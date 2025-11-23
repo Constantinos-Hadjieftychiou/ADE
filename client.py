@@ -7,6 +7,7 @@ Features:
   - Configurable concurrency (threads) & requests/sec.
   - Optional steady / poisson patterns like synthetic benchmarks.
   - Per-request CSV metrics for offline analysis.
+  - Multi-phase patterns via --phases-json.
 """
 
 import argparse
@@ -240,6 +241,29 @@ def schedule_poisson_pattern(
         task_queue.put(1)
 
 
+def schedule_pattern(
+    pattern: str,
+    duration: int,
+    rps: int,
+    burst: int,
+    idle: int,
+    task_queue: "queue.Queue[Optional[int]]",
+) -> None:
+    """
+    Helper: choose the right scheduler based on pattern name.
+    Used both for single-pattern and multi-phase runs.
+    """
+    pattern = pattern.lower()
+    if pattern == "burst":
+        schedule_burst_pattern(duration, burst, idle, rps, task_queue)
+    elif pattern == "steady":
+        schedule_steady_pattern(duration, rps, task_queue)
+    elif pattern == "poisson":
+        schedule_poisson_pattern(duration, rps, task_queue)
+    else:
+        raise ValueError(f"Unknown pattern: {pattern}")
+
+
 def run_load(
     url: str,
     mode: str,
@@ -253,6 +277,7 @@ def run_load(
     pattern: TrafficPattern,
     warmup_requests: int,
     csv_path: Optional[str],
+    phases: Optional[List[Dict[str, Any]]] = None,
 ) -> None:
     samples = load_samples(mode)
 
@@ -276,15 +301,42 @@ def run_load(
         t.start()
         threads.append(t)
 
-    # Schedule tasks according to pattern
-    if pattern == "burst":
-        schedule_burst_pattern(duration, burst, idle, rps, task_queue)
-    elif pattern == "steady":
-        schedule_steady_pattern(duration, rps, task_queue)
-    elif pattern == "poisson":
-        schedule_poisson_pattern(duration, rps, task_queue)
+    # Schedule tasks according to pattern or phases
+    if phases:
+        total_phase_duration = sum(int(p.get("duration", 0)) for p in phases)
+        logging.info(
+            f"🚦 Running {len(phases)} phases (total duration ~{total_phase_duration}s). "
+            "Per-phase settings can override --pattern/--duration/--rps/--burst/--idle."
+        )
+        for idx, phase in enumerate(phases, start=1):
+            phase_pattern = (phase.get("pattern", pattern) or pattern).lower()
+            phase_duration = int(phase.get("duration", duration))
+            phase_rps = int(phase.get("rps", rps))
+            phase_burst = int(phase.get("burst", burst))
+            phase_idle = int(phase.get("idle", idle))
+            name = phase.get("name", f"phase-{idx}")
+            logging.info(
+                f"=== Phase {idx}/{len(phases)}: {name} | "
+                f"pattern={phase_pattern}, duration={phase_duration}s, "
+                f"rps={phase_rps}, burst={phase_burst}, idle={phase_idle} ==="
+            )
+            schedule_pattern(
+                pattern=phase_pattern,
+                duration=phase_duration,
+                rps=phase_rps,
+                burst=phase_burst,
+                idle=phase_idle,
+                task_queue=task_queue,
+            )
     else:
-        raise ValueError(f"Unknown pattern: {pattern}")
+        schedule_pattern(
+            pattern=pattern,
+            duration=duration,
+            rps=rps,
+            burst=burst,
+            idle=idle,
+            task_queue=task_queue,
+        )
 
     # Send sentinel None to tell workers to exit once queue is empty
     for _ in range(concurrency):
@@ -376,7 +428,7 @@ def main() -> None:
         "--duration",
         type=int,
         default=300,
-        help="Test duration (s)",
+        help="Test duration (s) if not using --phases-json",
     )
     parser.add_argument(
         "--burst",
@@ -424,6 +476,15 @@ def main() -> None:
         default=None,
         help="Auth token (optional)",
     )
+    parser.add_argument(
+        "--phases-json",
+        default=None,
+        help=(
+            "Optional path to a JSON file describing multiple load phases. "
+            "If set, runs all phases sequentially and overrides "
+            "--pattern/--duration/--rps/--burst/--idle."
+        ),
+    )
 
     args = parser.parse_args()
 
@@ -431,6 +492,11 @@ def main() -> None:
     headers: Dict[str, str] = {}
     if args.token:
         headers["Authorization"] = f"Bearer {args.token}"
+
+    phases = None
+    if args.phases_json:
+        with open(args.phases_json) as f:
+            phases = json.load(f)
 
     run_load(
         url=url,
@@ -445,6 +511,7 @@ def main() -> None:
         pattern=args.pattern,  # type: ignore[arg-type]
         warmup_requests=args.warmup_requests,
         csv_path=args.csv,
+        phases=phases,
     )
 
 

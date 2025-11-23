@@ -1,9 +1,18 @@
 #!/usr/bin/env python3
 """
-build_resnet_mar.py
+build_resnet_mar.py  (multi-model version)
 
-Builds a TorchServe .mar for ResNet-18 and puts it in ./model_store.
-If resnet-18.mar already exists, it does nothing.
+Builds TorchServe .mar files for several ImageNet classifiers and puts them in ./model_store.
+
+Currently builds:
+  - resnet-18
+  - resnet-50
+  - mobilenet-v2
+
+Each model gets:
+  - TorchScript file (e.g. resnet18_scripted.pt)
+  - .mar file in ./model_store using the 'image_classifier' handler
+  - Shared index_to_name.json with ImageNet class labels
 """
 
 import json
@@ -12,57 +21,85 @@ from pathlib import Path
 from urllib.request import urlopen
 
 import torch
-from torchvision.models import resnet18, ResNet18_Weights
+from torchvision.models import (
+    resnet18,
+    resnet50,
+    mobilenet_v2,
+    ResNet18_Weights,
+    ResNet50_Weights,
+    MobileNet_V2_Weights,
+)
 
 PROJECT_DIR = Path(__file__).resolve().parent
 MODEL_STORE = PROJECT_DIR / "model_store"
 MODEL_STORE.mkdir(exist_ok=True)
 
-MAR_PATH = MODEL_STORE / "resnet-18.mar"
-SCRIPTED_PATH = PROJECT_DIR / "resnet18_scripted.pt"
 IDX2NAME_PATH = PROJECT_DIR / "index_to_name.json"
 
+# Define the models you want to build here
+MODEL_SPECS = {
+    "resnet-18": {
+        "ctor": resnet18,
+        "weights": ResNet18_Weights.DEFAULT,
+        "scripted_filename": "resnet18_scripted.pt",
+    },
+    "resnet-50": {
+        "ctor": resnet50,
+        "weights": ResNet50_Weights.DEFAULT,
+        "scripted_filename": "resnet50_scripted.pt",
+    },
+    "mobilenet-v2": {
+        "ctor": mobilenet_v2,
+        "weights": MobileNet_V2_Weights.DEFAULT,
+        "scripted_filename": "mobilenet_v2_scripted.pt",
+    },
+}
 
-def build_torchscript():
-    if SCRIPTED_PATH.exists():
-        print(f"[build_resnet_mar] TorchScript already exists at {SCRIPTED_PATH}")
-        return
-    print("[build_resnet_mar] Loading ResNet-18 with ImageNet weights…")
-    weights = ResNet18_Weights.DEFAULT
-    model = resnet18(weights=weights)
+
+def build_torchscript(model_name: str, spec: dict) -> Path:
+    scripted_path = PROJECT_DIR / spec["scripted_filename"]
+    if scripted_path.exists():
+        print(f"[build_mar] TorchScript already exists for {model_name} at {scripted_path}")
+        return scripted_path
+
+    print(f"[build_mar] Loading {model_name} with ImageNet weights…")
+    model = spec["ctor"](weights=spec["weights"])
     model.eval()
     scripted = torch.jit.script(model)
-    scripted.save(SCRIPTED_PATH)
-    print(f"[build_resnet_mar] Saved TorchScript model to {SCRIPTED_PATH}")
+    scripted.save(scripted_path)
+    print(f"[build_mar] Saved TorchScript model for {model_name} to {scripted_path}")
+    return scripted_path
 
 
 def build_index_to_name():
     if IDX2NAME_PATH.exists():
-        print(f"[build_resnet_mar] index_to_name.json already exists at {IDX2NAME_PATH}")
+        print(f"[build_mar] index_to_name.json already exists at {IDX2NAME_PATH}")
         return
-    print("[build_resnet_mar] Downloading ImageNet class names…")
+    print("[build_mar] Downloading ImageNet class names…")
     url = "https://raw.githubusercontent.com/pytorch/hub/master/imagenet_classes.txt"
     with urlopen(url) as resp:
         lines = resp.read().decode("utf-8").strip().splitlines()
     mapping = {str(i): name for i, name in enumerate(lines)}
     with IDX2NAME_PATH.open("w") as f:
         json.dump(mapping, f)
-    print(f"[build_resnet_mar] Wrote index_to_name.json to {IDX2NAME_PATH}")
+    print(f"[build_mar] Wrote index_to_name.json to {IDX2NAME_PATH}")
 
 
-def build_mar():
-    if MAR_PATH.exists():
-        print(f"[build_resnet_mar] {MAR_PATH} already exists, skipping archiver.")
+def build_mar(model_name: str, scripted_path: Path):
+    mar_path = MODEL_STORE / f"{model_name}.mar"
+    if mar_path.exists():
+        print(f"[build_mar] {mar_path} already exists, skipping archiver.")
         return
-    print(f"[build_resnet_mar] Creating {MAR_PATH} with torch-model-archiver…")
+
+    print(f"[build_mar] Creating {mar_path} with torch-model-archiver…")
     cmd = [
         "torch-model-archiver",
         "--model-name",
-        "resnet-18",
+        model_name,
         "--version",
         "1.0",
         "--serialized-file",
-        str(SCRIPTED_PATH),
+        str(scripted_path),
         "--handler",
         "image_classifier",
         "--extra-files",
@@ -71,15 +108,18 @@ def build_mar():
         str(MODEL_STORE),
         "--force",
     ]
-    print("[build_resnet_mar] Running:", " ".join(cmd))
+    print("[build_mar] Running:", " ".join(cmd))
     subprocess.run(cmd, check=True)
-    print(f"[build_resnet_mar] ✅ Created {MAR_PATH}")
+    print(f"[build_mar] ✅ Created {mar_path}")
 
 
 def main():
-    build_torchscript()
     build_index_to_name()
-    build_mar()
+
+    for model_name, spec in MODEL_SPECS.items():
+        print(f"\n=== Building artifacts for {model_name} ===")
+        scripted_path = build_torchscript(model_name, spec)
+        build_mar(model_name, scripted_path)
 
 
 if __name__ == "__main__":

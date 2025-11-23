@@ -1,0 +1,42 @@
+[
+    {
+        "name": "cold-start-trickle",
+        "pattern": "steady",
+        "duration": 60,
+        "rps": 1
+    },
+    {
+        "name": "small-bursty-traffic",
+        "pattern": "burst",
+        "duration": 180,
+        "rps": 8,
+        "burst": 25,
+        "idle": 20
+    },
+    {
+        "name": "mid-peak-poisson",
+        "pattern": "poisson",
+        "duration": 300,
+        "rps": 20
+    },
+    {
+        "name": "choppy-afternoon",
+        "pattern": "burst",
+        "duration": 240,
+        "rps": 12,
+        "burst": 40,
+        "idle": 30
+    },
+    {
+        "name": "long-idle",
+        "pattern": "steady",
+        "duration": 180,
+        "rps": 0
+    },
+    {
+        "name": "evening-cooldown",
+        "pattern": "steady",
+        "duration": 120,
+        "rps": 3
+    }
+]

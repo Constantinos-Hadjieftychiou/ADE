@@ -5,7 +5,7 @@
 #SBATCH --gres=gpu:1
 #SBATCH --mem=32G
 #SBATCH --time=02:00:00
-#SBATCH --partition=GPU
+#SBATCH --partition=GPU   # <-- change to your actual GPU partition if different
 
 set -u
 set -o pipefail
@@ -41,8 +41,14 @@ module load Python/3.11.5-GCCcore-13.2.0 || module load Python || {
   echo "❌ Failed to load Python module"
   exit 1
 }
+
 module load CUDA || true
-module load Java || true
+
+# Java is required for TorchServe; fail early if missing
+module load Java || {
+  echo "❌ Failed to load Java module (required for TorchServe)"
+  exit 1
+}
 
 echo "🔧 GPU inventory:"
 nvidia-smi || true
@@ -54,21 +60,20 @@ if [[ ! -d "$ENV_DIR" ]]; then
 fi
 source "$ENV_DIR/bin/activate"
 
-# Prefer binary wheels, avoid heavy source builds
-export PIP_ONLY_BINARY=":all:"
+# Prefer binary wheels for heavy packages; avoid heavy source builds
 export PIP_NO_BUILD_ISOLATION=1
 
-# -------------------- Core Python deps --------------------------------------
+# Core packaging tools
 pip install --quiet --upgrade pip setuptools wheel
 
-# Install torch + torchvision with CUDA wheels (cu121)
-pip install --index-url https://download.pytorch.org/whl/cu121 \
+# Install torch + torchvision with CUDA wheels (cu121), binary-only
+PIP_ONLY_BINARY=":all:" pip install --index-url https://download.pytorch.org/whl/cu121 \
   torch==2.5.1 torchvision==0.20.1 --no-cache-dir || {
   echo "❌ Failed to install torch/torchvision"
   exit 1
 }
 
-# TorchServe + model archiver + utilities + Captum + Zeus
+# TorchServe + model archiver + utilities + Transformers
 pip install --quiet \
   torchserve torch-model-archiver pillow requests transformers
 
