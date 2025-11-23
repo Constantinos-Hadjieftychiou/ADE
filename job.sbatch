@@ -62,19 +62,21 @@ export PIP_NO_BUILD_ISOLATION=1
 pip install --quiet --upgrade pip setuptools wheel
 
 # Install torch + torchvision with CUDA wheels (cu121)
-# This is what you had before and it worked.
 pip install --index-url https://download.pytorch.org/whl/cu121 \
   torch==2.5.1 torchvision==0.20.1 --no-cache-dir || {
   echo "❌ Failed to install torch/torchvision"
   exit 1
 }
 
-# TorchServe + model archiver + utilities + Captum
+# TorchServe + model archiver + utilities + Captum + Zeus
 pip install --quiet \
   torchserve torch-model-archiver pillow requests transformers
 
 # Captum is required by TorchServe's image_classifier handler
 pip install --quiet --no-deps captum
+
+# Zeus for GPU energy / power measurement
+pip install --quiet zeus
 
 # ------------------ Build ResNet-18 MAR (external script) -------------------
 echo "📦 Ensuring resnet-18.mar exists…"
@@ -99,21 +101,30 @@ echo "⏳ Checking TorchServe /ping…"
 curl -s "http://$HOSTNAME:8080/ping" || echo "ℹ️ /ping may 404 until models are loaded"
 
 # ------------------------------ Run client -----------------------------------
-echo "💥 Image workload against resnet-18…"
-python "$PROJECT_DIR/client.py" \
-  --url "http://$HOSTNAME:8080" \
-  --mode image \
-  --model-name resnet-18 \
-  --duration 300 \
-  --burst 20 \
-  --idle 10 \
-  --rps 15 \
-  --concurrency 16 \
-  --pattern burst \
-  --warmup-requests 100 \
-  --csv "$RUN_DIR/requests.csv" \
+echo "💥 Image workload against resnet-18 (Zeus monitored)…"
+python "$PROJECT_DIR/measure_with_zeus.py" \
+  --window-name "resnet18_image_burst" \
+  --log-csv "$RUN_DIR/zeus_windows.csv" \
+  --json-out "$RUN_DIR/zeus_summary.json" \
+  -- \
+  python "$PROJECT_DIR/client.py" \
+    --url "http://$HOSTNAME:8080" \
+    --mode image \
+    --model-name resnet-18 \
+    --duration 300 \
+    --burst 20 \
+    --idle 10 \
+    --rps 15 \
+    --concurrency 16 \
+    --pattern burst \
+    --warmup-requests 100 \
+    --csv "$RUN_DIR/requests.csv" \
   > "$RUN_DIR/client_image.log" 2>&1 || true
 
+# ------------------------- TorchServe metrics snapshot -----------------------
+echo "📊 Fetching TorchServe metrics…"
+curl -s "http://$HOSTNAME:8082/metrics" > "$RUN_DIR/torchserve_metrics.prom" \
+  || echo "⚠️ Failed to fetch TorchServe /metrics"
 
 # ------------------------------- Teardown ------------------------------------
 echo "🧹 Stopping TorchServe…"

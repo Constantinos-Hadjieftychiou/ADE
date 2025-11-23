@@ -145,31 +145,28 @@ def worker_loop(
     mode: str,
     headers: Dict[str, str],
     sample_pool: List[Any],
-    task_queue: "queue.Queue[int]",
+    task_queue: "queue.Queue[Optional[int]]",
     result_list: List[RequestResult],
 ):
     """
     Worker thread: consumes "tokens" from task_queue and performs that many requests.
     Each token represents 1 request to send now.
+    A token of None is a sentinel telling the worker to exit cleanly.
     """
     while True:
+        token = task_queue.get()
         try:
-            token = task_queue.get(timeout=1.0)
-        except queue.Empty:
-            # No more tasks and coordinator is probably done
-            if getattr(task_queue, "finished", False):
-                break
-            else:
+            if token is None:
+                # Sentinel: shut down this worker
+                return
+            if token <= 0:
                 continue
 
-        if token <= 0:
+            sample = random.choice(sample_pool)
+            result = send_request(url, model_name, sample, mode, headers)
+            result_list.append(result)
+        finally:
             task_queue.task_done()
-            continue
-
-        sample = random.choice(sample_pool)
-        result = send_request(url, model_name, sample, mode, headers)
-        result_list.append(result)
-        task_queue.task_done()
 
 
 def schedule_burst_pattern(
@@ -177,11 +174,10 @@ def schedule_burst_pattern(
     burst: int,
     idle: int,
     base_rps: int,
-    task_queue: "queue.Queue[int]",
+    task_queue: "queue.Queue[Optional[int]]",
 ):
     """
-    Your original bursty pattern, but instead of sending directly, we enqueue
-    "tokens" = requests that workers will execute concurrently.
+    Bursty pattern: alternate randomised burst + idle periods, enqueueing tokens.
     """
     start = time.time()
     while time.time() - start < duration:
@@ -192,7 +188,6 @@ def schedule_burst_pattern(
         burst_start = time.time()
 
         while time.time() - burst_start < burst_dur and time.time() - start < duration:
-            # Enqueue req_per_sec "tokens" which workers will consume
             for _ in range(req_per_sec):
                 task_queue.put(1)
             time.sleep(1.0)
@@ -206,7 +201,7 @@ def schedule_burst_pattern(
 def schedule_steady_pattern(
     duration: int,
     rps: int,
-    task_queue: "queue.Queue[int]",
+    task_queue: "queue.Queue[Optional[int]]",
 ):
     """
     Steady "open-loop" RPS: every 1/rps seconds enqueue 1 request.
@@ -221,13 +216,15 @@ def schedule_steady_pattern(
             task_queue.put(1)
             next_time += inter_arrival
         else:
-            time.sleep(min(0.001, next_time - now))
+            sleep_for = next_time - now
+            if sleep_for > 0:
+                time.sleep(sleep_for)
 
 
 def schedule_poisson_pattern(
     duration: int,
     rps: int,
-    task_queue: "queue.Queue[int]",
+    task_queue: "queue.Queue[Optional[int]]",
 ):
     """
     Poisson arrivals: inter-arrival ~ Exp(lambda = rps).
@@ -236,7 +233,6 @@ def schedule_poisson_pattern(
     start = time.time()
     lam = float(max(1, rps))
     while time.time() - start < duration:
-        # exponential inter-arrival
         wait = random.expovariate(lam)
         time.sleep(wait)
         if time.time() - start >= duration:
@@ -267,7 +263,7 @@ def run_load(
             sample = random.choice(samples)
             _ = send_request(url, model_name, sample, mode, headers)
 
-    task_queue: "queue.Queue[int]" = queue.Queue()
+    task_queue: "queue.Queue[Optional[int]]" = queue.Queue()
     results: List[RequestResult] = []
 
     # Start worker threads
@@ -276,7 +272,6 @@ def run_load(
         t = threading.Thread(
             target=worker_loop,
             args=(f"worker-{i}", url, model_name, mode, headers, samples, task_queue, results),
-            daemon=True,
         )
         t.start()
         threads.append(t)
@@ -291,15 +286,16 @@ def run_load(
     else:
         raise ValueError(f"Unknown pattern: {pattern}")
 
-    # Signal workers to finish when queue drains
-    setattr(task_queue, "finished", True)  # monkey-patch attribute
+    # Send sentinel None to tell workers to exit once queue is empty
+    for _ in range(concurrency):
+        task_queue.put(None)
+
+    # Wait for all work (including sentinels) to be processed
     task_queue.join()
-    # Give workers a moment to exit
-    time.sleep(0.5)
 
     # Join threads
     for t in threads:
-        t.join(timeout=0.5)
+        t.join()
 
     if not results:
         logging.warning("No successful requests recorded (or results list empty).")
