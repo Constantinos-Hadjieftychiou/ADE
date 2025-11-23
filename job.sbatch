@@ -26,7 +26,7 @@ export HF_HOME="$PROJECT_DIR/.hf_cache"
 export TRANSFORMERS_CACHE="$PROJECT_DIR/.hf_cache"
 export TORCH_HOME="$PROJECT_DIR/.torch_cache"
 
-# Prefer binary wheels
+# Prefer binary wheels (avoid heavy source builds)
 export PIP_ONLY_BINARY=":all:"
 export PIP_NO_BUILD_ISOLATION=1
 
@@ -35,7 +35,7 @@ module purge
 module use /share/apps/eb/modules/all || true
 module load Python/3.11.5-GCCcore-13.2.0 || module load Python || true
 module load CUDA || true
-module load Java || true   # adjust to your cluster's Java module name if needed
+module load Java || true   # adjust module name if your cluster uses a different Java module
 
 echo "🔧 GPU inventory:"
 nvidia-smi || true
@@ -64,8 +64,8 @@ if [[ "${_miss:-0}" == "1" ]]; then
 fi
 unset _miss
 
-# TorchServe + model archiver + utils
-pip install --quiet torchserve torch-model-archiver transformers pillow requests || true
+# TorchServe + model archiver + utils + captum (required by image_classifier handler)
+pip install --quiet torchserve torch-model-archiver transformers pillow requests captum || true
 
 python - <<'PY'
 import torch
@@ -92,7 +92,7 @@ scripted.save("resnet18_scripted.pt")
 print("Saved TorchScript model to resnet18_scripted.pt")
 PY
 
-  # 2) Build simple index_to_name.json from imagenet classes (for nicer responses)
+  # 2) Build simple index_to_name.json from ImageNet classes (for nicer responses)
   python - <<'PY'
 import json, urllib.request
 url = "https://raw.githubusercontent.com/pytorch/hub/master/imagenet_classes.txt"
@@ -122,13 +122,14 @@ cd "$PROJECT_DIR"
 
 echo "🚀 Starting TorchServe…"
 torchserve --start --ncs \
+  --disable-token-auth \
   --model-store "$MODEL_STORE" \
   --models resnet-18=resnet-18.mar \
   --ts-config "$PROJECT_DIR/torchserve.properties"
 
 # TorchServe logs to ./logs by default
 sleep 20
-echo "⏳ Waiting for TorchServe to be ready…"
+echo "⏳ Checking TorchServe /ping…"
 curl -s "http://$HOSTNAME:8080/ping" || echo "ℹ️ /ping may 404 until models are loaded"
 
 # ------------------------------ Run client -----------------------------------

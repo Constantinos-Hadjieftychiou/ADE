@@ -3860,3 +3860,1171 @@ ModuleNotFoundError: No module named 'nvgpu'
 2025-11-22T14:50:08,650 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815808
 2025-11-22T14:50:08,652 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:41800 "POST /predictions/resnet-18 HTTP/1.1" 400 0
 2025-11-22T14:50:08,652 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815808
+2025-11-22T14:50:09,658 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:41802 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:09,658 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815809
+2025-11-22T14:50:09,663 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:41804 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:09,663 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815809
+2025-11-22T14:50:09,667 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:41806 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:09,667 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815809
+2025-11-22T14:50:09,670 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:41808 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:09,670 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815809
+2025-11-22T14:50:09,672 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:41810 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:09,672 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815809
+2025-11-22T14:50:10,678 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:41812 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:10,678 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815810
+2025-11-22T14:50:10,683 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:41814 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:10,683 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815810
+2025-11-22T14:50:10,686 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:41816 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:10,686 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815810
+2025-11-22T14:50:10,690 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:41818 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:10,690 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815810
+2025-11-22T14:50:10,692 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:41820 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:10,692 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815810
+2025-11-22T14:50:16,462 [DEBUG] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerLifeCycle - Worker cmdline: [/home/chadji10/ADE/.venv_torchserve/bin/python, /home/chadji10/ADE/.venv_torchserve/lib/python3.11/site-packages/ts/model_service_worker.py, --sock-type, unix, --sock-name, /tmp/.ts.sock.9000, --metrics-config, /home/chadji10/ADE/.venv_torchserve/lib/python3.11/site-packages/ts/configs/metrics.yaml]
+2025-11-22T14:50:18,332 [INFO ] W-9000-resnet-18_1.0-stdout MODEL_LOG - s_name_part0=/tmp/.ts.sock, s_name_part1=9000, pid=265190
+2025-11-22T14:50:18,332 [INFO ] W-9000-resnet-18_1.0-stdout MODEL_LOG - Listening on port: /tmp/.ts.sock.9000
+2025-11-22T14:50:18,343 [INFO ] W-9000-resnet-18_1.0-stdout MODEL_LOG - Successfully loaded /home/chadji10/ADE/.venv_torchserve/lib/python3.11/site-packages/ts/configs/metrics.yaml.
+2025-11-22T14:50:18,343 [INFO ] W-9000-resnet-18_1.0-stdout MODEL_LOG - [PID]265190
+2025-11-22T14:50:18,343 [INFO ] W-9000-resnet-18_1.0-stdout MODEL_LOG - Torch worker started.
+2025-11-22T14:50:18,344 [DEBUG] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - W-9000-resnet-18_1.0 State change WORKER_STOPPED -> WORKER_STARTED
+2025-11-22T14:50:18,344 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Connecting to: /tmp/.ts.sock.9000
+2025-11-22T14:50:18,345 [DEBUG] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Flushing req.cmd LOAD repeats 1 to backend at: 1763815818345
+2025-11-22T14:50:18,345 [INFO ] W-9000-resnet-18_1.0-stdout MODEL_LOG - Python runtime: 3.11.5
+2025-11-22T14:50:18,346 [INFO ] W-9000-resnet-18_1.0-stdout MODEL_LOG - Connection accepted: /tmp/.ts.sock.9000.
+2025-11-22T14:50:18,346 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Looping backend response at: 1763815818346
+2025-11-22T14:50:18,347 [INFO ] W-9000-resnet-18_1.0-stdout MODEL_LOG - model_name: resnet-18, batchSize: 1
+2025-11-22T14:50:19,859 [INFO ] W-9000-resnet-18_1.0-stdout MODEL_LOG - Backend worker process died.
+2025-11-22T14:50:19,859 [INFO ] W-9000-resnet-18_1.0-stdout MODEL_LOG - Traceback (most recent call last):
+2025-11-22T14:50:19,859 [INFO ] W-9000-resnet-18_1.0-stdout MODEL_LOG -   File "/home/chadji10/ADE/.venv_torchserve/lib/python3.11/site-packages/ts/model_loader.py", line 108, in load
+2025-11-22T14:50:19,859 [INFO ] W-9000-resnet-18_1.0-stdout MODEL_LOG -     module, function_name = self._load_handler_file(handler)
+2025-11-22T14:50:19,859 [INFO ] W-9000-resnet-18_1.0-stdout MODEL_LOG -                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-11-22T14:50:19,859 [INFO ] W-9000-resnet-18_1.0-stdout MODEL_LOG -   File "/home/chadji10/ADE/.venv_torchserve/lib/python3.11/site-packages/ts/model_loader.py", line 153, in _load_handler_file
+2025-11-22T14:50:19,859 [INFO ] W-9000-resnet-18_1.0-stdout MODEL_LOG -     module = importlib.import_module(module_name)
+2025-11-22T14:50:19,859 [INFO ] W-9000-resnet-18_1.0-stdout MODEL_LOG -              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-11-22T14:50:19,859 [INFO ] W-9000-resnet-18_1.0-stdout MODEL_LOG -   File "/share/apps/eb/software/Python/3.11.5-GCCcore-13.2.0/lib/python3.11/importlib/__init__.py", line 126, in import_module
+2025-11-22T14:50:19,859 [INFO ] W-9000-resnet-18_1.0-stdout MODEL_LOG -     return _bootstrap._gcd_import(name[level:], package, level)
+2025-11-22T14:50:19,859 [INFO ] W-9000-resnet-18_1.0-stdout MODEL_LOG -            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-11-22T14:50:19,859 [INFO ] W-9000-resnet-18_1.0-stdout MODEL_LOG -   File "<frozen importlib._bootstrap>", line 1204, in _gcd_import
+2025-11-22T14:50:19,859 [INFO ] W-9000-resnet-18_1.0-stdout MODEL_LOG -   File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+2025-11-22T14:50:19,859 [INFO ] W-9000-resnet-18_1.0-stdout MODEL_LOG -   File "<frozen importlib._bootstrap>", line 1140, in _find_and_load_unlocked
+2025-11-22T14:50:19,859 [INFO ] W-9000-resnet-18_1.0-stdout MODEL_LOG - ModuleNotFoundError: No module named 'image_classifier'
+2025-11-22T14:50:19,859 [INFO ] W-9000-resnet-18_1.0-stdout MODEL_LOG - 
+2025-11-22T14:50:19,859 [INFO ] W-9000-resnet-18_1.0-stdout MODEL_LOG - During handling of the above exception, another exception occurred:
+2025-11-22T14:50:19,859 [INFO ] W-9000-resnet-18_1.0-stdout MODEL_LOG - 
+2025-11-22T14:50:19,859 [INFO ] W-9000-resnet-18_1.0-stdout MODEL_LOG - Traceback (most recent call last):
+2025-11-22T14:50:19,859 [INFO ] W-9000-resnet-18_1.0-stdout MODEL_LOG -   File "/home/chadji10/ADE/.venv_torchserve/lib/python3.11/site-packages/ts/model_service_worker.py", line 301, in <module>
+2025-11-22T14:50:19,859 [INFO ] W-9000-resnet-18_1.0-stdout MODEL_LOG -     worker.run_server()
+2025-11-22T14:50:19,859 [INFO ] W-9000-resnet-18_1.0-stdout MODEL_LOG -   File "/home/chadji10/ADE/.venv_torchserve/lib/python3.11/site-packages/ts/model_service_worker.py", line 268, in run_server
+2025-11-22T14:50:19,859 [INFO ] W-9000-resnet-18_1.0-stdout MODEL_LOG -     self.handle_connection(cl_socket)
+2025-11-22T14:50:19,859 [INFO ] W-9000-resnet-18_1.0-stdout MODEL_LOG -   File "/home/chadji10/ADE/.venv_torchserve/lib/python3.11/site-packages/ts/model_service_worker.py", line 196, in handle_connection
+2025-11-22T14:50:19,859 [INFO ] W-9000-resnet-18_1.0-stdout MODEL_LOG -     service, result, code = self.load_model(msg)
+2025-11-22T14:50:19,859 [INFO ] W-9000-resnet-18_1.0-stdout MODEL_LOG -                             ^^^^^^^^^^^^^^^^^^^^
+2025-11-22T14:50:19,859 [INFO ] W-9000-resnet-18_1.0-stdout MODEL_LOG -   File "/home/chadji10/ADE/.venv_torchserve/lib/python3.11/site-packages/ts/model_service_worker.py", line 133, in load_model
+2025-11-22T14:50:19,859 [INFO ] W-9000-resnet-18_1.0-stdout MODEL_LOG -     service = model_loader.load(
+2025-11-22T14:50:19,859 [INFO ] W-9000-resnet-18_1.0-stdout MODEL_LOG -               ^^^^^^^^^^^^^^^^^^
+2025-11-22T14:50:19,859 [INFO ] W-9000-resnet-18_1.0-stdout MODEL_LOG -   File "/home/chadji10/ADE/.venv_torchserve/lib/python3.11/site-packages/ts/model_loader.py", line 110, in load
+2025-11-22T14:50:19,859 [INFO ] W-9000-resnet-18_1.0-stdout MODEL_LOG -     module = self._load_default_handler(handler)
+2025-11-22T14:50:19,859 [INFO ] W-9000-resnet-18_1.0-stdout MODEL_LOG -              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-11-22T14:50:19,859 [INFO ] W-9000-resnet-18_1.0-stdout MODEL_LOG -   File "/home/chadji10/ADE/.venv_torchserve/lib/python3.11/site-packages/ts/model_loader.py", line 159, in _load_default_handler
+2025-11-22T14:50:19,859 [INFO ] W-9000-resnet-18_1.0-stdout MODEL_LOG -     module = importlib.import_module(module_name, "ts.torch_handler")
+2025-11-22T14:50:19,859 [INFO ] W-9000-resnet-18_1.0-stdout MODEL_LOG -              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-11-22T14:50:19,859 [INFO ] W-9000-resnet-18_1.0-stdout MODEL_LOG -   File "/share/apps/eb/software/Python/3.11.5-GCCcore-13.2.0/lib/python3.11/importlib/__init__.py", line 126, in import_module
+2025-11-22T14:50:19,859 [INFO ] W-9000-resnet-18_1.0-stdout MODEL_LOG -     return _bootstrap._gcd_import(name[level:], package, level)
+2025-11-22T14:50:19,859 [INFO ] W-9000-resnet-18_1.0-stdout MODEL_LOG -            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-11-22T14:50:19,859 [INFO ] W-9000-resnet-18_1.0-stdout MODEL_LOG -   File "<frozen importlib._bootstrap>", line 1204, in _gcd_import
+2025-11-22T14:50:19,859 [INFO ] W-9000-resnet-18_1.0-stdout MODEL_LOG -   File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+2025-11-22T14:50:19,859 [INFO ] W-9000-resnet-18_1.0-stdout MODEL_LOG -   File "<frozen importlib._bootstrap>", line 1147, in _find_and_load_unlocked
+2025-11-22T14:50:19,859 [INFO ] W-9000-resnet-18_1.0-stdout MODEL_LOG -   File "<frozen importlib._bootstrap>", line 690, in _load_unlocked
+2025-11-22T14:50:19,859 [INFO ] W-9000-resnet-18_1.0-stdout MODEL_LOG -   File "<frozen importlib._bootstrap_external>", line 940, in exec_module
+2025-11-22T14:50:19,859 [INFO ] W-9000-resnet-18_1.0-stdout MODEL_LOG -   File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+2025-11-22T14:50:19,859 [INFO ] W-9000-resnet-18_1.0-stdout MODEL_LOG -   File "/home/chadji10/ADE/.venv_torchserve/lib/python3.11/site-packages/ts/torch_handler/image_classifier.py", line 11, in <module>
+2025-11-22T14:50:19,859 [INFO ] W-9000-resnet-18_1.0-stdout MODEL_LOG -     from .vision_handler import VisionHandler
+2025-11-22T14:50:19,859 [INFO ] W-9000-resnet-18_1.0-stdout MODEL_LOG -   File "/home/chadji10/ADE/.venv_torchserve/lib/python3.11/site-packages/ts/torch_handler/vision_handler.py", line 11, in <module>
+2025-11-22T14:50:19,859 [INFO ] W-9000-resnet-18_1.0-stdout MODEL_LOG -     from captum.attr import IntegratedGradients
+2025-11-22T14:50:19,859 [INFO ] W-9000-resnet-18_1.0-stdout MODEL_LOG - ModuleNotFoundError: No module named 'captum'
+2025-11-22T14:50:19,951 [INFO ] epollEventLoopGroup-5-2 org.pytorch.serve.wlm.WorkerThread - 9000 Worker disconnected. WORKER_STARTED
+2025-11-22T14:50:19,951 [DEBUG] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - System state is : WORKER_STARTED
+2025-11-22T14:50:19,951 [DEBUG] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Backend worker monitoring thread interrupted or backend worker process died., startupTimeout:120sec
+java.lang.InterruptedException: null
+	at java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.awaitNanos(AbstractQueuedSynchronizer.java:1770) ~[?:?]
+	at java.util.concurrent.ArrayBlockingQueue.poll(ArrayBlockingQueue.java:435) ~[?:?]
+	at org.pytorch.serve.wlm.WorkerThread.run(WorkerThread.java:234) ~[model-server.jar:?]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144) ~[?:?]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642) ~[?:?]
+	at java.lang.Thread.run(Thread.java:1583) [?:?]
+2025-11-22T14:50:19,952 [WARN ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.BatchAggregator - Load model failed: resnet-18, error: Worker died.
+2025-11-22T14:50:19,952 [DEBUG] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - W-9000-resnet-18_1.0 State change WORKER_STARTED -> WORKER_STOPPED
+2025-11-22T14:50:19,952 [WARN ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Auto recovery failed again
+2025-11-22T14:50:19,952 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Retry worker: 9000 in 144 seconds.
+2025-11-22T14:50:19,977 [INFO ] W-9000-resnet-18_1.0-stdout org.pytorch.serve.wlm.WorkerLifeCycle - Stopped Scanner - W-9000-resnet-18_1.0-stdout
+2025-11-22T14:50:19,978 [INFO ] W-9000-resnet-18_1.0-stderr org.pytorch.serve.wlm.WorkerLifeCycle - Stopped Scanner - W-9000-resnet-18_1.0-stderr
+2025-11-22T14:50:24,711 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:41822 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:24,712 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815824
+2025-11-22T14:50:24,717 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:41824 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:24,717 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815824
+2025-11-22T14:50:24,720 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:41826 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:24,720 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815824
+2025-11-22T14:50:24,723 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:41828 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:24,723 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815824
+2025-11-22T14:50:24,726 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:41830 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:24,726 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815824
+2025-11-22T14:50:24,728 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:41832 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:24,728 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815824
+2025-11-22T14:50:24,730 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:41834 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:24,730 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815824
+2025-11-22T14:50:25,736 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:41836 "POST /predictions/resnet-18 HTTP/1.1" 400 1
+2025-11-22T14:50:25,736 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815825
+2025-11-22T14:50:25,742 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:41838 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:25,742 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815825
+2025-11-22T14:50:25,746 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:41840 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:25,746 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815825
+2025-11-22T14:50:25,749 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:41842 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:25,749 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815825
+2025-11-22T14:50:25,751 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:41844 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:25,751 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815825
+2025-11-22T14:50:25,754 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:41846 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:25,754 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815825
+2025-11-22T14:50:25,763 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:41848 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:25,763 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815825
+2025-11-22T14:50:26,777 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:41850 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:26,777 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815826
+2025-11-22T14:50:26,787 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:41852 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:26,787 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815826
+2025-11-22T14:50:26,800 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:41854 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:26,800 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815826
+2025-11-22T14:50:26,802 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:41856 "POST /predictions/resnet-18 HTTP/1.1" 400 1
+2025-11-22T14:50:26,802 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815826
+2025-11-22T14:50:26,804 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:41858 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:26,804 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815826
+2025-11-22T14:50:26,806 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:41860 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:26,806 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815826
+2025-11-22T14:50:26,808 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:41862 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:26,808 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815826
+2025-11-22T14:50:27,814 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:41864 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:27,815 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815827
+2025-11-22T14:50:27,819 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:41866 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:27,819 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815827
+2025-11-22T14:50:27,823 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:41868 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:27,823 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815827
+2025-11-22T14:50:27,826 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:41870 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:27,827 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815827
+2025-11-22T14:50:27,828 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:41872 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:27,828 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815827
+2025-11-22T14:50:27,830 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:41874 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:27,830 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815827
+2025-11-22T14:50:27,844 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:41876 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:27,844 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815827
+2025-11-22T14:50:28,854 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:41878 "POST /predictions/resnet-18 HTTP/1.1" 400 1
+2025-11-22T14:50:28,854 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815828
+2025-11-22T14:50:28,858 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:41880 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:28,858 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815828
+2025-11-22T14:50:28,861 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:41882 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:28,861 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815828
+2025-11-22T14:50:28,864 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:41884 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:28,864 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815828
+2025-11-22T14:50:28,866 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:41886 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:28,866 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815828
+2025-11-22T14:50:28,868 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:41888 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:28,868 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815828
+2025-11-22T14:50:28,870 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:41890 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:28,870 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815828
+2025-11-22T14:50:29,875 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:41892 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:29,876 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815829
+2025-11-22T14:50:29,882 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:41894 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:29,882 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815829
+2025-11-22T14:50:29,886 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:41896 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:29,886 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815829
+2025-11-22T14:50:29,889 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:41898 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:29,889 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815829
+2025-11-22T14:50:29,891 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:41900 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:29,891 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815829
+2025-11-22T14:50:29,895 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:41902 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:29,895 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815829
+2025-11-22T14:50:29,897 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:41904 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:29,897 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815829
+2025-11-22T14:50:30,903 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:41906 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:30,903 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815830
+2025-11-22T14:50:30,908 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:41908 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:30,908 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815830
+2025-11-22T14:50:30,911 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:41910 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:30,911 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815830
+2025-11-22T14:50:30,915 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:41912 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:30,915 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815830
+2025-11-22T14:50:30,917 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:41914 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:30,917 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815830
+2025-11-22T14:50:30,919 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:41916 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:30,919 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815830
+2025-11-22T14:50:30,921 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:41918 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:30,921 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815830
+2025-11-22T14:50:31,926 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:41920 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:31,927 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815831
+2025-11-22T14:50:31,933 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:41922 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:31,933 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815831
+2025-11-22T14:50:31,937 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:41924 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:31,937 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815831
+2025-11-22T14:50:31,940 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:41926 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:31,940 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815831
+2025-11-22T14:50:31,942 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:41928 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:31,942 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815831
+2025-11-22T14:50:31,945 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:41930 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:31,945 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815831
+2025-11-22T14:50:31,947 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:41932 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:31,947 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815831
+2025-11-22T14:50:32,953 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:41934 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:32,953 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815832
+2025-11-22T14:50:32,958 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:41936 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:32,958 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815832
+2025-11-22T14:50:32,961 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:41938 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:32,961 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815832
+2025-11-22T14:50:32,965 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:41940 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:32,965 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815832
+2025-11-22T14:50:32,967 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:41942 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:32,967 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815832
+2025-11-22T14:50:32,969 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:41944 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:32,969 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815832
+2025-11-22T14:50:32,970 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:41946 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:32,971 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815832
+2025-11-22T14:50:33,976 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:41948 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:33,976 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815833
+2025-11-22T14:50:33,982 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:41950 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:33,982 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815833
+2025-11-22T14:50:33,987 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:41952 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:33,987 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815833
+2025-11-22T14:50:33,989 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:41954 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:33,989 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815833
+2025-11-22T14:50:33,991 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:41956 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:33,991 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815833
+2025-11-22T14:50:33,994 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:41958 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:33,994 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815833
+2025-11-22T14:50:33,996 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:41960 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:33,996 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815833
+2025-11-22T14:50:35,002 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:41962 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:35,002 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815835
+2025-11-22T14:50:35,008 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:41964 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:35,008 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815835
+2025-11-22T14:50:35,011 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:41966 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:35,011 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815835
+2025-11-22T14:50:35,013 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:41968 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:35,013 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815835
+2025-11-22T14:50:35,016 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:41970 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:35,016 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815835
+2025-11-22T14:50:35,018 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:41972 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:35,018 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815835
+2025-11-22T14:50:35,020 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:41974 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:35,020 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815835
+2025-11-22T14:50:36,026 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:41976 "POST /predictions/resnet-18 HTTP/1.1" 400 1
+2025-11-22T14:50:36,026 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815836
+2025-11-22T14:50:36,030 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:41978 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:36,031 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815836
+2025-11-22T14:50:36,034 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:41980 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:36,034 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815836
+2025-11-22T14:50:36,038 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:41982 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:36,038 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815836
+2025-11-22T14:50:36,040 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:41984 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:36,040 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815836
+2025-11-22T14:50:36,041 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:41986 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:36,042 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815836
+2025-11-22T14:50:36,043 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:41988 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:36,043 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815836
+2025-11-22T14:50:37,049 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:41990 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:37,049 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815837
+2025-11-22T14:50:37,055 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:41992 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:37,055 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815837
+2025-11-22T14:50:37,059 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:41994 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:37,059 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815837
+2025-11-22T14:50:37,062 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:41996 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:37,062 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815837
+2025-11-22T14:50:37,064 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:41998 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:37,064 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815837
+2025-11-22T14:50:37,067 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42000 "POST /predictions/resnet-18 HTTP/1.1" 400 1
+2025-11-22T14:50:37,067 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815837
+2025-11-22T14:50:37,068 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42002 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:37,069 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815837
+2025-11-22T14:50:47,075 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42004 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:47,076 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815847
+2025-11-22T14:50:47,080 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42006 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:47,080 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815847
+2025-11-22T14:50:47,084 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42008 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:47,084 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815847
+2025-11-22T14:50:47,088 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42010 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:47,088 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815847
+2025-11-22T14:50:47,089 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42012 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:47,089 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815847
+2025-11-22T14:50:47,091 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42014 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:47,091 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815847
+2025-11-22T14:50:47,093 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42016 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:47,093 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815847
+2025-11-22T14:50:47,095 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42018 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:47,095 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815847
+2025-11-22T14:50:47,096 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42020 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:47,097 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815847
+2025-11-22T14:50:47,098 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42022 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:47,098 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815847
+2025-11-22T14:50:47,100 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42024 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:47,100 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815847
+2025-11-22T14:50:47,102 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42026 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:47,102 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815847
+2025-11-22T14:50:47,104 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42028 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:47,104 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815847
+2025-11-22T14:50:48,109 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42030 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:48,109 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815848
+2025-11-22T14:50:48,117 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42032 "POST /predictions/resnet-18 HTTP/1.1" 400 1
+2025-11-22T14:50:48,117 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815848
+2025-11-22T14:50:48,120 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42034 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:48,120 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815848
+2025-11-22T14:50:48,123 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42036 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:48,123 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815848
+2025-11-22T14:50:48,125 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42038 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:48,125 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815848
+2025-11-22T14:50:48,128 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42040 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:48,128 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815848
+2025-11-22T14:50:48,130 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42042 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:48,130 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815848
+2025-11-22T14:50:48,131 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42044 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:48,131 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815848
+2025-11-22T14:50:48,133 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42046 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:48,133 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815848
+2025-11-22T14:50:48,135 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42048 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:48,135 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815848
+2025-11-22T14:50:48,139 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42050 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:48,139 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815848
+2025-11-22T14:50:48,140 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42052 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:48,140 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815848
+2025-11-22T14:50:48,142 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42054 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:48,142 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815848
+2025-11-22T14:50:49,148 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42056 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:49,148 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815849
+2025-11-22T14:50:49,154 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42058 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:49,154 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815849
+2025-11-22T14:50:49,158 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42060 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:49,158 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815849
+2025-11-22T14:50:49,161 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42062 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:49,161 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815849
+2025-11-22T14:50:49,164 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42064 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:49,164 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815849
+2025-11-22T14:50:49,166 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42066 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:49,166 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815849
+2025-11-22T14:50:49,168 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42068 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:49,169 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815849
+2025-11-22T14:50:49,170 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42070 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:49,170 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815849
+2025-11-22T14:50:49,172 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42072 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:49,172 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815849
+2025-11-22T14:50:49,174 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42074 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:49,174 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815849
+2025-11-22T14:50:49,175 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42076 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:49,176 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815849
+2025-11-22T14:50:49,177 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42078 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:49,177 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815849
+2025-11-22T14:50:49,179 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42080 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:49,179 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815849
+2025-11-22T14:50:50,189 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42082 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:50,189 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815850
+2025-11-22T14:50:50,192 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42084 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:50,192 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815850
+2025-11-22T14:50:50,195 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42086 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:50,196 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815850
+2025-11-22T14:50:50,199 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42088 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:50,199 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815850
+2025-11-22T14:50:50,201 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42090 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:50,201 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815850
+2025-11-22T14:50:50,202 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42092 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:50,203 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815850
+2025-11-22T14:50:50,204 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42094 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:50,204 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815850
+2025-11-22T14:50:50,206 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42096 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:50,206 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815850
+2025-11-22T14:50:50,208 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42098 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:50,208 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815850
+2025-11-22T14:50:50,210 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42100 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:50,210 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815850
+2025-11-22T14:50:50,211 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42102 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:50,211 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815850
+2025-11-22T14:50:50,213 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42104 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:50,213 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815850
+2025-11-22T14:50:50,215 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42106 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:50,215 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815850
+2025-11-22T14:50:51,221 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42108 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:51,221 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815851
+2025-11-22T14:50:51,227 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42110 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:51,227 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815851
+2025-11-22T14:50:51,231 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42112 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:51,231 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815851
+2025-11-22T14:50:51,234 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42114 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:51,234 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815851
+2025-11-22T14:50:51,236 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42116 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:51,236 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815851
+2025-11-22T14:50:51,239 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42118 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:51,239 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815851
+2025-11-22T14:50:51,241 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42120 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:51,241 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815851
+2025-11-22T14:50:51,243 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42122 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:51,243 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815851
+2025-11-22T14:50:51,244 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42124 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:51,245 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815851
+2025-11-22T14:50:51,246 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42126 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:51,246 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815851
+2025-11-22T14:50:51,248 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42128 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:51,248 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815851
+2025-11-22T14:50:51,250 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42130 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:51,250 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815851
+2025-11-22T14:50:51,251 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42132 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:51,252 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815851
+2025-11-22T14:50:52,258 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42134 "POST /predictions/resnet-18 HTTP/1.1" 400 1
+2025-11-22T14:50:52,258 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815852
+2025-11-22T14:50:52,262 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42136 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:52,262 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815852
+2025-11-22T14:50:52,266 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42138 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:52,266 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815852
+2025-11-22T14:50:52,269 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42140 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:52,269 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815852
+2025-11-22T14:50:52,271 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42142 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:52,271 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815852
+2025-11-22T14:50:52,273 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42144 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:52,273 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815852
+2025-11-22T14:50:52,275 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42146 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:52,275 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815852
+2025-11-22T14:50:52,277 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42148 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:52,277 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815852
+2025-11-22T14:50:52,278 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42150 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:52,278 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815852
+2025-11-22T14:50:52,280 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42152 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:52,280 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815852
+2025-11-22T14:50:52,282 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42154 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:52,282 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815852
+2025-11-22T14:50:52,284 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42156 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:52,284 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815852
+2025-11-22T14:50:52,285 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42158 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:52,285 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815852
+2025-11-22T14:50:53,038 [ERROR] Thread-18 org.pytorch.serve.metrics.MetricCollector - Traceback (most recent call last):
+  File "/home/chadji10/ADE/.venv_torchserve/lib/python3.11/site-packages/ts/metrics/metric_collector.py", line 27, in <module>
+    system_metrics.collect_all(sys.modules['ts.metrics.system_metrics'], arguments.gpu)
+  File "/home/chadji10/ADE/.venv_torchserve/lib/python3.11/site-packages/ts/metrics/system_metrics.py", line 119, in collect_all
+    value(num_of_gpu)
+  File "/home/chadji10/ADE/.venv_torchserve/lib/python3.11/site-packages/ts/metrics/system_metrics.py", line 64, in gpu_utilization
+    import nvgpu
+ModuleNotFoundError: No module named 'nvgpu'
+
+2025-11-22T14:50:53,291 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42160 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:53,291 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815853
+2025-11-22T14:50:53,297 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42162 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:53,297 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815853
+2025-11-22T14:50:53,302 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42164 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:53,302 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815853
+2025-11-22T14:50:53,304 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42166 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:53,304 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815853
+2025-11-22T14:50:53,307 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42168 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:53,307 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815853
+2025-11-22T14:50:53,309 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42170 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:53,309 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815853
+2025-11-22T14:50:53,311 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42172 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:53,311 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815853
+2025-11-22T14:50:53,313 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42174 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:53,313 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815853
+2025-11-22T14:50:53,315 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42176 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:53,315 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815853
+2025-11-22T14:50:53,317 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42178 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:53,317 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815853
+2025-11-22T14:50:53,318 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42180 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:53,318 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815853
+2025-11-22T14:50:53,320 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42182 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:53,320 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815853
+2025-11-22T14:50:53,322 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42184 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:53,322 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815853
+2025-11-22T14:50:54,328 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42186 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:54,328 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815854
+2025-11-22T14:50:54,333 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42188 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:54,333 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815854
+2025-11-22T14:50:54,336 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42190 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:54,336 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815854
+2025-11-22T14:50:54,340 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42192 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:54,340 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815854
+2025-11-22T14:50:54,342 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42194 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:54,342 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815854
+2025-11-22T14:50:54,344 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42196 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:54,344 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815854
+2025-11-22T14:50:54,346 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42198 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:54,346 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815854
+2025-11-22T14:50:54,352 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42200 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:54,353 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815854
+2025-11-22T14:50:54,354 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42202 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:54,354 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815854
+2025-11-22T14:50:54,356 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42204 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:54,356 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815854
+2025-11-22T14:50:54,358 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42206 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:54,358 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815854
+2025-11-22T14:50:54,360 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42208 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:54,360 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815854
+2025-11-22T14:50:54,362 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42210 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:54,362 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815854
+2025-11-22T14:50:55,368 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42212 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:55,368 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815855
+2025-11-22T14:50:55,374 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42214 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:55,374 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815855
+2025-11-22T14:50:55,377 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42216 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:55,377 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815855
+2025-11-22T14:50:55,380 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42218 "POST /predictions/resnet-18 HTTP/1.1" 400 1
+2025-11-22T14:50:55,380 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815855
+2025-11-22T14:50:55,382 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42220 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:55,382 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815855
+2025-11-22T14:50:55,384 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42222 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:55,384 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815855
+2025-11-22T14:50:55,386 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42224 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:55,386 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815855
+2025-11-22T14:50:55,392 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42226 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:55,392 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815855
+2025-11-22T14:50:55,394 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42228 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:55,394 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815855
+2025-11-22T14:50:55,396 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42230 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:55,396 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815855
+2025-11-22T14:50:55,398 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42232 "POST /predictions/resnet-18 HTTP/1.1" 400 1
+2025-11-22T14:50:55,398 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815855
+2025-11-22T14:50:55,399 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42234 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:55,399 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815855
+2025-11-22T14:50:55,410 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42236 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:55,410 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815855
+2025-11-22T14:50:56,424 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42238 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:56,424 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815856
+2025-11-22T14:50:56,436 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42240 "POST /predictions/resnet-18 HTTP/1.1" 400 1
+2025-11-22T14:50:56,436 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815856
+2025-11-22T14:50:56,438 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42242 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:56,438 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815856
+2025-11-22T14:50:56,440 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42244 "POST /predictions/resnet-18 HTTP/1.1" 400 1
+2025-11-22T14:50:56,440 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815856
+2025-11-22T14:50:56,441 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42246 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:56,441 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815856
+2025-11-22T14:50:56,443 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42248 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:56,443 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815856
+2025-11-22T14:50:56,445 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42250 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:56,445 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815856
+2025-11-22T14:50:56,447 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42252 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:56,447 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815856
+2025-11-22T14:50:56,449 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42254 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:56,449 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815856
+2025-11-22T14:50:56,450 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42256 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:56,450 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815856
+2025-11-22T14:50:56,452 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42258 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:56,452 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815856
+2025-11-22T14:50:56,454 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42260 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:56,454 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815856
+2025-11-22T14:50:56,456 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42262 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:56,456 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815856
+2025-11-22T14:50:57,461 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42264 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:57,462 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815857
+2025-11-22T14:50:57,466 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42266 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:57,466 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815857
+2025-11-22T14:50:57,470 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42268 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:57,470 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815857
+2025-11-22T14:50:57,473 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42270 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:57,474 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815857
+2025-11-22T14:50:57,476 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42272 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:57,476 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815857
+2025-11-22T14:50:57,477 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42274 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:57,477 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815857
+2025-11-22T14:50:57,479 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42276 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:57,479 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815857
+2025-11-22T14:50:57,481 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42278 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:57,481 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815857
+2025-11-22T14:50:57,483 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42280 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:57,483 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815857
+2025-11-22T14:50:57,484 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42282 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:57,484 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815857
+2025-11-22T14:50:57,487 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42284 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:57,487 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815857
+2025-11-22T14:50:57,489 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42286 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:57,489 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815857
+2025-11-22T14:50:57,491 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42288 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:57,491 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815857
+2025-11-22T14:50:58,497 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42290 "POST /predictions/resnet-18 HTTP/1.1" 400 1
+2025-11-22T14:50:58,497 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815858
+2025-11-22T14:50:58,504 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42292 "POST /predictions/resnet-18 HTTP/1.1" 400 1
+2025-11-22T14:50:58,504 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815858
+2025-11-22T14:50:58,507 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42294 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:58,507 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815858
+2025-11-22T14:50:58,509 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42296 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:58,509 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815858
+2025-11-22T14:50:58,516 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42298 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:58,517 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815858
+2025-11-22T14:50:58,518 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42300 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:58,518 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815858
+2025-11-22T14:50:58,520 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42302 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:58,520 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815858
+2025-11-22T14:50:58,522 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42304 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:58,522 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815858
+2025-11-22T14:50:58,525 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42306 "POST /predictions/resnet-18 HTTP/1.1" 400 1
+2025-11-22T14:50:58,525 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815858
+2025-11-22T14:50:58,526 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42308 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:58,526 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815858
+2025-11-22T14:50:58,528 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42310 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:58,528 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815858
+2025-11-22T14:50:58,535 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42312 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:58,535 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815858
+2025-11-22T14:50:58,537 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42314 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:58,537 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815858
+2025-11-22T14:50:59,543 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42316 "POST /predictions/resnet-18 HTTP/1.1" 400 1
+2025-11-22T14:50:59,543 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815859
+2025-11-22T14:50:59,548 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42318 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:59,548 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815859
+2025-11-22T14:50:59,552 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42320 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:59,552 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815859
+2025-11-22T14:50:59,555 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42322 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:59,555 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815859
+2025-11-22T14:50:59,567 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42324 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:59,567 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815859
+2025-11-22T14:50:59,569 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42326 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:59,569 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815859
+2025-11-22T14:50:59,571 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42328 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:59,571 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815859
+2025-11-22T14:50:59,573 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42330 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:59,573 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815859
+2025-11-22T14:50:59,575 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42332 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:59,575 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815859
+2025-11-22T14:50:59,577 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42334 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:59,577 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815859
+2025-11-22T14:50:59,578 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42336 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:59,578 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815859
+2025-11-22T14:50:59,580 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42338 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:59,580 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815859
+2025-11-22T14:50:59,582 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42340 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:50:59,582 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815859
+2025-11-22T14:51:00,588 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42342 "POST /predictions/resnet-18 HTTP/1.1" 400 1
+2025-11-22T14:51:00,588 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815860
+2025-11-22T14:51:00,595 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42344 "POST /predictions/resnet-18 HTTP/1.1" 400 1
+2025-11-22T14:51:00,595 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815860
+2025-11-22T14:51:00,597 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42346 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:00,597 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815860
+2025-11-22T14:51:00,600 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42348 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:00,600 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815860
+2025-11-22T14:51:00,603 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42350 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:00,603 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815860
+2025-11-22T14:51:00,608 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42352 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:00,608 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815860
+2025-11-22T14:51:00,610 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42354 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:00,610 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815860
+2025-11-22T14:51:00,612 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42356 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:00,612 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815860
+2025-11-22T14:51:00,613 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42358 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:00,613 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815860
+2025-11-22T14:51:00,615 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42360 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:00,615 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815860
+2025-11-22T14:51:00,617 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42362 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:00,617 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815860
+2025-11-22T14:51:00,619 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42364 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:00,619 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815860
+2025-11-22T14:51:00,620 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42366 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:00,620 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815860
+2025-11-22T14:51:01,626 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42368 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:01,626 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815861
+2025-11-22T14:51:01,632 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42370 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:01,632 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815861
+2025-11-22T14:51:01,636 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42372 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:01,636 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815861
+2025-11-22T14:51:01,638 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42374 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:01,638 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815861
+2025-11-22T14:51:01,641 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42376 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:01,641 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815861
+2025-11-22T14:51:01,643 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42378 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:01,643 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815861
+2025-11-22T14:51:01,645 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42380 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:01,645 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815861
+2025-11-22T14:51:01,647 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42382 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:01,647 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815861
+2025-11-22T14:51:01,649 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42384 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:01,649 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815861
+2025-11-22T14:51:01,651 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42386 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:01,651 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815861
+2025-11-22T14:51:01,652 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42388 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:01,652 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815861
+2025-11-22T14:51:01,654 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42390 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:01,654 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815861
+2025-11-22T14:51:01,656 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42392 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:01,656 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815861
+2025-11-22T14:51:02,661 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42394 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:02,662 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815862
+2025-11-22T14:51:02,667 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42396 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:02,667 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815862
+2025-11-22T14:51:02,671 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42398 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:02,671 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815862
+2025-11-22T14:51:02,674 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42400 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:02,674 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815862
+2025-11-22T14:51:02,676 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42402 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:02,676 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815862
+2025-11-22T14:51:02,678 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42404 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:02,678 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815862
+2025-11-22T14:51:02,680 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42406 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:02,680 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815862
+2025-11-22T14:51:02,681 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42408 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:02,681 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815862
+2025-11-22T14:51:02,683 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42410 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:02,683 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815862
+2025-11-22T14:51:02,685 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42412 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:02,685 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815862
+2025-11-22T14:51:02,687 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42414 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:02,687 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815862
+2025-11-22T14:51:02,688 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42416 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:02,688 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815862
+2025-11-22T14:51:02,690 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42418 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:02,690 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815862
+2025-11-22T14:51:03,696 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42420 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:03,696 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815863
+2025-11-22T14:51:03,702 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42422 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:03,702 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815863
+2025-11-22T14:51:03,707 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42424 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:03,707 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815863
+2025-11-22T14:51:03,709 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42426 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:03,709 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815863
+2025-11-22T14:51:03,712 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42428 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:03,712 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815863
+2025-11-22T14:51:03,714 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42430 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:03,714 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815863
+2025-11-22T14:51:03,717 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42432 "POST /predictions/resnet-18 HTTP/1.1" 400 1
+2025-11-22T14:51:03,717 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815863
+2025-11-22T14:51:03,718 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42434 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:03,718 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815863
+2025-11-22T14:51:03,720 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42436 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:03,720 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815863
+2025-11-22T14:51:03,722 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42438 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:03,722 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815863
+2025-11-22T14:51:03,723 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42440 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:03,724 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815863
+2025-11-22T14:51:03,725 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42442 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:03,725 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815863
+2025-11-22T14:51:03,727 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42444 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:03,727 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815863
+2025-11-22T14:51:04,733 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42446 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:04,733 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815864
+2025-11-22T14:51:04,738 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42448 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:04,738 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815864
+2025-11-22T14:51:04,741 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42450 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:04,741 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815864
+2025-11-22T14:51:04,744 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42452 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:04,744 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815864
+2025-11-22T14:51:04,747 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42454 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:04,747 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815864
+2025-11-22T14:51:04,749 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42456 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:04,749 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815864
+2025-11-22T14:51:04,751 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42458 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:04,751 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815864
+2025-11-22T14:51:04,752 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42460 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:04,752 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815864
+2025-11-22T14:51:04,754 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42462 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:04,754 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815864
+2025-11-22T14:51:04,756 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42464 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:04,756 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815864
+2025-11-22T14:51:04,757 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42466 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:04,758 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815864
+2025-11-22T14:51:04,759 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42468 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:04,759 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815864
+2025-11-22T14:51:04,761 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42470 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:04,761 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815864
+2025-11-22T14:51:05,767 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42472 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:05,767 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815865
+2025-11-22T14:51:05,773 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42474 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:05,773 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815865
+2025-11-22T14:51:05,777 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42476 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:05,777 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815865
+2025-11-22T14:51:05,780 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42478 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:05,780 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815865
+2025-11-22T14:51:05,782 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42480 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:05,782 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815865
+2025-11-22T14:51:05,785 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42482 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:05,785 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815865
+2025-11-22T14:51:05,787 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42484 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:05,787 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815865
+2025-11-22T14:51:05,789 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42486 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:05,789 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815865
+2025-11-22T14:51:05,790 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42488 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:05,790 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815865
+2025-11-22T14:51:05,792 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42490 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:05,792 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815865
+2025-11-22T14:51:05,794 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42492 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:05,794 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815865
+2025-11-22T14:51:05,796 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42494 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:05,796 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815865
+2025-11-22T14:51:05,797 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42496 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:05,797 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815865
+2025-11-22T14:51:06,803 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42498 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:06,803 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815866
+2025-11-22T14:51:06,809 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42500 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:06,809 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815866
+2025-11-22T14:51:06,812 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42502 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:06,812 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815866
+2025-11-22T14:51:06,815 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42504 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:06,815 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815866
+2025-11-22T14:51:06,818 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42506 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:06,818 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815866
+2025-11-22T14:51:06,819 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42508 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:06,819 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815866
+2025-11-22T14:51:06,821 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42510 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:06,821 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815866
+2025-11-22T14:51:06,823 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42512 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:06,823 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815866
+2025-11-22T14:51:06,825 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42514 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:06,825 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815866
+2025-11-22T14:51:06,826 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42516 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:06,826 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815866
+2025-11-22T14:51:06,828 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42518 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:06,828 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815866
+2025-11-22T14:51:06,830 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42520 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:06,830 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815866
+2025-11-22T14:51:06,832 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42522 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:06,832 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815866
+2025-11-22T14:51:07,837 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42524 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:07,838 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815867
+2025-11-22T14:51:07,843 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42526 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:07,843 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815867
+2025-11-22T14:51:07,847 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42528 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:07,848 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815867
+2025-11-22T14:51:07,850 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42530 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:07,850 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815867
+2025-11-22T14:51:07,852 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42532 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:07,852 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815867
+2025-11-22T14:51:07,854 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42534 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:07,854 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815867
+2025-11-22T14:51:07,856 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42536 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:07,856 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815867
+2025-11-22T14:51:07,858 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42538 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:07,858 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815867
+2025-11-22T14:51:07,860 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42540 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:07,860 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815867
+2025-11-22T14:51:07,862 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42542 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:07,862 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815867
+2025-11-22T14:51:07,864 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42544 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:07,864 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815867
+2025-11-22T14:51:07,865 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42546 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:07,865 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815867
+2025-11-22T14:51:07,867 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42548 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:07,867 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815867
+2025-11-22T14:51:08,873 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42552 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:08,873 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815868
+2025-11-22T14:51:08,879 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42554 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:08,879 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815868
+2025-11-22T14:51:08,882 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42556 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:08,882 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815868
+2025-11-22T14:51:08,884 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42558 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:08,885 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815868
+2025-11-22T14:51:08,887 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42560 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:08,887 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815868
+2025-11-22T14:51:08,890 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42562 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:08,890 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815868
+2025-11-22T14:51:08,891 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42564 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:08,891 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815868
+2025-11-22T14:51:08,893 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42566 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:08,893 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815868
+2025-11-22T14:51:08,895 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42568 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:08,895 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815868
+2025-11-22T14:51:08,897 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42570 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:08,897 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815868
+2025-11-22T14:51:08,898 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42572 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:08,898 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815868
+2025-11-22T14:51:08,900 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42574 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:08,900 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815868
+2025-11-22T14:51:08,902 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42576 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:08,902 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815868
+2025-11-22T14:51:11,908 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42578 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:11,908 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815871
+2025-11-22T14:51:11,913 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42580 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:11,913 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815871
+2025-11-22T14:51:11,917 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42582 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:11,917 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815871
+2025-11-22T14:51:11,920 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42584 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:11,920 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815871
+2025-11-22T14:51:11,922 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42586 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:11,922 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815871
+2025-11-22T14:51:11,924 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42588 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:11,924 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815871
+2025-11-22T14:51:11,926 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42590 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:11,926 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815871
+2025-11-22T14:51:11,927 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42592 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:11,927 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815871
+2025-11-22T14:51:12,933 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42594 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:12,934 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815872
+2025-11-22T14:51:12,940 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42596 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:12,940 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815872
+2025-11-22T14:51:12,945 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42598 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:12,945 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815872
+2025-11-22T14:51:12,948 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42600 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:12,948 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815872
+2025-11-22T14:51:12,951 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42602 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:12,951 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815872
+2025-11-22T14:51:12,953 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42604 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:12,953 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815872
+2025-11-22T14:51:12,955 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42606 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:12,955 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815872
+2025-11-22T14:51:12,959 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42608 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:12,959 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815872
+2025-11-22T14:51:13,965 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42610 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:13,965 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815873
+2025-11-22T14:51:13,972 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42612 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:13,972 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815873
+2025-11-22T14:51:13,975 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42614 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:13,975 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815873
+2025-11-22T14:51:13,977 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42616 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:13,977 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815873
+2025-11-22T14:51:13,992 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42618 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:13,992 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815873
+2025-11-22T14:51:13,999 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42620 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:13,999 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815873
+2025-11-22T14:51:14,001 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42622 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:14,001 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815874
+2025-11-22T14:51:14,003 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42624 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:14,003 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815874
+2025-11-22T14:51:15,022 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42626 "POST /predictions/resnet-18 HTTP/1.1" 400 1
+2025-11-22T14:51:15,022 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815875
+2025-11-22T14:51:15,024 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42628 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:15,024 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815875
+2025-11-22T14:51:15,026 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42630 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:15,026 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815875
+2025-11-22T14:51:15,028 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42632 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:15,028 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815875
+2025-11-22T14:51:15,029 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42634 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:15,029 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815875
+2025-11-22T14:51:15,031 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42636 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:15,031 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815875
+2025-11-22T14:51:15,033 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42638 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:15,033 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815875
+2025-11-22T14:51:15,044 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42640 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:15,044 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815875
+2025-11-22T14:51:16,050 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42642 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:16,050 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815876
+2025-11-22T14:51:16,055 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42644 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:16,055 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815876
+2025-11-22T14:51:16,059 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42646 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:16,059 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815876
+2025-11-22T14:51:16,063 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42648 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:16,063 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815876
+2025-11-22T14:51:16,064 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42650 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:16,064 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815876
+2025-11-22T14:51:16,067 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42652 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:16,067 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815876
+2025-11-22T14:51:16,069 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42654 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:16,069 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815876
+2025-11-22T14:51:16,071 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42656 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:16,071 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815876
+2025-11-22T14:51:17,076 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42658 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:17,076 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815877
+2025-11-22T14:51:17,082 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42660 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:17,082 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815877
+2025-11-22T14:51:17,085 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42662 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:17,085 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815877
+2025-11-22T14:51:17,088 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42664 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:17,088 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815877
+2025-11-22T14:51:17,090 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42666 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:17,090 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815877
+2025-11-22T14:51:17,093 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42668 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:17,093 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815877
+2025-11-22T14:51:17,094 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42670 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:17,094 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815877
+2025-11-22T14:51:17,096 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42672 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:17,096 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815877
+2025-11-22T14:51:18,102 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42674 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:18,103 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815878
+2025-11-22T14:51:18,108 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42676 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:18,108 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815878
+2025-11-22T14:51:18,114 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42678 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:18,114 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815878
+2025-11-22T14:51:18,118 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42680 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:18,118 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815878
+2025-11-22T14:51:18,120 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42682 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:18,120 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815878
+2025-11-22T14:51:18,122 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42684 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:18,122 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815878
+2025-11-22T14:51:18,124 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42686 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:18,124 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815878
+2025-11-22T14:51:18,126 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42688 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:18,126 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815878
+2025-11-22T14:51:19,132 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42690 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:19,132 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815879
+2025-11-22T14:51:19,141 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42692 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:19,141 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815879
+2025-11-22T14:51:19,144 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42694 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:19,144 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815879
+2025-11-22T14:51:19,146 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42696 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:19,146 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815879
+2025-11-22T14:51:19,150 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42698 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:19,150 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815879
+2025-11-22T14:51:19,151 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42700 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:19,151 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815879
+2025-11-22T14:51:19,153 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42702 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:19,153 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815879
+2025-11-22T14:51:19,155 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42704 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:19,155 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815879
+2025-11-22T14:51:20,162 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42706 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:20,162 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815880
+2025-11-22T14:51:20,167 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42708 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:20,167 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815880
+2025-11-22T14:51:20,182 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42710 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:20,182 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815880
+2025-11-22T14:51:20,184 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42712 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:20,184 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815880
+2025-11-22T14:51:20,186 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42714 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:20,187 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815880
+2025-11-22T14:51:20,188 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42716 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:20,188 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815880
+2025-11-22T14:51:20,190 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42718 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:20,190 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815880
+2025-11-22T14:51:20,192 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42720 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:20,192 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815880
+2025-11-22T14:51:21,205 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42722 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:21,205 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815881
+2025-11-22T14:51:21,208 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42724 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:21,209 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815881
+2025-11-22T14:51:21,211 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42726 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:21,211 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815881
+2025-11-22T14:51:21,220 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42728 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:21,220 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815881
+2025-11-22T14:51:21,222 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42730 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:21,222 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815881
+2025-11-22T14:51:21,223 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42732 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:21,223 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815881
+2025-11-22T14:51:21,225 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42734 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:21,225 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815881
+2025-11-22T14:51:21,227 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42736 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:21,227 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815881
+2025-11-22T14:51:22,233 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42738 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:22,233 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815882
+2025-11-22T14:51:22,243 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42740 "POST /predictions/resnet-18 HTTP/1.1" 400 1
+2025-11-22T14:51:22,243 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815882
+2025-11-22T14:51:22,246 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42742 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:22,246 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815882
+2025-11-22T14:51:22,248 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42744 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:22,248 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815882
+2025-11-22T14:51:22,250 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42746 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:22,250 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815882
+2025-11-22T14:51:22,251 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42748 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:22,251 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815882
+2025-11-22T14:51:22,253 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42750 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:22,253 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815882
+2025-11-22T14:51:22,255 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42752 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:22,255 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815882
+2025-11-22T14:51:23,272 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42754 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:23,272 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815883
+2025-11-22T14:51:23,276 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42756 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:23,276 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815883
+2025-11-22T14:51:23,278 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42758 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:23,278 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815883
+2025-11-22T14:51:23,280 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42760 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:23,280 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815883
+2025-11-22T14:51:23,281 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42762 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:23,281 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815883
+2025-11-22T14:51:23,283 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42764 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:23,283 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815883
+2025-11-22T14:51:23,285 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42766 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:23,285 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815883
+2025-11-22T14:51:23,287 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42768 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:23,287 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815883
+2025-11-22T14:51:24,292 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42770 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:24,292 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815884
+2025-11-22T14:51:24,298 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42772 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:24,298 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815884
+2025-11-22T14:51:24,301 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42774 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:24,301 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815884
+2025-11-22T14:51:24,304 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42776 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:24,304 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815884
+2025-11-22T14:51:24,307 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42778 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:24,307 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815884
+2025-11-22T14:51:24,309 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42780 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:24,309 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815884
+2025-11-22T14:51:24,311 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42782 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:24,311 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815884
+2025-11-22T14:51:24,312 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42784 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:24,313 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815884
+2025-11-22T14:51:25,318 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42786 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:25,318 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815885
+2025-11-22T14:51:25,324 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42788 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:25,324 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815885
+2025-11-22T14:51:25,329 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42790 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:25,329 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815885
+2025-11-22T14:51:25,331 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42792 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:25,331 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815885
+2025-11-22T14:51:25,334 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42794 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:25,334 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815885
+2025-11-22T14:51:25,336 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42796 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:25,336 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815885
+2025-11-22T14:51:25,339 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42798 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:25,339 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815885
+2025-11-22T14:51:25,366 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42800 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:25,366 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815885
+2025-11-22T14:51:26,373 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42802 "POST /predictions/resnet-18 HTTP/1.1" 400 1
+2025-11-22T14:51:26,373 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815886
+2025-11-22T14:51:26,378 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42804 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:26,378 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815886
+2025-11-22T14:51:26,381 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42806 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:26,381 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815886
+2025-11-22T14:51:26,391 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42808 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:26,391 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815886
+2025-11-22T14:51:26,393 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42810 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:26,393 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815886
+2025-11-22T14:51:26,395 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42812 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:26,395 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815886
+2025-11-22T14:51:26,397 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42814 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:26,397 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815886
+2025-11-22T14:51:26,398 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42816 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:26,398 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815886
+2025-11-22T14:51:27,404 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42818 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:27,404 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815887
+2025-11-22T14:51:27,409 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42820 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:27,409 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815887
+2025-11-22T14:51:27,412 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42822 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:27,412 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815887
+2025-11-22T14:51:27,416 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42824 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:27,416 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815887
+2025-11-22T14:51:27,419 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42826 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:27,419 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815887
+2025-11-22T14:51:27,421 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42828 "POST /predictions/resnet-18 HTTP/1.1" 400 1
+2025-11-22T14:51:27,421 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815887
+2025-11-22T14:51:27,422 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42830 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:27,422 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815887
+2025-11-22T14:51:27,424 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42832 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:27,424 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815887
+2025-11-22T14:51:28,430 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42834 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:28,430 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815888
+2025-11-22T14:51:28,436 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42836 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:28,437 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815888
+2025-11-22T14:51:28,440 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42838 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:28,440 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815888
+2025-11-22T14:51:28,443 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42840 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:28,443 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815888
+2025-11-22T14:51:28,446 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42842 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:28,446 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815888
+2025-11-22T14:51:28,448 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42844 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:28,448 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815888
+2025-11-22T14:51:28,450 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42846 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:28,450 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815888
+2025-11-22T14:51:28,452 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42848 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:28,452 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815888
+2025-11-22T14:51:29,458 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42850 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:29,458 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815889
+2025-11-22T14:51:29,464 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42852 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:29,464 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815889
+2025-11-22T14:51:29,468 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42854 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:29,468 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815889
+2025-11-22T14:51:29,471 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42856 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:29,471 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815889
+2025-11-22T14:51:29,473 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42858 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:29,473 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815889
+2025-11-22T14:51:29,476 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42860 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:29,476 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815889
+2025-11-22T14:51:29,478 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42862 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:29,478 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815889
+2025-11-22T14:51:29,480 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42864 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:29,480 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815889
+2025-11-22T14:51:30,485 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42866 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:30,485 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815890
+2025-11-22T14:51:30,490 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42868 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:30,490 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815890
+2025-11-22T14:51:30,494 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42870 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:30,494 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815890
+2025-11-22T14:51:30,497 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42872 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:30,497 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815890
+2025-11-22T14:51:30,499 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42874 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:30,499 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815890
+2025-11-22T14:51:30,501 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42876 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:30,501 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815890
+2025-11-22T14:51:30,503 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /192.168.250.187:42878 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:30,503 [INFO ] epollEventLoopGroup-3-2 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815890
+2025-11-22T14:51:30,504 [INFO ] epollEventLoopGroup-3-1 ACCESS_LOG - /192.168.250.187:42880 "POST /predictions/resnet-18 HTTP/1.1" 400 0
+2025-11-22T14:51:30,504 [INFO ] epollEventLoopGroup-3-1 TS_METRICS - Requests4XX.Count:1.0|#Level:Host|#hostname:gpu-0-3.local,timestamp:1763815890
+🧹 Stopping TorchServe…
+TorchServe has stopped.
+✅ Job complete. Logs archived to /home/chadji10/ADE/runs/run_20251122_144152/logs.tar.gz

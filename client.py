@@ -3,7 +3,7 @@
 client.py — Randomised load generator for TorchServe on GPU microservices.
 
 Sends bursty traffic to a TorchServe model:
-  - image mode: POST /predictions/resnet-18 with JPEG bytes
+  - image mode: POST /predictions/<model_name> with JPEG bytes
 """
 
 import argparse
@@ -53,7 +53,7 @@ def send_request(
                 timeout=30,
             )
         else:
-            # placeholder for future text model, if you add one
+            # Placeholder for future text model, if you add one
             payload = json.dumps({"text": sample})
             r = requests.post(
                 f"{url}/predictions/{model_name}",
@@ -76,7 +76,6 @@ def load_samples(mode: str, num_samples: int = 100) -> List[Any]:
         dataset = CIFAR10(root="./data", train=False, download=True)
         return [dataset[i][0] for i in range(min(num_samples, len(dataset)))]
     elif mode == "text":
-        # You can plug in a TorchServe text model later
         logging.info("Using hard-coded sentences for text mode…")
         sentences = [
             "I absolutely loved this movie!",
