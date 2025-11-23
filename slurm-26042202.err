@@ -1,11 +1,0 @@
-Traceback (most recent call last):
-  File "<stdin>", line 2, in <module>
-  File "/share/apps/eb/software/Python/3.11.5-GCCcore-13.2.0/lib/python3.11/importlib/__init__.py", line 126, in import_module
-    return _bootstrap._gcd_import(name[level:], package, level)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "<frozen importlib._bootstrap>", line 1204, in _gcd_import
-  File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
-  File "<frozen importlib._bootstrap>", line 1140, in _find_and_load_unlocked
-ModuleNotFoundError: No module named 'torch'
-Downloading: "https://download.pytorch.org/models/resnet18-f37072fd.pth" to /home/chadji10/ADE/.torch_cache/hub/checkpoints/resnet18-f37072fd.pth
-  0%|          | 0.00/44.7M [00:00<?, ?B/s]  1%|          | 256k/44.7M [00:00<00:19, 2.34MB/s]  4%|▍         | 1.75M/44.7M [00:00<00:04, 9.67MB/s] 20%|█▉        | 8.75M/44.7M [00:00<00:00, 37.7MB/s] 37%|███▋      | 16.6M/44.7M [00:00<00:00, 55.0MB/s] 55%|█████▌    | 24.6M/44.7M [00:00<00:00, 65.0MB/s] 73%|███████▎  | 32.6M/44.7M [00:00<00:00, 71.3MB/s] 91%|█████████ | 40.6M/44.7M [00:00<00:00, 75.3MB/s]100%|██████████| 44.7M/44.7M [00:00<00:00, 60.9MB/s]
