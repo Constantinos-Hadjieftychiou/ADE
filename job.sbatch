@@ -26,16 +26,23 @@ export HF_HOME="$PROJECT_DIR/.hf_cache"
 export TRANSFORMERS_CACHE="$PROJECT_DIR/.hf_cache"
 export TORCH_HOME="$PROJECT_DIR/.torch_cache"
 
-# Prefer binary wheels (avoid heavy source builds)
-export PIP_ONLY_BINARY=":all:"
-export PIP_NO_BUILD_ISOLATION=1
+echo "PROJECT_DIR=$PROJECT_DIR"
+echo "RUN_DIR=$RUN_DIR"
+
+# Make sure we don't inherit a weird PYTHONPATH from a login shell
+unset PYTHONPATH || true
 
 # ----------------------------- Modules --------------------------------------
 module purge
 module use /share/apps/eb/modules/all || true
-module load Python/3.11.5-GCCcore-13.2.0 || module load Python || true
+
+# Use a clean Python module (this matched your old working setup)
+module load Python/3.11.5-GCCcore-13.2.0 || module load Python || {
+  echo "❌ Failed to load Python module"
+  exit 1
+}
 module load CUDA || true
-module load Java || true   # adjust module name if your cluster uses a different Java module
+module load Java || true
 
 echo "🔧 GPU inventory:"
 nvidia-smi || true
@@ -47,75 +54,34 @@ if [[ ! -d "$ENV_DIR" ]]; then
 fi
 source "$ENV_DIR/bin/activate"
 
-python -c 'import sys; print("Python:", sys.version)'
-pip install --quiet --upgrade pip setuptools wheel || true
+# Prefer binary wheels, avoid heavy source builds
+export PIP_ONLY_BINARY=":all:"
+export PIP_NO_BUILD_ISOLATION=1
 
 # -------------------- Core Python deps --------------------------------------
-# torch + torchvision with CUDA (cu121 wheels)
-python - <<'PY' || _miss=1
-import importlib
-importlib.import_module("torch")
-importlib.import_module("torchvision")
-PY
-if [[ "${_miss:-0}" == "1" ]]; then
-  echo "⬇️ Installing torch/torchvision (cu121 wheels)…"
-  pip install --index-url https://download.pytorch.org/whl/cu121 \
-    torch==2.5.1 torchvision==0.20.1 --no-cache-dir || echo "⚠️ torch/vision install failed"
-fi
-unset _miss
+pip install --quiet --upgrade pip setuptools wheel
 
-# TorchServe + model archiver + utils + captum (required by image_classifier handler)
-pip install --quiet torchserve torch-model-archiver transformers pillow requests captum || true
+# Install torch + torchvision with CUDA wheels (cu121)
+# This is what you had before and it worked.
+pip install --index-url https://download.pytorch.org/whl/cu121 \
+  torch==2.5.1 torchvision==0.20.1 --no-cache-dir || {
+  echo "❌ Failed to install torch/torchvision"
+  exit 1
+}
 
-python - <<'PY'
-import torch
-print(f"Torch {torch.__version__} | CUDA: {torch.cuda.is_available()} | GPUs: {torch.cuda.device_count()}")
-if torch.cuda.is_available():
-    print("GPU:", torch.cuda.get_device_name(0))
-PY
+# TorchServe + model archiver + utilities + Captum
+pip install --quiet \
+  torchserve torch-model-archiver pillow requests transformers
 
-# ------------------ Build ResNet-18 MAR if missing --------------------------
-if [[ ! -f "$MODEL_STORE/resnet-18.mar" ]]; then
-  echo "📦 Building resnet-18.mar for TorchServe…"
-  cd "$PROJECT_DIR"
+# Captum is required by TorchServe's image_classifier handler
+pip install --quiet --no-deps captum
 
-  # 1) Create TorchScript file
-  python - <<'PY'
-from torchvision import models
-import torch
-
-print("Loading ResNet-18 with ImageNet weights…")
-model = models.resnet18(weights=models.ResNet18_Weights.IMAGENET1K_V1)
-model.eval()
-scripted = torch.jit.script(model)
-scripted.save("resnet18_scripted.pt")
-print("Saved TorchScript model to resnet18_scripted.pt")
-PY
-
-  # 2) Build simple index_to_name.json from ImageNet classes (for nicer responses)
-  python - <<'PY'
-import json, urllib.request
-url = "https://raw.githubusercontent.com/pytorch/hub/master/imagenet_classes.txt"
-print("Downloading ImageNet class names…")
-txt = urllib.request.urlopen(url).read().decode("utf-8").strip().splitlines()
-mapping = {str(i): name for i, name in enumerate(txt)}
-with open("index_to_name.json", "w") as f:
-    json.dump(mapping, f)
-print("Wrote index_to_name.json")
-PY
-
-  # 3) Archive into .mar using built-in image_classifier handler
-  torch-model-archiver \
-    --model-name resnet-18 \
-    --version 1.0 \
-    --serialized-file resnet18_scripted.pt \
-    --handler image_classifier \
-    --extra-files index_to_name.json \
-    --export-path "$MODEL_STORE" \
-    --force
-
-  echo "✅ Created $MODEL_STORE/resnet-18.mar"
-fi
+# ------------------ Build ResNet-18 MAR (external script) -------------------
+echo "📦 Ensuring resnet-18.mar exists…"
+python "$PROJECT_DIR/build_resnet_mar.py" || {
+  echo "❌ Failed to build resnet-18.mar"
+  exit 1
+}
 
 # ------------------------------ Start TorchServe -----------------------------
 cd "$PROJECT_DIR"
