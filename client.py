@@ -1,20 +1,27 @@
 #!/usr/bin/env python3
 """
-client.py — Randomised load generator for TorchServe on GPU microservices.
+client.py — TorchServe load generator inspired by official benchmarks.
 
-Sends bursty traffic to a TorchServe model:
-  - image mode: POST /predictions/<model_name> with JPEG bytes
+Features:
+  - Randomised burst/idle traffic (microservice-like).
+  - Configurable concurrency (threads) & requests/sec.
+  - Optional steady / poisson patterns like synthetic benchmarks.
+  - Per-request CSV metrics for offline analysis.
 """
 
 import argparse
+import csv
 import io
 import json
 import logging
 import os
+import queue
 import random
 import statistics
+import threading
 import time
-from typing import List, Any, Dict, Optional
+from dataclasses import dataclass
+from typing import List, Any, Dict, Optional, Literal
 
 import requests
 from PIL import Image
@@ -24,6 +31,17 @@ logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s [%(levelname)s] %(message)s",
 )
+
+TrafficPattern = Literal["burst", "steady", "poisson"]
+
+
+@dataclass
+class RequestResult:
+    ts_start: float
+    ts_end: float
+    latency_ms: float
+    status_code: int
+    error: Optional[str]
 
 
 def img_to_bytes(img: Image.Image) -> bytes:
@@ -38,36 +56,49 @@ def send_request(
     sample: Any,
     mode: str,
     headers: Dict[str, str],
-) -> Optional[float]:
+    timeout: float = 30.0,
+) -> RequestResult:
     """
-    Send one request to TorchServe and return latency in ms (or None on error).
+    Send one request to TorchServe and return a RequestResult.
     """
+    ts_start = time.time()
     try:
-        start = time.perf_counter()
         if mode == "image":
             img_bytes = img_to_bytes(sample)
             r = requests.post(
                 f"{url}/predictions/{model_name}",
                 data=img_bytes,
                 headers=headers,
-                timeout=30,
+                timeout=timeout,
             )
         else:
-            # Placeholder for future text model, if you add one
             payload = json.dumps({"text": sample})
             r = requests.post(
                 f"{url}/predictions/{model_name}",
                 data=payload,
                 headers={**headers, "Content-Type": "application/json"},
-                timeout=30,
+                timeout=timeout,
             )
-        if r.status_code == 200:
-            return (time.perf_counter() - start) * 1000.0
-        else:
-            logging.warning(f"Bad response: {r.status_code} | {r.text[:120]}")
+        ts_end = time.time()
+        latency_ms = (ts_end - ts_start) * 1000.0
+        return RequestResult(
+            ts_start=ts_start,
+            ts_end=ts_end,
+            latency_ms=latency_ms,
+            status_code=r.status_code,
+            error=None if r.status_code == 200 else r.text[:200],
+        )
     except Exception as e:
+        ts_end = time.time()
+        latency_ms = (ts_end - ts_start) * 1000.0
         logging.warning(f"Request failed: {e}")
-    return None
+        return RequestResult(
+            ts_start=ts_start,
+            ts_end=ts_end,
+            latency_ms=latency_ms,
+            status_code=0,
+            error=str(e),
+        )
 
 
 def load_samples(mode: str, num_samples: int = 100) -> List[Any]:
@@ -107,7 +138,113 @@ def load_samples(mode: str, num_samples: int = 100) -> List[Any]:
         raise ValueError(f"Unknown mode: {mode}")
 
 
-def run_random_load(
+def worker_loop(
+    name: str,
+    url: str,
+    model_name: str,
+    mode: str,
+    headers: Dict[str, str],
+    sample_pool: List[Any],
+    task_queue: "queue.Queue[int]",
+    result_list: List[RequestResult],
+):
+    """
+    Worker thread: consumes "tokens" from task_queue and performs that many requests.
+    Each token represents 1 request to send now.
+    """
+    while True:
+        try:
+            token = task_queue.get(timeout=1.0)
+        except queue.Empty:
+            # No more tasks and coordinator is probably done
+            if getattr(task_queue, "finished", False):
+                break
+            else:
+                continue
+
+        if token <= 0:
+            task_queue.task_done()
+            continue
+
+        sample = random.choice(sample_pool)
+        result = send_request(url, model_name, sample, mode, headers)
+        result_list.append(result)
+        task_queue.task_done()
+
+
+def schedule_burst_pattern(
+    duration: int,
+    burst: int,
+    idle: int,
+    base_rps: int,
+    task_queue: "queue.Queue[int]",
+):
+    """
+    Your original bursty pattern, but instead of sending directly, we enqueue
+    "tokens" = requests that workers will execute concurrently.
+    """
+    start = time.time()
+    while time.time() - start < duration:
+        burst_dur = max(5, int(random.gauss(burst, max(1.0, burst * 0.2))))
+        idle_dur = max(2, int(random.gauss(idle, max(1.0, idle * 0.3))))
+        req_per_sec = max(1, int(random.gauss(base_rps, max(1.0, base_rps * 0.25))))
+        logging.info(f"💥 Burst for {burst_dur}s at {req_per_sec} req/s")
+        burst_start = time.time()
+
+        while time.time() - burst_start < burst_dur and time.time() - start < duration:
+            # Enqueue req_per_sec "tokens" which workers will consume
+            for _ in range(req_per_sec):
+                task_queue.put(1)
+            time.sleep(1.0)
+
+        if time.time() - start >= duration:
+            break
+        logging.info(f"😴 Idle for {idle_dur}s")
+        time.sleep(idle_dur)
+
+
+def schedule_steady_pattern(
+    duration: int,
+    rps: int,
+    task_queue: "queue.Queue[int]",
+):
+    """
+    Steady "open-loop" RPS: every 1/rps seconds enqueue 1 request.
+    """
+    logging.info(f"📈 Steady load: {rps} req/s for {duration}s")
+    start = time.time()
+    inter_arrival = 1.0 / max(1, rps)
+    next_time = start
+    while time.time() - start < duration:
+        now = time.time()
+        if now >= next_time:
+            task_queue.put(1)
+            next_time += inter_arrival
+        else:
+            time.sleep(min(0.001, next_time - now))
+
+
+def schedule_poisson_pattern(
+    duration: int,
+    rps: int,
+    task_queue: "queue.Queue[int]",
+):
+    """
+    Poisson arrivals: inter-arrival ~ Exp(lambda = rps).
+    """
+    logging.info(f"🎲 Poisson load: avg {rps} req/s for {duration}s")
+    start = time.time()
+    lam = float(max(1, rps))
+    while time.time() - start < duration:
+        # exponential inter-arrival
+        wait = random.expovariate(lam)
+        time.sleep(wait)
+        if time.time() - start >= duration:
+            break
+        task_queue.put(1)
+
+
+def run_load(
     url: str,
     mode: str,
     model_name: str,
@@ -116,55 +253,182 @@ def run_random_load(
     idle: int,
     rps: int,
     headers: Dict[str, str],
+    concurrency: int,
+    pattern: TrafficPattern,
+    warmup_requests: int,
+    csv_path: Optional[str],
 ) -> None:
     samples = load_samples(mode)
-    start = time.time()
-    latencies: List[float] = []
-    num_requests = 0
 
-    while time.time() - start < duration:
-        burst_dur = max(5, int(random.gauss(burst, max(1.0, burst * 0.2))))
-        idle_dur = max(2, int(random.gauss(idle, max(1.0, idle * 0.3))))
-        req_per_sec = max(1, int(random.gauss(rps, max(1.0, rps * 0.25))))
-        logging.info(f"💥 Burst for {burst_dur}s at {req_per_sec} req/s")
-        burst_start = time.time()
+    # Warmup (not recorded)
+    if warmup_requests > 0:
+        logging.info(f"🔥 Warmup: sending {warmup_requests} requests (not recorded)")
+        for _ in range(warmup_requests):
+            sample = random.choice(samples)
+            _ = send_request(url, model_name, sample, mode, headers)
 
-        while time.time() - burst_start < burst_dur and time.time() - start < duration:
-            batch = random.choices(samples, k=req_per_sec)
-            for sample in batch:
-                latency = send_request(url, model_name, sample, mode, headers)
-                if latency is not None:
-                    latencies.append(latency)
-                num_requests += 1
-            time.sleep(1)
+    task_queue: "queue.Queue[int]" = queue.Queue()
+    results: List[RequestResult] = []
 
-        if time.time() - start >= duration:
-            break
-        logging.info(f"😴 Idle for {idle_dur}s")
-        time.sleep(idle_dur)
+    # Start worker threads
+    threads: List[threading.Thread] = []
+    for i in range(concurrency):
+        t = threading.Thread(
+            target=worker_loop,
+            args=(f"worker-{i}", url, model_name, mode, headers, samples, task_queue, results),
+            daemon=True,
+        )
+        t.start()
+        threads.append(t)
+
+    # Schedule tasks according to pattern
+    if pattern == "burst":
+        schedule_burst_pattern(duration, burst, idle, rps, task_queue)
+    elif pattern == "steady":
+        schedule_steady_pattern(duration, rps, task_queue)
+    elif pattern == "poisson":
+        schedule_poisson_pattern(duration, rps, task_queue)
+    else:
+        raise ValueError(f"Unknown pattern: {pattern}")
+
+    # Signal workers to finish when queue drains
+    setattr(task_queue, "finished", True)  # monkey-patch attribute
+    task_queue.join()
+    # Give workers a moment to exit
+    time.sleep(0.5)
+
+    # Join threads
+    for t in threads:
+        t.join(timeout=0.5)
+
+    if not results:
+        logging.warning("No successful requests recorded (or results list empty).")
+        return
+
+    # Compute stats like JMeter/AB style
+    latencies = [r.latency_ms for r in results if r.status_code == 200]
+    errors = [r for r in results if r.status_code != 200]
+    total = len(results)
+    window = max(r.ts_end for r in results) - min(r.ts_start for r in results)
+    throughput = total / window if window > 0 else float("nan")
 
     if latencies:
         avg_latency = statistics.mean(latencies)
+        p50 = statistics.median(latencies)
         p95 = statistics.quantiles(latencies, n=100)[94]
         p99 = statistics.quantiles(latencies, n=100)[98]
-        logging.info(
-            f"Completed load test: requests={num_requests}, "
-            f"avg_latency={avg_latency:.2f}ms, p95={p95:.2f}ms, p99={p99:.2f}ms"
-        )
     else:
-        logging.warning("No successful requests recorded.")
+        avg_latency = p50 = p95 = p99 = float("nan")
+
+    error_rate = len(errors) * 100.0 / total
+
+    logging.info(
+        "Completed load test: "
+        f"requests={total}, throughput={throughput:.2f} req/s, "
+        f"avg={avg_latency:.2f}ms, p50={p50:.2f}ms, p95={p95:.2f}ms, "
+        f"p99={p99:.2f}ms, error%={error_rate:.2f}"
+    )
+
+    # Optional CSV output in a style similar-ish to ab_report/jmeter
+    if csv_path:
+        logging.info(f"📝 Writing per-request metrics to {csv_path}")
+        os.makedirs(os.path.dirname(csv_path), exist_ok=True)
+        with open(csv_path, "w", newline="") as f:
+            writer = csv.writer(f)
+            writer.writerow(
+                [
+                    "ts_start",
+                    "ts_end",
+                    "latency_ms",
+                    "status_code",
+                    "error",
+                ]
+            )
+            for r in results:
+                writer.writerow(
+                    [
+                        f"{r.ts_start:.6f}",
+                        f"{r.ts_end:.6f}",
+                        f"{r.latency_ms:.3f}",
+                        r.status_code,
+                        r.error or "",
+                    ]
+                )
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Randomised load generator for TorchServe.")
-    parser.add_argument("--url", default=None, help="Base URL of TorchServe (default: http://$HOSTNAME:8080)")
-    parser.add_argument("--mode", choices=["image", "text"], default="image", help="Service type to test")
-    parser.add_argument("--model-name", default="resnet-18", help="TorchServe model name (default: resnet-18)")
-    parser.add_argument("--duration", type=int, default=300, help="Test duration (s)")
-    parser.add_argument("--burst", type=int, default=30, help="Mean burst duration (s)")
-    parser.add_argument("--idle", type=int, default=15, help="Mean idle duration (s)")
-    parser.add_argument("--rps", type=int, default=10, help="Mean requests per second during bursts")
-    parser.add_argument("--token", default=None, help="Auth token (optional)")
+    parser = argparse.ArgumentParser(
+        description="TorchServe load generator (randomised + benchmark-style)."
+    )
+    parser.add_argument(
+        "--url",
+        default=None,
+        help="Base URL of TorchServe (default: http://$HOSTNAME:8080)",
+    )
+    parser.add_argument(
+        "--mode",
+        choices=["image", "text"],
+        default="image",
+        help="Service type to test",
+    )
+    parser.add_argument(
+        "--model-name",
+        default="resnet-18",
+        help="TorchServe model name (default: resnet-18)",
+    )
+    parser.add_argument(
+        "--duration",
+        type=int,
+        default=300,
+        help="Test duration (s)",
+    )
+    parser.add_argument(
+        "--burst",
+        type=int,
+        default=30,
+        help="Mean burst duration (s) for burst pattern",
+    )
+    parser.add_argument(
+        "--idle",
+        type=int,
+        default=15,
+        help="Mean idle duration (s) for burst pattern",
+    )
+    parser.add_argument(
+        "--rps",
+        type=int,
+        default=10,
+        help="Target requests per second (pattern-dependent)",
+    )
+    parser.add_argument(
+        "--concurrency",
+        type=int,
+        default=8,
+        help="Number of worker threads (like JMeter/AB concurrency)",
+    )
+    parser.add_argument(
+        "--pattern",
+        choices=["burst", "steady", "poisson"],
+        default="burst",
+        help="Traffic pattern: burst (microservice-like), steady, or poisson.",
+    )
+    parser.add_argument(
+        "--warmup-requests",
+        type=int,
+        default=50,
+        help="Warmup requests before measurement",
+    )
+    parser.add_argument(
+        "--csv",
+        default=None,
+        help="Path to write per-request CSV metrics (optional)",
+    )
+    parser.add_argument(
+        "--token",
+        default=None,
+        help="Auth token (optional)",
+    )
+
     args = parser.parse_args()
 
     url = args.url or f"http://{os.environ.get('HOSTNAME', '127.0.0.1')}:8080"
@@ -172,7 +436,20 @@ def main() -> None:
     if args.token:
         headers["Authorization"] = f"Bearer {args.token}"
 
-    run_random_load(url, args.mode, args.model_name, args.duration, args.burst, args.idle, args.rps, headers)
+    run_load(
+        url=url,
+        mode=args.mode,
+        model_name=args.model_name,
+        duration=args.duration,
+        burst=args.burst,
+        idle=args.idle,
+        rps=args.rps,
+        headers=headers,
+        concurrency=args.concurrency,
+        pattern=args.pattern,  # type: ignore[arg-type]
+        warmup_requests=args.warmup_requests,
+        csv_path=args.csv,
+    )
 
 
 if __name__ == "__main__":

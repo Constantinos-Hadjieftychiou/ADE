@@ -107,7 +107,13 @@ python "$PROJECT_DIR/client.py" \
   --duration 300 \
   --burst 20 \
   --idle 10 \
-  --rps 10 > "$RUN_DIR/client_image.log" 2>&1 || true
+  --rps 15 \
+  --concurrency 16 \
+  --pattern burst \
+  --warmup-requests 100 \
+  --csv "$RUN_DIR/requests.csv" \
+  > "$RUN_DIR/client_image.log" 2>&1 || true
+
 
 # ------------------------------- Teardown ------------------------------------
 echo "🧹 Stopping TorchServe…"
