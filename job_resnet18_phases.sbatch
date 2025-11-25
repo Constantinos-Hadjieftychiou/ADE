@@ -67,8 +67,9 @@ PIP_ONLY_BINARY=":all:" pip install --index-url https://download.pytorch.org/whl
   exit 1
 }
 
+# TorchServe + utilities + analysis deps
 pip install --quiet \
-  torchserve torch-model-archiver pillow requests transformers
+  torchserve torch-model-archiver pillow requests transformers pandas numpy
 
 pip install --quiet --no-deps captum
 pip install --quiet zeus

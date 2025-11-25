@@ -264,6 +264,82 @@ def schedule_pattern(
         raise ValueError(f"Unknown pattern: {pattern}")
 
 
+def aggregate_window_metrics(csv_path: str, window_s: float = 1.0) -> None:
+    """
+    Post-process a per-request CSV into fixed-size time windows.
+
+    Produces a file like <csv_path>_windows_1s.csv with:
+      - window_index
+      - window_start_ts / window_start_dt
+      - requests_started
+      - avg_latency_ms
+      - p50_latency_ms
+      - error_rate
+      - is_idle (True/False)
+      - idle_label (1 = idle, 0 = busy)
+    """
+    try:
+        import pandas as pd
+        import numpy as np
+    except ImportError:
+        logging.warning("pandas/numpy not available; skipping window aggregation.")
+        return
+
+    try:
+        df = pd.read_csv(csv_path)
+    except Exception as e:
+        logging.warning(f"Failed to read CSV {csv_path}: {e}")
+        return
+
+    if df.empty:
+        logging.warning(f"No rows in {csv_path}; skipping window aggregation.")
+        return
+
+    required_cols = {"ts_start", "ts_end", "latency_ms", "status_code"}
+    if not required_cols.issubset(df.columns):
+        logging.warning(
+            f"{csv_path} missing required columns {required_cols}; "
+            "skipping window aggregation."
+        )
+        return
+
+    t_min = df["ts_start"].min()
+    if t_min is None or (isinstance(t_min, float) and (t_min != t_min)):
+        logging.warning("ts_start has no valid values; skipping window aggregation.")
+        return
+
+    # Assign each request to an integer window index
+    df["window_index"] = np.floor((df["ts_start"] - t_min) / window_s).astype(int)
+
+    grouped = df.groupby("window_index")
+
+    # Aggregate per window
+    window_stats = grouped.agg(
+        requests_started=("ts_start", "count"),
+        avg_latency_ms=("latency_ms", "mean"),
+        p50_latency_ms=("latency_ms", "median"),
+        error_rate=("status_code", lambda s: (s != 200).mean() * 100.0),
+    ).reset_index()
+
+    window_stats["window_start_ts"] = t_min + window_stats["window_index"] * window_s
+
+    try:
+        window_stats["window_start_dt"] = (
+            __import__("pandas").to_datetime(window_stats["window_start_ts"], unit="s")
+        )
+    except Exception:
+        # Fallback if pandas import via __import__ fails for some reason
+        pass
+
+    # Simple idle/busy label: idle if no requests in that window
+    window_stats["is_idle"] = window_stats["requests_started"] == 0
+    window_stats["idle_label"] = window_stats["is_idle"].astype(int)  # 1 = idle, 0 = busy
+
+    out_path = csv_path.replace(".csv", f"_windows_{int(window_s)}s.csv")
+    window_stats.to_csv(out_path, index=False)
+    logging.info(f"🧮 Wrote window-level metrics to {out_path}")
+
+
 def run_load(
     url: str,
     mode: str,
@@ -402,6 +478,9 @@ def run_load(
                         r.error or "",
                     ]
                 )
+
+        # New: window-level aggregation with idle/busy labels
+        aggregate_window_metrics(csv_path, window_s=1.0)
 
 
 def main() -> None:
