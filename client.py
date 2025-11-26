@@ -813,6 +813,7 @@ def run_load(
     csv_path: Optional[str],
     phases: Optional[List[Dict[str, Any]]] = None,
     energy_csv_path: Optional[str] = None,
+    phases_total_seconds: Optional[int] = None,
 ) -> None:
     """
     Orchestrate the entire load test:
@@ -824,6 +825,11 @@ def run_load(
       - Optionally write per-request CSV + window-level metrics.
       - Optionally join per-second energy trace with window metrics to
         correlate energy with load.
+      - When --phases-json is used:
+          * If phases_total_seconds is not set: run each phase exactly once,
+            but in RANDOM order.
+          * If phases_total_seconds > 0: shuffle/repeat phases in random order
+            until the total scheduled phase duration reaches this budget.
     """
     # Pre-load a small pool of samples that all worker threads will reuse.
     samples = load_samples(mode)
@@ -854,31 +860,88 @@ def run_load(
 
     # --- Schedule tasks according to pattern or phases --------------------
     if phases:
-        total_phase_duration = sum(int(p.get("duration", 0)) for p in phases)
-        logging.info(
-            f"🚦 Running {len(phases)} phases (total duration ~{total_phase_duration}s). "
-            "Per-phase settings can override --pattern/--duration/--rps/--burst/--idle."
-        )
-        for idx, phase in enumerate(phases, start=1):
-            phase_pattern = (phase.get("pattern", pattern) or pattern).lower()
-            phase_duration = int(phase.get("duration", duration))
-            phase_rps = int(phase.get("rps", rps))
-            phase_burst = int(phase.get("burst", burst))
-            phase_idle = int(phase.get("idle", idle))
-            name = phase.get("name", f"phase-{idx}")
+        phases_list = list(phases)
+
+        # Sum of durations for a single pass through phases.json
+        base_total_phase_duration = sum(int(p.get("duration", 0)) for p in phases_list)
+
+        if phases_total_seconds is not None and phases_total_seconds > 0:
+            # Repeated randomised phases until we exhaust the given budget.
             logging.info(
-                f"=== Phase {idx}/{len(phases)}: {name} | "
-                f"pattern={phase_pattern}, duration={phase_duration}s, "
-                f"rps={phase_rps}, burst={phase_burst}, idle={phase_idle} ==="
+                f"🚦 Running randomized phases up to ~{phases_total_seconds}s "
+                "of scheduled duration."
             )
-            schedule_pattern(
-                pattern=phase_pattern,
-                duration=phase_duration,
-                rps=phase_rps,
-                burst=phase_burst,
-                idle=phase_idle,
-                task_queue=task_queue,
+            logging.info(
+                f"(One sequential pass through phases.json would be "
+                f"~{base_total_phase_duration}s.)"
             )
+
+            total_scheduled = 0
+            round_idx = 0
+
+            while total_scheduled < phases_total_seconds:
+                round_idx += 1
+                random.shuffle(phases_list)
+                for phase in phases_list:
+                    if total_scheduled >= phases_total_seconds:
+                        break
+
+                    phase_pattern = (phase.get("pattern", pattern) or pattern).lower()
+                    # Original configured duration for this phase
+                    orig_phase_duration = int(phase.get("duration", duration))
+                    remaining = phases_total_seconds - total_scheduled
+                    # Clip to remaining budget but keep at least 1s
+                    phase_duration = max(1, min(orig_phase_duration, remaining))
+                    phase_rps = int(phase.get("rps", rps))
+                    phase_burst = int(phase.get("burst", burst))
+                    phase_idle = int(phase.get("idle", idle))
+                    name = phase.get("name", f"phase-round{round_idx}")
+
+                    logging.info(
+                        f"=== Phase round {round_idx}: {name} | "
+                        f"pattern={phase_pattern}, duration={phase_duration}s "
+                        f"(configured {orig_phase_duration}s), "
+                        f"rps={phase_rps}, burst={phase_burst}, idle={phase_idle} ==="
+                    )
+                    schedule_pattern(
+                        pattern=phase_pattern,
+                        duration=phase_duration,
+                        rps=phase_rps,
+                        burst=phase_burst,
+                        idle=phase_idle,
+                        task_queue=task_queue,
+                    )
+                    total_scheduled += phase_duration
+        else:
+            # Single pass through the phases, but in RANDOM order.
+            total_phase_duration = base_total_phase_duration
+            random.shuffle(phases_list)
+            logging.info(
+                f"🚦 Running {len(phases_list)} phases ONCE in random order "
+                f"(total duration ~{total_phase_duration}s). "
+                "Per-phase settings can override --pattern/--duration/--rps/--burst/--idle."
+            )
+
+            for idx, phase in enumerate(phases_list, start=1):
+                phase_pattern = (phase.get("pattern", pattern) or pattern).lower()
+                phase_duration = int(phase.get("duration", duration))
+                phase_rps = int(phase.get("rps", rps))
+                phase_burst = int(phase.get("burst", burst))
+                phase_idle = int(phase.get("idle", idle))
+                name = phase.get("name", f"phase-{idx}")
+                logging.info(
+                    f"=== Phase {idx}/{len(phases_list)}: {name} | "
+                    f"pattern={phase_pattern}, duration={phase_duration}s, "
+                    f"rps={phase_rps}, burst={phase_burst}, idle={phase_idle} ==="
+                )
+                schedule_pattern(
+                    pattern=phase_pattern,
+                    duration=phase_duration,
+                    rps=phase_rps,
+                    burst=phase_burst,
+                    idle=phase_idle,
+                    task_queue=task_queue,
+                )
     else:
         schedule_pattern(
             pattern=pattern,
@@ -998,6 +1061,11 @@ def main() -> None:
 
         # Multi-phase scenario described in a JSON file
         python client.py --phases-json phases.json --csv results/run1.csv
+
+        # Multi-phase scenario with repeated, randomised phases for ~2h
+        python client.py --phases-json phases.json \
+                         --phases-total-seconds 7200 \
+                         --csv results/run_long.csv
     """
     parser = argparse.ArgumentParser(
         description="TorchServe load generator (randomised + benchmark-style)."
@@ -1075,8 +1143,7 @@ def main() -> None:
         default=None,
         help=(
             "Optional path to a JSON file describing multiple load phases. "
-            "If set, runs all phases sequentially and overrides the global "
-            "--pattern/--duration/--rps/--burst/--idle values."
+            "If set, runs phases instead of a single global pattern."
         ),
     )
     parser.add_argument(
@@ -1086,6 +1153,18 @@ def main() -> None:
             "Optional path to a per-second energy CSV (e.g. Zeus output) "
             "with columns 'timestamp' and 'energy_j'. If set, energy will be "
             "joined with 1-second window metrics to correlate energy with load."
+        ),
+    )
+    parser.add_argument(
+        "--phases-total-seconds",
+        type=int,
+        default=None,
+        help=(
+            "When used together with --phases-json, sets an approximate total "
+            "number of seconds of scheduled phase time. Phases from the JSON "
+            "will be shuffled and repeatedly sampled in random order until "
+            "this budget is exhausted. If not set, each phase is run exactly "
+            "once in random order."
         ),
     )
 
@@ -1121,6 +1200,7 @@ def main() -> None:
         csv_path=args.csv,
         phases=phases,
         energy_csv_path=args.energy_csv,
+        phases_total_seconds=args.phases_total_seconds,
     )
 
 

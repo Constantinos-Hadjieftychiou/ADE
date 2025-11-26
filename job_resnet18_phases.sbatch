@@ -98,6 +98,8 @@ curl -s "http://$HOSTNAME:8080/ping" || echo "ℹ️ /ping may 404 until models 
 # ------------------------------ Run client -----------------------------------
 echo "💥 Multi-phase image workload against resnet-18 (Zeus monitored)…"
 
+# We set --phases-total-seconds to ~6600s (~1h50m) so the randomized phases
+# can repeat for most of the 2h SLURM window, leaving some time for setup/teardown.
 python "$PROJECT_DIR/measure_with_zeus.py" \
   --window-name "resnet18_phases" \
   --log-csv "$RUN_DIR/zeus_windows_resnet18.csv" \
@@ -111,7 +113,9 @@ python "$PROJECT_DIR/measure_with_zeus.py" \
     --warmup-requests 100 \
     --concurrency 16 \
     --phases-json "$PROJECT_DIR/phases.json" \
+    --phases-total-seconds 6600 \
     --csv "$RUN_DIR/requests_resnet18.csv" \
+    --energy-csv "$RUN_DIR/zeus_windows_resnet18.csv" \
   > "$RUN_DIR/client_resnet18.log" 2>&1 || true
 
 # ------------------------- TorchServe metrics snapshot -----------------------
