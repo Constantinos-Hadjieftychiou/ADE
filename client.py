@@ -179,7 +179,13 @@ def schedule_burst_pattern(
 ):
     """
     Bursty pattern: alternate randomised burst + idle periods, enqueueing tokens.
+    If base_rps <= 0, we treat the entire duration as idle.
     """
+    if base_rps <= 0:
+        logging.info(f"😴 Burst pattern with base_rps={base_rps} -> pure idle for {duration}s")
+        time.sleep(duration)
+        return
+
     start = time.time()
     while time.time() - start < duration:
         burst_dur = max(5, int(random.gauss(burst, max(1.0, burst * 0.2))))
@@ -206,10 +212,16 @@ def schedule_steady_pattern(
 ):
     """
     Steady "open-loop" RPS: every 1/rps seconds enqueue 1 request.
+    If rps <= 0, this phase is pure idle (no requests).
     """
+    if rps <= 0:
+        logging.info(f"📉 Steady load with rps={rps} -> pure idle for {duration}s")
+        time.sleep(duration)
+        return
+
     logging.info(f"📈 Steady load: {rps} req/s for {duration}s")
     start = time.time()
-    inter_arrival = 1.0 / max(1, rps)
+    inter_arrival = 1.0 / float(rps)
     next_time = start
     while time.time() - start < duration:
         now = time.time()
@@ -229,10 +241,16 @@ def schedule_poisson_pattern(
 ):
     """
     Poisson arrivals: inter-arrival ~ Exp(lambda = rps).
+    If rps <= 0, this phase is pure idle (no requests).
     """
+    if rps <= 0:
+        logging.info(f"🎲 Poisson load with rps={rps} -> pure idle for {duration}s")
+        time.sleep(duration)
+        return
+
     logging.info(f"🎲 Poisson load: avg {rps} req/s for {duration}s")
     start = time.time()
-    lam = float(max(1, rps))
+    lam = float(rps)
     while time.time() - start < duration:
         wait = random.expovariate(lam)
         time.sleep(wait)
@@ -304,6 +322,7 @@ def aggregate_window_metrics(csv_path: str, window_s: float = 1.0) -> None:
         return
 
     t_min = df["ts_start"].min()
+    t_max = df["ts_start"].max()
     if t_min is None or (isinstance(t_min, float) and (t_min != t_min)):
         logging.warning("ts_start has no valid values; skipping window aggregation.")
         return
@@ -313,31 +332,49 @@ def aggregate_window_metrics(csv_path: str, window_s: float = 1.0) -> None:
 
     grouped = df.groupby("window_index")
 
-    # Aggregate per window
+    # Aggregate per window (only for windows that have at least one request)
     window_stats = grouped.agg(
         requests_started=("ts_start", "count"),
         avg_latency_ms=("latency_ms", "mean"),
         p50_latency_ms=("latency_ms", "median"),
         error_rate=("status_code", lambda s: (s != 200).mean() * 100.0),
-    ).reset_index()
+    )
 
+    # Build a full index for all windows from first to last timestamp
+    max_index = int(np.floor((t_max - t_min) / window_s))
+    full_index = np.arange(0, max_index + 1, dtype=int)
+
+    # Reindex to full range; missing windows = no requests
+    window_stats = window_stats.reindex(full_index)
+
+    # Fill in defaults for windows with no requests
+    window_stats["requests_started"] = window_stats["requests_started"].fillna(0).astype(int)
+    # Latencies stay NaN where no requests happened
+    window_stats["error_rate"] = window_stats["error_rate"].fillna(0.0)
+
+    # Add explicit index column
+    window_stats = window_stats.reset_index().rename(columns={"index": "window_index"})
+
+    # Compute window start timestamps
     window_stats["window_start_ts"] = t_min + window_stats["window_index"] * window_s
 
     try:
-        window_stats["window_start_dt"] = (
-            __import__("pandas").to_datetime(window_stats["window_start_ts"], unit="s")
+        window_stats["window_start_dt"] = pd.to_datetime(
+            window_stats["window_start_ts"], unit="s"
         )
     except Exception:
-        # Fallback if pandas import via __import__ fails for some reason
         pass
 
-    # Simple idle/busy label: idle if no requests in that window
+    # Idle if no requests in that window
     window_stats["is_idle"] = window_stats["requests_started"] == 0
     window_stats["idle_label"] = window_stats["is_idle"].astype(int)  # 1 = idle, 0 = busy
 
     out_path = csv_path.replace(".csv", f"_windows_{int(window_s)}s.csv")
-    window_stats.to_csv(out_path, index=False)
-    logging.info(f"🧮 Wrote window-level metrics to {out_path}")
+    try:
+        window_stats.to_csv(out_path, index=False)
+        logging.info(f"🧮 Wrote window-level metrics to {out_path}")
+    except Exception as e:
+        logging.warning(f"Failed to write window stats CSV {out_path}: {e}")
 
 
 def run_load(
@@ -437,10 +474,13 @@ def run_load(
     throughput = total / window if window > 0 else float("nan")
 
     if latencies:
-        avg_latency = statistics.mean(latencies)
-        p50 = statistics.median(latencies)
-        p95 = statistics.quantiles(latencies, n=100)[94]
-        p99 = statistics.quantiles(latencies, n=100)[98]
+        # Sort once and compute simple percentile estimates
+        latencies_sorted = sorted(latencies)
+        avg_latency = statistics.mean(latencies_sorted)
+        p50 = statistics.median(latencies_sorted)
+        n = len(latencies_sorted)
+        p95 = latencies_sorted[int(0.95 * (n - 1))]
+        p99 = latencies_sorted[int(0.99 * (n - 1))]
     else:
         avg_latency = p50 = p95 = p99 = float("nan")
 
@@ -456,7 +496,9 @@ def run_load(
     # Optional CSV output in a style similar-ish to ab_report/jmeter
     if csv_path:
         logging.info(f"📝 Writing per-request metrics to {csv_path}")
-        os.makedirs(os.path.dirname(csv_path), exist_ok=True)
+        csv_dir = os.path.dirname(csv_path)
+        if csv_dir:
+            os.makedirs(csv_dir, exist_ok=True)
         with open(csv_path, "w", newline="") as f:
             writer = csv.writer(f)
             writer.writerow(
