@@ -548,10 +548,10 @@ def schedule_pattern(
 
 
 # ---------------------------------------------------------------------------
-# CSV post-processing: fixed-size windows + idle labels
+# CSV post-processing: fixed-size windows + idle labels (+ optional energy)
 # ---------------------------------------------------------------------------
 
-def aggregate_window_metrics(csv_path: str, window_s: float = 1.0) -> None:
+def aggregate_window_metrics(csv_path: str, window_s: float = 1.0) -> Optional[str]:
     """
     Post-process a per-request CSV into fixed-size time windows.
 
@@ -568,23 +568,26 @@ def aggregate_window_metrics(csv_path: str, window_s: float = 1.0) -> None:
       - idle_label           (1 if idle, 0 if busy — convenient for ML)
 
     If pandas/numpy are not available, this step is skipped.
+
+    Returns:
+        Path to the window-level CSV if successfully written, otherwise None.
     """
     try:
         import pandas as pd
         import numpy as np
     except ImportError:
         logging.warning("pandas/numpy not available; skipping window aggregation.")
-        return
+        return None
 
     try:
         df = pd.read_csv(csv_path)
     except Exception as e:
         logging.warning(f"Failed to read CSV {csv_path}: {e}")
-        return
+        return None
 
     if df.empty:
         logging.warning(f"No rows in {csv_path}; skipping window aggregation.")
-        return
+        return None
 
     required_cols = {"ts_start", "ts_end", "latency_ms", "status_code"}
     if not required_cols.issubset(df.columns):
@@ -592,13 +595,13 @@ def aggregate_window_metrics(csv_path: str, window_s: float = 1.0) -> None:
             f"{csv_path} missing required columns {required_cols}; "
             "skipping window aggregation."
         )
-        return
+        return None
 
     t_min = df["ts_start"].min()
     t_max = df["ts_start"].max()
     if t_min is None or (isinstance(t_min, float) and (t_min != t_min)):
         logging.warning("ts_start has no valid values; skipping window aggregation.")
-        return
+        return None
 
     # Assign each request to an integer window index based on ts_start.
     df["window_index"] = np.floor((df["ts_start"] - t_min) / window_s).astype(int)
@@ -647,8 +650,148 @@ def aggregate_window_metrics(csv_path: str, window_s: float = 1.0) -> None:
     try:
         window_stats.to_csv(out_path, index=False)
         logging.info(f"🧮 Wrote window-level metrics to {out_path}")
+        return out_path
     except Exception as e:
         logging.warning(f"Failed to write window stats CSV {out_path}: {e}")
+        return None
+
+
+def attach_energy_to_windows(
+    windows_csv_path: str,
+    energy_csv_path: str,
+    energy_ts_col: str = "timestamp",
+    energy_col: str = "energy_j",
+) -> None:
+    """
+    Optional post-processing step: correlate per-second energy with load.
+
+    Expects:
+      - windows_csv_path: CSV produced by aggregate_window_metrics(...), e.g.
+            "<csv_path>_windows_1s.csv"
+      - energy_csv_path: CSV with at least:
+            * <energy_ts_col>: timestamp in seconds since epoch
+            * <energy_col>:    energy (e.g. Joules) for that second
+
+    This function:
+      - Aligns energy samples to window_start_ts (1-second windows).
+      - Computes:
+            * energy_j_per_window
+            * energy_per_request
+      - Logs a simple correlation between requests_started and energy_j_per_window,
+        and basic idle vs busy energy stats for sanity-checking the idle labels.
+    """
+    try:
+        import pandas as pd
+        import numpy as np
+    except ImportError:
+        logging.warning("pandas/numpy not available; skipping energy/window join.")
+        return
+
+    if not os.path.exists(windows_csv_path):
+        logging.warning(
+            f"Window metrics CSV {windows_csv_path} not found; "
+            "cannot attach energy."
+        )
+        return
+
+    if not os.path.exists(energy_csv_path):
+        logging.warning(
+            f"Energy CSV {energy_csv_path} not found; "
+            "skipping energy/window join."
+        )
+        return
+
+    try:
+        windows = pd.read_csv(windows_csv_path)
+        energy = pd.read_csv(energy_csv_path)
+    except Exception as e:
+        logging.warning(f"Failed to read windows/energy CSVs: {e}")
+        return
+
+    if windows.empty or energy.empty:
+        logging.warning("Windows or energy CSV is empty; skipping join.")
+        return
+
+    if "window_start_ts" not in windows.columns:
+        logging.warning(
+            f"{windows_csv_path} missing window_start_ts; "
+            "skipping energy/window join."
+        )
+        return
+
+    if energy_ts_col not in energy.columns or energy_col not in energy.columns:
+        logging.warning(
+            f"{energy_csv_path} missing required columns "
+            f"({energy_ts_col}, {energy_col}); skipping energy/window join."
+        )
+        return
+
+    # Create an integer "second" key in both dataframes (rounding to align).
+    windows["second"] = windows["window_start_ts"].round().astype("int64")
+    energy["second"] = energy[energy_ts_col].round().astype("int64")
+
+    # Collapse energy to one row per second in case there are multiple samples.
+    energy_agg = (
+        energy
+        .groupby("second", as_index=False)[energy_col]
+        .sum()
+        .rename(columns={energy_col: "energy_j_per_window"})
+    )
+
+    merged = windows.merge(
+        energy_agg,
+        on="second",
+        how="left",          # keep all windows; some may have missing energy
+        validate="m:1",      # many windows -> one energy value per second
+    )
+
+    # Avoid division by zero: clip at 1 then explicitly set NaN for zero-load.
+    merged["energy_per_request"] = (
+        merged["energy_j_per_window"] /
+        merged["requests_started"].clip(lower=1)
+    )
+    merged.loc[merged["requests_started"] == 0, "energy_per_request"] = np.nan
+
+    # Simple load–energy correlation for sanity.
+    if "energy_j_per_window" in merged.columns:
+        try:
+            corr_df = merged[["requests_started", "energy_j_per_window"]].dropna()
+            if not corr_df.empty:
+                corr = corr_df.corr().iloc[0, 1]
+                logging.info(
+                    "🔌 Corr(requests_started, energy_j_per_window) = "
+                    f"{corr:.4f}"
+                )
+        except Exception as e:
+            logging.warning(f"Failed to compute load/energy correlation: {e}")
+
+    # Basic idle vs busy energy stats to help validate idle_label.
+    if "idle_label" in merged.columns and "energy_j_per_window" in merged.columns:
+        try:
+            idle_energy = merged.loc[merged["idle_label"] == 1, "energy_j_per_window"].dropna()
+            busy_energy = merged.loc[merged["idle_label"] == 0, "energy_j_per_window"].dropna()
+            if not idle_energy.empty and not busy_energy.empty:
+                logging.info(
+                    "🔍 Idle vs busy energy: "
+                    f"idle_mean={idle_energy.mean():.2f}J, "
+                    f"busy_mean={busy_energy.mean():.2f}J"
+                )
+        except Exception as e:
+            logging.warning(f"Failed to compute idle/busy energy stats: {e}")
+
+    # Drop helper column and write back in-place.
+    try:
+        merged.drop(columns=["second"], inplace=True)
+    except KeyError:
+        pass
+
+    try:
+        merged.to_csv(windows_csv_path, index=False)
+        logging.info(
+            f"🔋 Attached energy features to window metrics in {windows_csv_path}"
+        )
+    except Exception as e:
+        logging.warning(f"Failed to write energy-augmented CSV {windows_csv_path}: {e}")
 
 
 # ---------------------------------------------------------------------------
@@ -669,6 +812,7 @@ def run_load(
     warmup_requests: int,
     csv_path: Optional[str],
     phases: Optional[List[Dict[str, Any]]] = None,
+    energy_csv_path: Optional[str] = None,
 ) -> None:
     """
     Orchestrate the entire load test:
@@ -678,6 +822,8 @@ def run_load(
       - Schedule request tokens according to pattern or multi-phase config.
       - Collect and summarise metrics.
       - Optionally write per-request CSV + window-level metrics.
+      - Optionally join per-second energy trace with window metrics to
+        correlate energy with load.
     """
     # Pre-load a small pool of samples that all worker threads will reuse.
     samples = load_samples(mode)
@@ -821,7 +967,16 @@ def run_load(
         # New: window-level aggregation with idle/busy labels on top of
         # the per-request CSV. This is especially useful for building
         # supervised ML datasets for "idle vs busy" prediction.
-        aggregate_window_metrics(csv_path, window_s=1.0)
+        windows_csv_path = aggregate_window_metrics(csv_path, window_s=1.0)
+
+        # New: optional energy correlation with load. If the user provided
+        # a per-second energy CSV, join it with the 1-second windows and
+        # compute simple correlation / sanity stats.
+        if windows_csv_path and energy_csv_path:
+            attach_energy_to_windows(
+                windows_csv_path=windows_csv_path,
+                energy_csv_path=energy_csv_path,
+            )
 
 
 # ---------------------------------------------------------------------------
@@ -924,6 +1079,15 @@ def main() -> None:
             "--pattern/--duration/--rps/--burst/--idle values."
         ),
     )
+    parser.add_argument(
+        "--energy-csv",
+        default=None,
+        help=(
+            "Optional path to a per-second energy CSV (e.g. Zeus output) "
+            "with columns 'timestamp' and 'energy_j'. If set, energy will be "
+            "joined with 1-second window metrics to correlate energy with load."
+        ),
+    )
 
     args = parser.parse_args()
 
@@ -956,6 +1120,7 @@ def main() -> None:
         warmup_requests=args.warmup_requests,
         csv_path=args.csv,
         phases=phases,
+        energy_csv_path=args.energy_csv,
     )
 
 
