@@ -2,14 +2,25 @@
 """
 client.py — TorchServe load generator inspired by official benchmarks.
 
-Features:
+High-level idea
+---------------
+This script generates synthetic load (HTTP requests) against a TorchServe model
+server and records detailed metrics:
+
+  - When each request started and finished.
+  - Latency per request.
+  - HTTP status codes and errors.
+  - Aggregated metrics per 1-second window (requests per second, latency stats).
+  - An "idle vs busy" label per window (based on request count).
+  - Optional correlation between per-window load and per-window GPU energy
+    (if we provide a Zeus energy CSV).
+
+It supports:
   - Randomised burst/idle traffic (microservice-like).
-  - Configurable concurrency (threads) & requests/sec.
-  - Optional steady / poisson patterns like synthetic benchmarks.
-  - Per-request CSV metrics for offline analysis.
-  - Multi-phase patterns via --phases-json.
-  - Text mode now uses a small public sentence dataset instead of
-    hard-coded example strings (with a tiny built-in fallback).
+  - Configurable concurrency (number of worker threads).
+  - Different traffic patterns: steady, burst, Poisson.
+  - Multi-phase patterns via a JSON file (phases.json).
+  - Randomised order / repetition of phases for long-running experiments.
 """
 
 import argparse
@@ -31,11 +42,15 @@ import requests
 from PIL import Image
 from torchvision.datasets import CIFAR10
 
+# Configure logging for the entire script. This controls how log messages
+# from logging.info(), logging.warning(), etc. will appear on stdout/stderr.
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s [%(levelname)s] %(message)s",
 )
 
+# Type alias for the allowed traffic patterns. This is mainly for type-checkers
+# and readability when we pass around the "pattern" parameter.
 TrafficPattern = Literal["burst", "steady", "poisson"]
 
 
@@ -45,15 +60,18 @@ class RequestResult:
     Container for per-request metrics that we can later aggregate
     or dump to CSV.
 
+    Each HTTP request sent to TorchServe results in one RequestResult.
+
     Attributes:
-        ts_start:   Time (seconds since epoch) just before sending the request.
-        ts_end:     Time (seconds since epoch) when the response is received
-                    or the request fails.
-        latency_ms: Wall-clock latency in milliseconds (ts_end - ts_start).
-        status_code:HTTP status code from TorchServe, or 0 if the request
-                    failed locally (timeout, connection error, etc.).
-        error:      Short error description or response body snippet if
-                    status_code != 200, otherwise None.
+        ts_start:    Wall-clock timestamp (seconds since epoch) just before
+                     sending the HTTP request.
+        ts_end:      Wall-clock timestamp when we receive the response or
+                     encounter an error.
+        latency_ms:  Simple latency measurement = (ts_end - ts_start) * 1000.
+        status_code: HTTP status code from TorchServe (e.g. 200), or 0 if the
+                     request never reached the server (e.g. timeout, network error).
+        error:       Short error description or snippet of response body if
+                     the response is not 200 OK; otherwise None.
     """
     ts_start: float
     ts_end: float
@@ -70,12 +88,12 @@ def img_to_bytes(img: Image.Image) -> bytes:
     """
     Encode a PIL image as JPEG and return the raw bytes.
 
-    TorchServe image handlers typically expect binary image data, so this
-    helper handles the in-memory encoding.
+    TorchServe image handlers typically expect binary image data in the request
+    body (e.g., for classifiers). We keep everything in-memory using BytesIO.
     """
     buf = io.BytesIO()
-    img.save(buf, format="JPEG")
-    return buf.getvalue()
+    img.save(buf, format="JPEG")  # Encode image as JPEG into the buffer.
+    return buf.getvalue()         # Extract raw bytes from buffer.
 
 
 def send_request(
@@ -87,25 +105,29 @@ def send_request(
     timeout: float = 30.0,
 ) -> RequestResult:
     """
-    Send a single request to TorchServe and capture basic timing/response stats.
+    Send a single HTTP request to TorchServe and capture basic timing/response stats.
+
+    This is the lowest-level function that actually talks to the TorchServe
+    inference endpoint. Everything else (workers, traffic patterns, etc.) ends
+    up calling this.
 
     Args:
         url:        Base TorchServe URL (e.g. http://localhost:8080).
         model_name: Name of the model as registered in TorchServe.
-        sample:     Input sample to send:
+        sample:     Input data for the model:
                         - PIL.Image.Image when mode == "image"
                         - str (sentence) when mode == "text"
-        mode:       Either "image" or "text".
+        mode:       "image" or "text" selects how we build the payload.
         headers:    Extra HTTP headers to include (e.g. Authorization).
-        timeout:    HTTP timeout in seconds.
+        timeout:    HTTP timeout in seconds for this request.
 
     Returns:
         RequestResult with timestamps, latency, status code and error info.
     """
-    ts_start = time.time()
+    ts_start = time.time()  # Start timer right before the HTTP call.
     try:
         if mode == "image":
-            # Binary JPEG payload for vision models
+            # For image models we send raw JPEG bytes.
             img_bytes = img_to_bytes(sample)
             r = requests.post(
                 f"{url}/predictions/{model_name}",
@@ -114,7 +136,7 @@ def send_request(
                 timeout=timeout,
             )
         else:
-            # JSON payload for text models: {"text": "<sentence>"}
+            # For text models we send a small JSON object: {"text": "<sentence>"}.
             payload = json.dumps({"text": sample})
             r = requests.post(
                 f"{url}/predictions/{model_name}",
@@ -126,6 +148,8 @@ def send_request(
         ts_end = time.time()
         latency_ms = (ts_end - ts_start) * 1000.0
 
+        # For successful responses we keep error=None; otherwise we store up to
+        # 200 characters of the body to help debug failures.
         return RequestResult(
             ts_start=ts_start,
             ts_end=ts_end,
@@ -134,7 +158,7 @@ def send_request(
             error=None if r.status_code == 200 else r.text[:200],
         )
     except Exception as e:
-        # Network error, timeout, etc.
+        # Any exception here means we never got a valid response from the server.
         ts_end = time.time()
         latency_ms = (ts_end - ts_start) * 1000.0
         logging.warning(f"Request failed: {e}")
@@ -152,13 +176,14 @@ def send_request(
 # ---------------------------------------------------------------------------
 
 # Public dataset with short English sentences + sentiment labels.
-# We only use the sentence text as generic payloads.
+# We only use the sentence text as generic payloads (we ignore labels).
 UCI_SENTIMENT_ZIP_URL = (
     "https://archive.ics.uci.edu/static/public/331/sentiment%2Blabelled%2Bsentences.zip"
 )
 
 # Local cache where we store the extracted sentences so we don't re-download
-# the dataset on every run.
+# the dataset on every run. This lets us run even without network after the
+# first successful download.
 UCI_SENTENCE_CACHE = os.path.join("data", "uci_sentiment_sentences.txt")
 
 
@@ -185,6 +210,7 @@ def _download_uci_sentences(cache_path: str = UCI_SENTENCE_CACHE) -> List[str]:
             "Downloading UCI Sentiment Labelled Sentences dataset "
             "for text-mode load generation…"
         )
+        # Download ZIP file from the UCI repository.
         resp = requests.get(UCI_SENTIMENT_ZIP_URL, timeout=30)
         resp.raise_for_status()
     except Exception as e:
@@ -192,13 +218,13 @@ def _download_uci_sentences(cache_path: str = UCI_SENTENCE_CACHE) -> List[str]:
         return []
 
     try:
-        # Wrap the raw bytes in a BytesIO buffer so zipfile can read it
+        # Wrap downloaded bytes in a buffer so zipfile can open it.
         zf = zipfile.ZipFile(io.BytesIO(resp.content))
     except Exception as e:
         logging.warning(f"Failed to open UCI sentiment ZIP: {e}")
         return []
 
-    # These are the expected file names in the ZIP archive
+    # Expected text files in the ZIP archive.
     wanted_files = (
         "imdb_labelled.txt",
         "amazon_cells_labelled.txt",
@@ -215,12 +241,12 @@ def _download_uci_sentences(cache_path: str = UCI_SENTENCE_CACHE) -> List[str]:
         try:
             with zf.open(fname) as f:
                 for raw_line in f:
-                    # Lines are bytes -> decode to string
+                    # Lines are bytes -> decode to string.
                     line = raw_line.decode("utf-8", errors="ignore").strip()
                     if not line:
                         continue
 
-                    # Split "<sentence>\t<label>" and keep the sentence
+                    # Split "<sentence>\t<label>" and keep the sentence part.
                     parts = line.split("\t")
                     if not parts:
                         continue
@@ -235,7 +261,7 @@ def _download_uci_sentences(cache_path: str = UCI_SENTENCE_CACHE) -> List[str]:
         logging.warning("No sentences extracted from UCI sentiment dataset.")
         return []
 
-    # Deduplicate sentences while preserving order
+    # Deduplicate while preserving original order.
     seen = set()
     unique_sentences: List[str] = []
     for s in sentences:
@@ -243,7 +269,7 @@ def _download_uci_sentences(cache_path: str = UCI_SENTENCE_CACHE) -> List[str]:
             seen.add(s)
             unique_sentences.append(s)
 
-    # Persist to a simple newline-separated text file for future runs
+    # Cache to a local file so we don't re-download on every run.
     try:
         cache_dir = os.path.dirname(cache_path)
         if cache_dir:
@@ -265,11 +291,10 @@ def load_text_samples(num_samples: int = 100) -> List[str]:
     """
     Load a pool of text samples to send to TorchServe when --mode text.
 
-    The logic is:
-      1. Try to read sentences from the local cache file (if it exists).
-      2. If the cache is missing/empty, download the UCI dataset and build it.
-      3. If all of that fails (e.g. offline), fall back to a tiny built-in list
-         of example sentences so the script still runs.
+    Strategy:
+      1. Try to read sentences from the local cache file (fast, no network).
+      2. If cache is missing/empty, download the UCI dataset and build it.
+      3. If that fails, fall back to a small built-in list of example sentences.
 
     Args:
         num_samples: Target number of sentences to return.
@@ -294,8 +319,7 @@ def load_text_samples(num_samples: int = 100) -> List[str]:
     if not sentences:
         sentences = _download_uci_sentences(cache_path=UCI_SENTENCE_CACHE)
 
-    # 3) Last-resort fallback so the load generator still works without
-    #    network access. This is only used if we cannot get the dataset.
+    # 3) Last-resort fallback so the load generator still works even offline.
     if not sentences:
         logging.warning(
             "Falling back to a small built-in list of text samples "
@@ -327,8 +351,8 @@ def load_text_samples(num_samples: int = 100) -> List[str]:
     if num_samples <= 0:
         return []
 
-    # If the dataset is smaller than num_samples, repeat sentences
-    # so the worker threads always have something to pick.
+    # If we requested more samples than we have, repeat them until we reach
+    # num_samples. This avoids running out of text samples for long tests.
     if num_samples > len(sentences):
         repeats = (num_samples + len(sentences) - 1) // len(sentences)
         return (sentences * repeats)[:num_samples]
@@ -344,14 +368,19 @@ def load_samples(mode: str, num_samples: int = 100) -> List[Any]:
     """
     Build a pool of input samples depending on the selected mode.
 
-    For image mode we use a subset of the CIFAR-10 test set.
-    For text mode we use sentences from a small public dataset (UCI).
+    For image mode:
+        - Use a subset of the CIFAR-10 test set (downloaded via torchvision).
+    For text mode:
+        - Use sentences from the UCI dataset (or fallback list).
+
+    All worker threads will randomly draw from this shared pool. We don't care
+    about labels, only inputs.
     """
     if mode == "image":
         logging.info("Loading CIFAR-10 test subset for image classification…")
-        # torchvision takes care of downloading the dataset on first use.
+        # torchvision will automatically download CIFAR-10 to ./data on first use.
         dataset = CIFAR10(root="./data", train=False, download=True)
-        # Only keep the PIL.Image objects (dataset[i] -> (image, label))
+        # dataset[i] returns (PIL.Image, label). We keep only the PIL.Image.
         return [dataset[i][0] for i in range(min(num_samples, len(dataset)))]
     elif mode == "text":
         return load_text_samples(num_samples=num_samples)
@@ -376,34 +405,39 @@ def worker_loop(
     """
     Worker thread body.
 
-    Each worker consumes "tokens" from task_queue. Every integer token
-    represents a single request to send *immediately* (no additional delay).
-    A token of None is used as a sentinel to signal that the worker
-    should exit cleanly.
+    Each worker continuously consumes items ("tokens") from task_queue.
+    The semantics of the tokens:
 
-    We push RequestResult objects into result_list, which is later used to
-    compute aggregate statistics and/or write a CSV.
+      - An integer token (e.g. 1) means "send a request now".
+      - A token of None is a sentinel that tells the worker to exit cleanly.
 
-    Note: list.append() is atomic in CPython, so appending to result_list
-    from multiple threads is safe in practice.
+    For each "real" token, the worker:
+      1. Picks a random sample from sample_pool.
+      2. Calls send_request(...) to talk to TorchServe.
+      3. Appends the RequestResult to result_list.
+
+    Note:
+      - list.append() is atomic in CPython, so appending to result_list from
+        multiple threads is safe in practice.
+      - task_queue.task_done() is called in a finally block so that the queue
+        accounting is correct even if something goes wrong.
     """
     while True:
-        token = task_queue.get()
+        token = task_queue.get()  # Block until a token is available.
         try:
             if token is None:
-                # Sentinel received: stop this worker.
+                # Sentinel received: stop this worker and exit the loop.
                 return
             if token <= 0:
-                # Skip empty/invalid tokens but still mark the task as done.
+                # Ignore invalid tokens but still mark them as done.
                 continue
 
-            # Pick a random sample from the shared pool to avoid bias.
+            # Pick a random input sample (image or sentence).
             sample = random.choice(sample_pool)
             result = send_request(url, model_name, sample, mode, headers)
             result_list.append(result)
         finally:
-            # Always notify the queue that this task is complete,
-            # even if an exception occurs above.
+            # Notify that we finished processing this queue item.
             task_queue.task_done()
 
 
@@ -417,22 +451,31 @@ def schedule_burst_pattern(
     """
     Bursty pattern: alternate randomised burst + idle periods.
 
-    During a burst period we enqueue roughly base_rps tokens per second.
-    During an idle period we enqueue nothing and simply sleep.
+    Behaviour:
+      - During "burst" periods, we enqueue roughly base_rps tokens per second.
+      - During "idle" periods, we enqueue nothing and just sleep.
 
-    This is intended to mimic microservice-like traffic on a shared cluster.
+    Rationale:
+      - This pattern better mimics microservice traffic, which typically
+        arrives in spikes and then quiet periods rather than being constant.
 
-    If base_rps <= 0, the entire duration is treated as idle.
+    Args:
+        duration:   Total duration (seconds) to run this pattern.
+        burst:      Mean burst duration (seconds). Actual burst duration is
+                    sampled from a Gaussian around this mean.
+        idle:       Mean idle duration (seconds). Same idea as burst.
+        base_rps:   Average requests per second during bursts.
+        task_queue: Shared queue to which we will push "request tokens".
     """
     if base_rps <= 0:
+        # Degenerate case: treat the entire duration as idle.
         logging.info(f"😴 Burst pattern with base_rps={base_rps} -> pure idle for {duration}s")
         time.sleep(duration)
         return
 
     start = time.time()
     while time.time() - start < duration:
-        # Draw burst/idle durations and RPS from simple Gaussians to avoid
-        # perfectly regular patterns.
+        # Randomise the exact durations and RPS to avoid perfectly regular patterns.
         burst_dur = max(5, int(random.gauss(burst, max(1.0, burst * 0.2))))
         idle_dur = max(2, int(random.gauss(idle, max(1.0, idle * 0.3))))
         req_per_sec = max(1, int(random.gauss(base_rps, max(1.0, base_rps * 0.25))))
@@ -440,10 +483,11 @@ def schedule_burst_pattern(
         logging.info(f"💥 Burst for {burst_dur}s at ~{req_per_sec} req/s")
         burst_start = time.time()
 
-        # Emit tokens for the burst period (bounded by global duration).
+        # Emit tokens for each second of the burst, but don't run past the
+        # total pattern duration.
         while time.time() - burst_start < burst_dur and time.time() - start < duration:
             for _ in range(req_per_sec):
-                task_queue.put(1)
+                task_queue.put(1)  # Each token triggers exactly one request.
             time.sleep(1.0)
 
         if time.time() - start >= duration:
@@ -462,9 +506,13 @@ def schedule_steady_pattern(
     Steady open-loop rate: every 1/rps seconds, enqueue one request token.
 
     This gives a roughly constant arrival rate independent of per-request
-    latency (as long as your workers and server can keep up).
+    latency (open-loop). If the server can't keep up, latency will grow,
+    but the rate of new requests is not throttled by response time.
 
-    If rps <= 0, this phase is treated as pure idle.
+    Args:
+        duration:   Total duration (seconds) for this pattern.
+        rps:        Target requests per second. If <= 0, treat as idle.
+        task_queue: Shared queue for request tokens.
     """
     if rps <= 0:
         logging.info(f"📉 Steady load with rps={rps} -> pure idle for {duration}s")
@@ -479,11 +527,11 @@ def schedule_steady_pattern(
     while time.time() - start < duration:
         now = time.time()
         if now >= next_time:
-            # Time to enqueue the next request
+            # Time to enqueue the next request.
             task_queue.put(1)
             next_time += inter_arrival
         else:
-            # Sleep until the next scheduled arrival (if positive)
+            # Sleep until the next scheduled arrival.
             sleep_for = next_time - now
             if sleep_for > 0:
                 time.sleep(sleep_for)
@@ -495,12 +543,16 @@ def schedule_poisson_pattern(
     task_queue: "queue.Queue[Optional[int]]",
 ):
     """
-    Poisson arrivals: exponential inter-arrival times with rate lambda=rps.
+    Poisson arrivals: exponential inter-arrival times with rate λ = rps.
 
-    This is often used in queueing theory / performance evaluation and
-    approximates independent users sending requests at random.
+    This approximates independent users sending requests at random. The
+    inter-arrival times are drawn from an exponential distribution, which is
+    typical in queueing theory.
 
-    If rps <= 0, this phase is treated as pure idle.
+    Args:
+        duration:   Total duration (seconds).
+        rps:        Average requests per second (λ). If <= 0, treat as idle.
+        task_queue: Shared queue for request tokens.
     """
     if rps <= 0:
         logging.info(f"🎲 Poisson load with rps={rps} -> pure idle for {duration}s")
@@ -512,7 +564,7 @@ def schedule_poisson_pattern(
     lam = float(rps)
 
     while time.time() - start < duration:
-        # Draw the next inter-arrival from an exponential distribution.
+        # Exponential inter-arrival time with mean 1/λ.
         wait = random.expovariate(lam)
         time.sleep(wait)
 
@@ -533,8 +585,9 @@ def schedule_pattern(
     """
     Dispatch helper: choose the right scheduler based on pattern name.
 
-    Used both for a single-pattern run (no phases) and within each phase
-    when using a --phases-json file.
+    This function is used both for:
+      - A single-pattern run (no phases).
+      - Each phase when using a --phases-json file.
     """
     pattern = pattern.lower()
     if pattern == "burst":
@@ -555,17 +608,24 @@ def aggregate_window_metrics(csv_path: str, window_s: float = 1.0) -> Optional[s
     """
     Post-process a per-request CSV into fixed-size time windows.
 
-    Produces a file like "<csv_path>_windows_1s.csv" with columns:
+    Input:
+      - Per-request CSV with columns: ts_start, ts_end, latency_ms, status_code, error
 
-      - window_index         (0, 1, 2, … based on ts_start)
-      - window_start_ts      (float seconds since epoch)
-      - window_start_dt      (human-readable timestamp where possible)
-      - requests_started     (#requests whose ts_start fell in the window)
-      - avg_latency_ms       (mean latency over that window)
-      - p50_latency_ms       (median latency over that window)
-      - error_rate           (% of non-200 status codes)
-      - is_idle              (True/False — no requests in that window?)
-      - idle_label           (1 if idle, 0 if busy — convenient for ML)
+    Output:
+      - A file like "<csv_path>_windows_1s.csv" with columns:
+
+          window_index       (0, 1, 2, … based on ts_start)
+          window_start_ts    (float seconds since epoch for start of window)
+          window_start_dt    (human-readable timestamp)
+          requests_started   (#requests whose ts_start fell in this window)
+          avg_latency_ms     (mean latency for this window)
+          p50_latency_ms     (median latency for this window)
+          error_rate         (% of non-200 status codes)
+          is_idle            (True if requests_started == 0)
+          idle_label         (1 if idle, 0 if busy)
+
+    The purpose is to convert per-request data into per-second "time series"
+    samples that we can use to train and evaluate "idle vs busy" predictors.
 
     If pandas/numpy are not available, this step is skipped.
 
@@ -579,6 +639,7 @@ def aggregate_window_metrics(csv_path: str, window_s: float = 1.0) -> Optional[s
         logging.warning("pandas/numpy not available; skipping window aggregation.")
         return None
 
+    # Read the per-request CSV.
     try:
         df = pd.read_csv(csv_path)
     except Exception as e:
@@ -589,6 +650,7 @@ def aggregate_window_metrics(csv_path: str, window_s: float = 1.0) -> Optional[s
         logging.warning(f"No rows in {csv_path}; skipping window aggregation.")
         return None
 
+    # Make sure required columns exist.
     required_cols = {"ts_start", "ts_end", "latency_ms", "status_code"}
     if not required_cols.issubset(df.columns):
         logging.warning(
@@ -597,18 +659,20 @@ def aggregate_window_metrics(csv_path: str, window_s: float = 1.0) -> Optional[s
         )
         return None
 
+    # Determine the earliest and latest request start time.
     t_min = df["ts_start"].min()
     t_max = df["ts_start"].max()
     if t_min is None or (isinstance(t_min, float) and (t_min != t_min)):
         logging.warning("ts_start has no valid values; skipping window aggregation.")
         return None
 
-    # Assign each request to an integer window index based on ts_start.
+    # Assign each request to an integer window index based on ts_start and window size.
     df["window_index"] = np.floor((df["ts_start"] - t_min) / window_s).astype(int)
 
+    # Group all requests that fall into the same window index.
     grouped = df.groupby("window_index")
 
-    # Aggregate per window (only for windows that have at least one request)
+    # Compute per-window aggregates for windows that have at least one request.
     window_stats = grouped.agg(
         requests_started=("ts_start", "count"),
         avg_latency_ms=("latency_ms", "mean"),
@@ -616,36 +680,38 @@ def aggregate_window_metrics(csv_path: str, window_s: float = 1.0) -> Optional[s
         error_rate=("status_code", lambda s: (s != 200).mean() * 100.0),
     )
 
-    # Build a full index for all windows from first to last timestamp
+    # Build the full range of window indices, including those with zero requests.
     max_index = int(np.floor((t_max - t_min) / window_s))
     full_index = np.arange(0, max_index + 1, dtype=int)
 
-    # Reindex to full range; missing windows = no requests
+    # Reindex so we have a row for every window (0..max_index).
     window_stats = window_stats.reindex(full_index)
 
-    # Fill in defaults for windows with no requests
+    # For windows with no requests, requests_started is 0 and error_rate is 0.
     window_stats["requests_started"] = window_stats["requests_started"].fillna(0).astype(int)
-    # Latencies stay NaN where no requests happened
+    # Latencies remain NaN for empty windows.
     window_stats["error_rate"] = window_stats["error_rate"].fillna(0.0)
 
-    # Add explicit index column
+    # Move index into a column called "window_index".
     window_stats = window_stats.reset_index().rename(columns={"index": "window_index"})
 
-    # Compute window start timestamps relative to the first request
+    # Compute the start timestamp of each window.
     window_stats["window_start_ts"] = t_min + window_stats["window_index"] * window_s
 
+    # Optional: also include a human-readable datetime column.
     try:
         window_stats["window_start_dt"] = pd.to_datetime(
             window_stats["window_start_ts"], unit="s"
         )
     except Exception:
-        # Not critical if timestamp parsing fails
+        # Not critical if this fails.
         pass
 
-    # Idle if no requests in that window
+    # Define idle windows as those with zero requests.
     window_stats["is_idle"] = window_stats["requests_started"] == 0
     window_stats["idle_label"] = window_stats["is_idle"].astype(int)  # 1 = idle, 0 = busy
 
+    # Write the result to disk next to the per-request CSV.
     out_path = csv_path.replace(".csv", f"_windows_{int(window_s)}s.csv")
     try:
         window_stats.to_csv(out_path, index=False)
@@ -665,7 +731,7 @@ def attach_energy_to_windows(
     """
     Optional post-processing step: correlate per-second energy with load.
 
-    Expects:
+    Inputs:
       - windows_csv_path: CSV produced by aggregate_window_metrics(...), e.g.
             "<csv_path>_windows_1s.csv"
       - energy_csv_path: CSV with at least:
@@ -673,12 +739,17 @@ def attach_energy_to_windows(
             * <energy_col>:    energy (e.g. Joules) for that second
 
     This function:
-      - Aligns energy samples to window_start_ts (1-second windows).
-      - Computes:
-            * energy_j_per_window
-            * energy_per_request
-      - Logs a simple correlation between requests_started and energy_j_per_window,
-        and basic idle vs busy energy stats for sanity-checking the idle labels.
+      - Aligns per-second energy to the window_start_ts of each window.
+      - Adds two new columns:
+            * energy_j_per_window: total energy in that 1-second window.
+            * energy_per_request:  energy per request in that window.
+      - Logs:
+            * Correlation between requests_started and energy_j_per_window.
+            * Mean energy in idle windows vs busy windows.
+
+    This is useful to:
+      - Validate that our "idle" windows indeed consume less energy.
+      - Provide extra features for ML models (e.g. energy per request).
     """
     try:
         import pandas as pd
@@ -701,6 +772,7 @@ def attach_energy_to_windows(
         )
         return
 
+    # Read both CSVs.
     try:
         windows = pd.read_csv(windows_csv_path)
         energy = pd.read_csv(energy_csv_path)
@@ -726,11 +798,13 @@ def attach_energy_to_windows(
         )
         return
 
-    # Create an integer "second" key in both dataframes (rounding to align).
+    # Create an integer "second" key in both dataframes by rounding the timestamps.
+    # This allows us to join windows and energy on the same integer second.
     windows["second"] = windows["window_start_ts"].round().astype("int64")
     energy["second"] = energy[energy_ts_col].round().astype("int64")
 
-    # Collapse energy to one row per second in case there are multiple samples.
+    # If there are multiple energy rows for the same second, aggregate them
+    # by summing up the energy for that second.
     energy_agg = (
         energy
         .groupby("second", as_index=False)[energy_col]
@@ -738,21 +812,24 @@ def attach_energy_to_windows(
         .rename(columns={energy_col: "energy_j_per_window"})
     )
 
+    # Merge per-window metrics with per-second energy.
     merged = windows.merge(
         energy_agg,
         on="second",
-        how="left",          # keep all windows; some may have missing energy
-        validate="m:1",      # many windows -> one energy value per second
+        how="left",          # Keep all windows even if some seconds lack energy data.
+        validate="m:1",      # Many windows to 1 energy value per second.
     )
 
-    # Avoid division by zero: clip at 1 then explicitly set NaN for zero-load.
+    # Compute energy per request.
+    # We clip requests_started at 1 to avoid division by zero, but then explicitly
+    # set energy_per_request to NaN for windows with 0 requests (idle).
     merged["energy_per_request"] = (
         merged["energy_j_per_window"] /
         merged["requests_started"].clip(lower=1)
     )
     merged.loc[merged["requests_started"] == 0, "energy_per_request"] = np.nan
 
-    # Simple load–energy correlation for sanity.
+    # Simple load–energy correlation for sanity checking.
     if "energy_j_per_window" in merged.columns:
         try:
             corr_df = merged[["requests_started", "energy_j_per_window"]].dropna()
@@ -779,12 +856,13 @@ def attach_energy_to_windows(
         except Exception as e:
             logging.warning(f"Failed to compute idle/busy energy stats: {e}")
 
-    # Drop helper column and write back in-place.
+    # Helper column is not needed in the final CSV.
     try:
         merged.drop(columns=["second"], inplace=True)
     except KeyError:
         pass
 
+    # Overwrite the windows CSV with the energy-augmented version.
     try:
         merged.to_csv(windows_csv_path, index=False)
         logging.info(
@@ -816,35 +894,39 @@ def run_load(
     phases_total_seconds: Optional[int] = None,
 ) -> None:
     """
-    Orchestrate the entire load test:
-      - Prepare sample pool (image/text).
-      - Optional warmup phase (requests not recorded).
-      - Spawn worker threads.
-      - Schedule request tokens according to pattern or multi-phase config.
-      - Collect and summarise metrics.
-      - Optionally write per-request CSV + window-level metrics.
-      - Optionally join per-second energy trace with window metrics to
-        correlate energy with load.
-      - When --phases-json is used:
-          * If phases_total_seconds is not set: run each phase exactly once,
-            but in RANDOM order.
-          * If phases_total_seconds > 0: shuffle/repeat phases in random order
-            until the total scheduled phase duration reaches this budget.
+    Orchestrate the entire load test from start to finish.
+
+    High-level steps:
+      1. Prepare input samples (images or text).
+      2. Optional warmup phase (requests not recorded).
+      3. Start worker threads.
+      4. Schedule request tokens according to either:
+           - a single global pattern (burst/steady/poisson), OR
+           - a multi-phase configuration from phases.json, possibly repeated
+             and randomised until phases_total_seconds is used up.
+      5. Wait for all work to finish and stop workers.
+      6. Compute headline stats (throughput, latency percentiles).
+      7. Write per-request CSV (optional).
+      8. Generate per-second window metrics and idle labels.
+      9. Optionally join with per-second energy CSV and log correlations.
     """
     # Pre-load a small pool of samples that all worker threads will reuse.
     samples = load_samples(mode)
 
     # --- Warmup (not recorded in the metrics) ------------------------------
+    # Warmup helps the model and GPU "stabilize" (e.g. load weights into memory)
+    # before we start recording performance data.
     if warmup_requests > 0:
         logging.info(f"🔥 Warmup: sending {warmup_requests} requests (not recorded)")
         for _ in range(warmup_requests):
             sample = random.choice(samples)
             _ = send_request(url, model_name, sample, mode, headers)
 
-    # Shared queue for work items (tokens); workers will block on this.
+    # Shared queue for work items (tokens). The scheduler pushes here; workers
+    # pop from here and send requests.
     task_queue: "queue.Queue[Optional[int]]" = queue.Queue()
 
-    # Shared list of RequestResult objects; we only append to it from workers.
+    # Shared list of RequestResult objects; only appended to by workers.
     results: List[RequestResult] = []
 
     # --- Start worker threads ---------------------------------------------
@@ -853,20 +935,22 @@ def run_load(
         t = threading.Thread(
             target=worker_loop,
             args=(f"worker-{i}", url, model_name, mode, headers, samples, task_queue, results),
-            daemon=True,  # makes sure threads don't block interpreter exit
+            daemon=True,  # Daemon threads won't block interpreter exit.
         )
         t.start()
         threads.append(t)
 
     # --- Schedule tasks according to pattern or phases --------------------
     if phases:
+        # Clone the list so we can shuffle it without mutating the original.
         phases_list = list(phases)
 
-        # Sum of durations for a single pass through phases.json
+        # Compute how long one sequential pass through phases.json would take.
         base_total_phase_duration = sum(int(p.get("duration", 0)) for p in phases_list)
 
         if phases_total_seconds is not None and phases_total_seconds > 0:
-            # Repeated randomised phases until we exhaust the given budget.
+            # Case 1: Run phases repeatedly, in random order, until we have
+            # scheduled approximately phases_total_seconds seconds of load.
             logging.info(
                 f"🚦 Running randomized phases up to ~{phases_total_seconds}s "
                 "of scheduled duration."
@@ -876,21 +960,21 @@ def run_load(
                 f"~{base_total_phase_duration}s.)"
             )
 
-            total_scheduled = 0
-            round_idx = 0
+            total_scheduled = 0  # How many seconds we have scheduled so far.
+            round_idx = 0        # How many full "rounds" through the phase list.
 
             while total_scheduled < phases_total_seconds:
                 round_idx += 1
-                random.shuffle(phases_list)
+                random.shuffle(phases_list)  # Randomize order for this round.
                 for phase in phases_list:
                     if total_scheduled >= phases_total_seconds:
                         break
 
                     phase_pattern = (phase.get("pattern", pattern) or pattern).lower()
-                    # Original configured duration for this phase
+                    # Original configured duration for this phase.
                     orig_phase_duration = int(phase.get("duration", duration))
                     remaining = phases_total_seconds - total_scheduled
-                    # Clip to remaining budget but keep at least 1s
+                    # Clip to remaining budget, but ensure at least 1 second.
                     phase_duration = max(1, min(orig_phase_duration, remaining))
                     phase_rps = int(phase.get("rps", rps))
                     phase_burst = int(phase.get("burst", burst))
@@ -913,7 +997,7 @@ def run_load(
                     )
                     total_scheduled += phase_duration
         else:
-            # Single pass through the phases, but in RANDOM order.
+            # Case 2: Run each phase exactly once but in random order.
             total_phase_duration = base_total_phase_duration
             random.shuffle(phases_list)
             logging.info(
@@ -943,6 +1027,7 @@ def run_load(
                     task_queue=task_queue,
                 )
     else:
+        # No phases.json provided: run a single global pattern.
         schedule_pattern(
             pattern=pattern,
             duration=duration,
@@ -953,14 +1038,14 @@ def run_load(
         )
 
     # --- Signal workers to shut down --------------------------------------
-    # Push one sentinel per worker so they can exit once the queue is empty.
+    # Push one sentinel (None) per worker so they exit after the queue empties.
     for _ in range(concurrency):
         task_queue.put(None)
 
-    # Wait for all work (including sentinel tasks) to be processed.
+    # Wait for all queued items (including sentinels) to be processed.
     task_queue.join()
 
-    # Join worker threads (should terminate quickly once they see the sentinel).
+    # Ensure all worker threads have finished.
     for t in threads:
         t.join()
 
@@ -968,7 +1053,7 @@ def run_load(
         logging.warning("No successful requests recorded (results list is empty).")
         return
 
-    # --- Compute headline stats (similar to JMeter/ab) --------------------
+    # --- Compute headline stats (similar to tools like ab/JMeter) ---------
     latencies = [r.latency_ms for r in results if r.status_code == 200]
     errors = [r for r in results if r.status_code != 200]
     total = len(results)
@@ -976,7 +1061,7 @@ def run_load(
     throughput = total / window if window > 0 else float("nan")
 
     if latencies:
-        # Sort once and compute simple percentile estimates.
+        # Sort once and compute percentile estimates.
         latencies_sorted = sorted(latencies)
         avg_latency = statistics.mean(latencies_sorted)
         p50 = statistics.median(latencies_sorted)
@@ -1004,6 +1089,7 @@ def run_load(
         try:
             with open(csv_path, "w", newline="") as f:
                 writer = csv.writer(f)
+                # CSV header row.
                 writer.writerow(
                     [
                         "ts_start",
@@ -1013,6 +1099,7 @@ def run_load(
                         "error",
                     ]
                 )
+                # One row per request result.
                 for r in results:
                     writer.writerow(
                         [
@@ -1027,14 +1114,11 @@ def run_load(
             logging.warning(f"Failed to write per-request CSV {csv_path}: {e}")
             return
 
-        # New: window-level aggregation with idle/busy labels on top of
-        # the per-request CSV. This is especially useful for building
-        # supervised ML datasets for "idle vs busy" prediction.
+        # Aggregate per-request CSV into per-second windows with idle labels.
         windows_csv_path = aggregate_window_metrics(csv_path, window_s=1.0)
 
-        # New: optional energy correlation with load. If the user provided
-        # a per-second energy CSV, join it with the 1-second windows and
-        # compute simple correlation / sanity stats.
+        # If we also have per-second energy, join that with the window metrics
+        # to compute correlations and energy features.
         if windows_csv_path and energy_csv_path:
             attach_energy_to_windows(
                 windows_csv_path=windows_csv_path,
@@ -1090,31 +1174,31 @@ def main() -> None:
         "--duration",
         type=int,
         default=300,
-        help="Test duration in seconds if not using --phases-json",
+        help="Test duration in seconds if not using --phases-json.",
     )
     parser.add_argument(
         "--burst",
         type=int,
         default=30,
-        help="Mean burst duration (s) for 'burst' pattern",
+        help="Mean burst duration (s) for 'burst' pattern.",
     )
     parser.add_argument(
         "--idle",
         type=int,
         default=15,
-        help="Mean idle duration (s) for 'burst' pattern",
+        help="Mean idle duration (s) for 'burst' pattern.",
     )
     parser.add_argument(
         "--rps",
         type=int,
         default=10,
-        help="Target requests per second (pattern-dependent)",
+        help="Target requests per second (pattern-dependent).",
     )
     parser.add_argument(
         "--concurrency",
         type=int,
         default=8,
-        help="Number of worker threads (similar to JMeter/ab concurrency)",
+        help="Number of worker threads (similar to JMeter/ab concurrency).",
     )
     parser.add_argument(
         "--pattern",
@@ -1126,17 +1210,17 @@ def main() -> None:
         "--warmup-requests",
         type=int,
         default=50,
-        help="Warmup requests to send before measurement starts",
+        help="Warmup requests to send before measurement starts.",
     )
     parser.add_argument(
         "--csv",
         default=None,
-        help="Path to write per-request CSV metrics (optional)",
+        help="Path to write per-request CSV metrics (optional).",
     )
     parser.add_argument(
         "--token",
         default=None,
-        help="Auth token for TorchServe (optional, for secured endpoints)",
+        help="Auth token for TorchServe (optional, for secured endpoints).",
     )
     parser.add_argument(
         "--phases-json",
@@ -1184,7 +1268,7 @@ def main() -> None:
         with open(args.phases_json) as f:
             phases = json.load(f)
 
-    # Kick off the run.
+    # Kick off the run with the parsed arguments.
     run_load(
         url=url,
         mode=args.mode,
@@ -1205,4 +1289,5 @@ def main() -> None:
 
 
 if __name__ == "__main__":
+    # Standard Python entry point: only run main() when executed as a script.
     main()
