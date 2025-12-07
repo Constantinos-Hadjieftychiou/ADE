@@ -115,9 +115,29 @@ python "$PROJECT_DIR/measure_with_zeus.py" \
     --concurrency 16 \
     --phases-json "$PROJECT_DIR/phases.json" \
     --csv "$RUN_DIR/requests_resnet18.csv" \
+    --random-seed 42 \
+  > "$RUN_DIR/client_resnet18.log" 2>&1 || true
+
+# After client.py finishes, it will have written:
+#   $RUN_DIR/requests_resnet18.csv
+#   $RUN_DIR/requests_resnet18_windows_1s.csv
+# Zeus wrote:
+#   $RUN_DIR/zeus_windows_resnet18.csv
+# Now attach energy to the windows CSV in a separate, clean pass.
+
+WINDOWS_CSV="$RUN_DIR/requests_resnet18_windows_1s.csv"
+
+if [[ -f "$WINDOWS_CSV" && -f "$RUN_DIR/zeus_windows_resnet18.csv" ]]; then
+  echo "Post-processing: attaching energy to windows CSV"
+  python "$PROJECT_DIR/client.py" \
+    --attach-energy-only \
+    --windows-csv "$WINDOWS_CSV" \
     --energy-csv "$RUN_DIR/zeus_windows_resnet18.csv" \
     --idle-power-threshold-w "$IDLE_POWER_THRESHOLD_W" \
-  > "$RUN_DIR/client_resnet18.log" 2>&1 || true
+    > "$RUN_DIR/attach_energy_resnet18.log" 2>&1 || true
+else
+  echo "Skipping energy/window join: $WINDOWS_CSV or energy CSV missing"
+fi
 
 echo "Fetching TorchServe metrics"
 curl -s "http://$HOSTNAME:8082/metrics" > "$RUN_DIR/torchserve_metrics_resnet18.prom" \

@@ -59,7 +59,12 @@ def send_request(
     ts_start = time.time()
     try:
         if mode == "image":
-            img_bytes = img_to_bytes(sample)
+            # Allow samples to be either pre-encoded bytes or PIL Images
+            if isinstance(sample, (bytes, bytearray)):
+                img_bytes = sample
+            else:
+                img_bytes = img_to_bytes(sample)
+
             r = requests.post(
                 f"{url}/predictions/{model_name}",
                 data=img_bytes,
@@ -220,7 +225,15 @@ def load_samples(mode: str, num_samples: int = 100) -> List[Any]:
     if mode == "image":
         logging.info("Loading CIFAR-10 test subset")
         dataset = CIFAR10(root="./data", train=False, download=True)
-        return [dataset[i][0] for i in range(min(num_samples, len(dataset)))]
+
+        # Pre-encode to JPEG bytes so the hot path doesn't spend CPU time
+        # repeatedly encoding images.
+        max_samples = min(num_samples, len(dataset))
+        samples: List[bytes] = []
+        for i in range(max_samples):
+            img = dataset[i][0]
+            samples.append(img_to_bytes(img))
+        return samples
     elif mode == "text":
         return load_text_samples(num_samples=num_samples)
     else:
@@ -236,6 +249,7 @@ def worker_loop(
     sample_pool: List[Any],
     task_queue: "queue.Queue[Optional[int]]",
     result_list: List[RequestResult],
+    result_lock: threading.Lock,
 ):
     while True:
         token = task_queue.get()
@@ -247,7 +261,10 @@ def worker_loop(
 
             sample = random.choice(sample_pool)
             result = send_request(url, model_name, sample, mode, headers)
-            result_list.append(result)
+            # Protect list appends so we don't corrupt the results under
+            # very high concurrency.
+            with result_lock:
+                result_list.append(result)
         finally:
             task_queue.task_done()
 
@@ -584,12 +601,23 @@ def run_load(
 
     task_queue: "queue.Queue[Optional[int]]" = queue.Queue()
     results: List[RequestResult] = []
+    results_lock = threading.Lock()
 
     threads: List[threading.Thread] = []
     for i in range(concurrency):
         t = threading.Thread(
             target=worker_loop,
-            args=(f"worker-{i}", url, model_name, mode, headers, samples, task_queue, results),
+            args=(
+                f"worker-{i}",
+                url,
+                model_name,
+                mode,
+                headers,
+                samples,
+                task_queue,
+                results,
+                results_lock,
+            ),
             daemon=True,
         )
         t.start()
@@ -867,8 +895,61 @@ def main() -> None:
             "less than or equal to this are marked with energy_idle_label=1."
         ),
     )
+    parser.add_argument(
+        "--windows-csv",
+        default=None,
+        help=(
+            "Path to an existing window-level metrics CSV to post-process "
+            "with energy data (used with --attach-energy-only)."
+        ),
+    )
+    parser.add_argument(
+        "--attach-energy-only",
+        action="store_true",
+        help=(
+            "Skip load generation and only attach energy data to an existing "
+            "windows CSV. Requires --windows-csv and --energy-csv."
+        ),
+    )
+    parser.add_argument(
+        "--random-seed",
+        type=int,
+        default=None,
+        help="Optional random seed for reproducible load patterns.",
+    )
 
     args = parser.parse_args()
+
+    # Make load patterns (and sampling) reproducible when requested.
+    if args.random_seed is not None:
+        random.seed(args.random_seed)
+        try:
+            import numpy as _np
+            _np.random.seed(args.random_seed)
+        except Exception:
+            pass
+        try:
+            import torch as _torch  # type: ignore[import]
+            _torch.manual_seed(args.random_seed)
+            if _torch.cuda.is_available():
+                _torch.cuda.manual_seed_all(args.random_seed)
+        except Exception:
+            # Torch not available or CUDA not usable; ignore
+            pass
+
+    # Post-processing-only mode: just attach energy to an existing windows CSV
+    if args.attach_energy_only:
+        if not args.windows_csv:
+            raise SystemExit("--attach-energy-only requires --windows-csv")
+        if not args.energy_csv:
+            raise SystemExit("--attach-energy-only requires --energy-csv")
+
+        attach_energy_to_windows(
+            windows_csv_path=args.windows_csv,
+            energy_csv_path=args.energy_csv,
+            idle_power_threshold_w=args.idle_power_threshold_w,
+        )
+        return
 
     url = args.url or f"http://{os.environ.get('HOSTNAME', '127.0.0.1')}:8080"
 
