@@ -6,16 +6,22 @@
         "rps": 1
     },
     {
-        "name": "poisson-low-2rps",
-        "pattern": "poisson",
+        "name": "low-traffic-steady-2rps",
+        "pattern": "steady",
         "duration": 300,
         "rps": 2
     },
     {
-        "name": "poisson-low-5rps",
+        "name": "low-traffic-poisson-5rps",
         "pattern": "poisson",
         "duration": 300,
         "rps": 5
+    },
+    {
+        "name": "mid-traffic-steady-10rps",
+        "pattern": "steady",
+        "duration": 300,
+        "rps": 10
     },
     {
         "name": "mid-peak-poisson",
@@ -24,19 +30,7 @@
         "rps": 20
     },
     {
-        "name": "poisson-high-40rps",
-        "pattern": "poisson",
-        "duration": 300,
-        "rps": 40
-    },
-    {
-        "name": "poisson-high-60rps",
-        "pattern": "poisson",
-        "duration": 300,
-        "rps": 60
-    },
-    {
-        "name": "burst-medium",
+        "name": "burst-medium-15rps",
         "pattern": "burst",
         "duration": 240,
         "rps": 15,
@@ -44,7 +38,7 @@
         "idle": 15
     },
     {
-        "name": "burst-high",
+        "name": "burst-high-30rps",
         "pattern": "burst",
         "duration": 240,
         "rps": 30,
@@ -52,15 +46,21 @@
         "idle": 20
     },
     {
-        "name": "long-idle",
+        "name": "high-traffic-steady-25rps",
         "pattern": "steady",
         "duration": 300,
-        "rps": 0
+        "rps": 25
     },
     {
         "name": "evening-cooldown-steady-3rps",
         "pattern": "steady",
         "duration": 300,
         "rps": 3
+    },
+    {
+        "name": "long-idle",
+        "pattern": "steady",
+        "duration": 600,
+        "rps": 0
     }
 ]

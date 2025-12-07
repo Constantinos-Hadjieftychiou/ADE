@@ -1,0 +1,17 @@
+Traceback (most recent call last):
+  File "/home/chadji10/ADE/measure_idle_baseline.py", line 141, in <module>
+    main()
+  File "/home/chadji10/ADE/measure_idle_baseline.py", line 84, in main
+    monitor.begin_window(args.window_name)
+  File "/home/chadji10/ADE/.venv_torchserve/lib/python3.11/site-packages/zeus/monitor/energy.py", line 282, in begin_window
+    sync_execution_fn(self.gpu_indices, sync_with=self.sync_with)
+  File "/home/chadji10/ADE/.venv_torchserve/lib/python3.11/site-packages/zeus/utils/framework.py", line 106, in sync_execution
+    torch.cuda.synchronize(device)
+  File "/home/chadji10/ADE/.venv_torchserve/lib/python3.11/site-packages/torch/cuda/__init__.py", line 954, in synchronize
+    return torch._C._cuda_synchronize()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: CUDA error: out of memory
+CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+

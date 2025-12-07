@@ -431,6 +431,7 @@ def attach_energy_to_windows(
     energy_csv_path: str,
     energy_ts_col: str = "timestamp",
     energy_col: str = "energy_j",
+    idle_power_threshold_w: Optional[float] = None,
 ) -> None:
     try:
         import pandas as pd
@@ -521,6 +522,26 @@ def attach_energy_to_windows(
         except Exception as e:
             logging.warning(f"Failed to compute idle/busy energy stats: {e}")
 
+    if idle_power_threshold_w is not None and "energy_j_per_window" in merged.columns:
+        try:
+            mask_valid = merged["energy_j_per_window"].notna()
+            energy_idle = merged["energy_j_per_window"] <= idle_power_threshold_w
+            merged["energy_idle_label"] = np.where(
+                mask_valid,
+                energy_idle.astype(int),
+                np.nan,
+            )
+            n_idle = int((merged["energy_idle_label"] == 1).sum())
+            n_total = int(mask_valid.sum())
+            logging.info(
+                "Energy-idle threshold %.2fW: %d/%d windows flagged idle",
+                idle_power_threshold_w,
+                n_idle,
+                n_total,
+            )
+        except Exception as e:
+            logging.warning(f"Failed to compute energy_idle_label: {e}")
+
     try:
         merged.drop(columns=["second"], inplace=True)
     except KeyError:
@@ -551,6 +572,7 @@ def run_load(
     phases: Optional[List[Dict[str, Any]]] = None,
     energy_csv_path: Optional[str] = None,
     phases_total_seconds: Optional[int] = None,
+    idle_power_threshold_w: Optional[float] = None,
 ) -> None:
     samples = load_samples(mode)
 
@@ -728,6 +750,7 @@ def run_load(
             attach_energy_to_windows(
                 windows_csv_path=windows_csv_path,
                 energy_csv_path=energy_csv_path,
+                idle_power_threshold_w=idle_power_threshold_w,
             )
 
 
@@ -834,6 +857,16 @@ def main() -> None:
             "repeated until this budget is exhausted."
         ),
     )
+    parser.add_argument(
+        "--idle-power-threshold-w",
+        type=float,
+        default=None,
+        help=(
+            "Optional energy-based idle threshold in watts. When set and "
+            "--energy-csv is provided, windows with energy_j_per_window "
+            "less than or equal to this are marked with energy_idle_label=1."
+        ),
+    )
 
     args = parser.parse_args()
 
@@ -872,6 +905,7 @@ def main() -> None:
         phases=phases,
         energy_csv_path=args.energy_csv,
         phases_total_seconds=args.phases_total_seconds,
+        idle_power_threshold_w=args.idle_power_threshold_w,
     )
 
 

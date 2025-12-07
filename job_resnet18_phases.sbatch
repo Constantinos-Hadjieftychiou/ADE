@@ -19,6 +19,9 @@ ENV_DIR="$PROJECT_DIR/.venv_torchserve"
 RUN_DIR="$PROJECT_DIR/runs/resnet18_run_$(date +%Y%m%d_%H%M%S)"
 MODEL_STORE="$PROJECT_DIR/model_store"
 
+# Idle baseline ~53.64 W → use a slightly higher threshold
+IDLE_POWER_THRESHOLD_W=58.0
+
 mkdir -p "$RUN_DIR" "$MODEL_STORE"
 
 export OMP_NUM_THREADS=1
@@ -107,14 +110,13 @@ python "$PROJECT_DIR/measure_with_zeus.py" \
     --url "http://$HOSTNAME:8080" \
     --mode image \
     --model-name resnet-18 \
-    --pattern poisson \
+    --pattern steady \
     --warmup-requests 100 \
     --concurrency 16 \
     --phases-json "$PROJECT_DIR/phases.json" \
-    --phase-name "mid-peak-poisson" \
-    --phases-total-seconds 1800 \
     --csv "$RUN_DIR/requests_resnet18.csv" \
     --energy-csv "$RUN_DIR/zeus_windows_resnet18.csv" \
+    --idle-power-threshold-w "$IDLE_POWER_THRESHOLD_W" \
   > "$RUN_DIR/client_resnet18.log" 2>&1 || true
 
 echo "Fetching TorchServe metrics"
