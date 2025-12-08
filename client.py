@@ -612,6 +612,7 @@ def attach_energy_to_windows(
     energy_ts_col: str = "timestamp",
     energy_col: str = "energy_j",
     idle_power_threshold_w: Optional[float] = None,
+    idle_calibration_seconds: Optional[float] = None,
 ) -> None:
     """
     Attach energy information to window-level metrics.
@@ -626,11 +627,20 @@ def attach_energy_to_windows(
        the windows' time origin and window_s, aggregate by
        window_index, and join.
 
+       If `idle_power_threshold_w` is not provided (>0) and
+       `idle_calibration_seconds` > 0, we will automatically
+       estimate an idle power threshold from the first
+       `idle_calibration_seconds` seconds of power samples
+       (using a high percentile, currently p99).
+
     2) Zeus summary CSV from measure_with_zeus.py:
        - Columns: 'wall_time_s', 'zeus_total_energy_j'
        - Single-row summary for the whole run
        In this case we compute a *constant* per-window energy based on
        average power = total_energy / wall_time and the window size.
+
+    Energy-based idleness is always defined in terms of average power
+    in watts per window, not raw joules.
     """
     try:
         import pandas as pd
@@ -685,6 +695,104 @@ def attach_energy_to_windows(
         return
 
     # ------------------------------------------------------------------
+    # Optional: auto-calibrate idle power threshold from power samples.
+    # We do this *before* we aggregate energy so it works even if some
+    # idle time occurs before the first request window.
+    # ------------------------------------------------------------------
+    auto_idle_thr_w: Optional[float] = None
+    if (
+        (idle_power_threshold_w is None or idle_power_threshold_w <= 0.0)
+        and idle_calibration_seconds is not None
+        and idle_calibration_seconds > 0.0
+    ):
+        power_col = None
+        for cand in ("power_w", "gpu_power_w", "power", "power_draw_w"):
+            if cand in energy.columns:
+                power_col = cand
+                break
+
+        if power_col is None:
+            logging.info(
+                "Energy CSV has no explicit power column; "
+                "skipping idle power auto-calibration."
+            )
+        else:
+            try:
+                ts_series = pd.to_numeric(
+                    energy.get(energy_ts_col, energy.index),
+                    errors="coerce",
+                )
+                t0_energy = ts_series.min()
+                if not (t0_energy == t0_energy):
+                    logging.warning(
+                        "Energy timestamps are all NaN; cannot auto-calibrate idle power"
+                    )
+                else:
+                    cutoff = float(t0_energy) + float(idle_calibration_seconds)
+                    idle_mask = ts_series <= cutoff
+                    idle_power = pd.to_numeric(
+                        energy.loc[idle_mask, power_col],
+                        errors="coerce",
+                    ).dropna()
+                    if idle_power.empty:
+                        logging.warning(
+                            "No power samples found in first %.1fs of energy CSV; "
+                            "skipping idle power auto-calibration",
+                            idle_calibration_seconds,
+                        )
+                    else:
+                        mean_idle = float(idle_power.mean())
+                        std_idle = float(idle_power.std(ddof=0))
+                        p95_idle = float(idle_power.quantile(0.95))
+                        p99_idle = float(idle_power.quantile(0.99))
+                        auto_idle_thr_w = p99_idle
+                        logging.info(
+                            "Auto-calibrated idle power threshold from first "
+                            "%.1fs of power samples: mean=%.2fW, std=%.2fW, "
+                            "p95=%.2fW, p99=%.2fW -> threshold=%.2fW",
+                            idle_calibration_seconds,
+                            mean_idle,
+                            std_idle,
+                            p95_idle,
+                            p99_idle,
+                            auto_idle_thr_w,
+                        )
+            except Exception as e:
+                logging.warning("Failed to auto-calibrate idle power threshold: %s", e)
+
+    # Helper for applying energy-based idle label in a consistent way
+    def _apply_energy_idle_label(df: "pd.DataFrame", idle_thr_w: Optional[float]) -> None:
+        if idle_thr_w is None:
+            logging.info(
+                "No idle power threshold available; skipping energy_idle_label."
+            )
+            return
+        if "avg_power_w" not in df.columns:
+            logging.info(
+                "avg_power_w not present in merged DataFrame; "
+                "cannot compute energy_idle_label."
+            )
+            return
+        try:
+            mask_valid = df["avg_power_w"].notna()
+            df["energy_idle_label"] = np.where(
+                mask_valid,
+                (df["avg_power_w"] <= float(idle_thr_w)).astype(int),
+                np.nan,
+            )
+            n_idle = int((df["energy_idle_label"] == 1).sum())
+            n_total = int(mask_valid.sum())
+            logging.info(
+                "Energy-idle threshold %.2fW: %d/%d windows flagged idle",
+                float(idle_thr_w),
+                n_idle,
+                n_total,
+            )
+            df["idle_power_threshold_w"] = float(idle_thr_w)
+        except Exception as e:
+            logging.warning("Failed to compute energy_idle_label: %s", e)
+
+    # ------------------------------------------------------------------
     # CASE 1: Per-sample energy CSV with timestamp + energy_j
     # ------------------------------------------------------------------
     if energy_ts_col in energy.columns and energy_col in energy.columns:
@@ -693,20 +801,17 @@ def attach_energy_to_windows(
             f"({energy_ts_col}, {energy_col}); using window-index-based join."
         )
 
-        try:
-            import numpy as np
-        except ImportError:
-            logging.warning("numpy not available; cannot compute window indices")
-            return
-
         # Filter to valid timestamps
         energy = energy[energy[energy_ts_col].notna()].copy()
+
         # Map each energy sample to the same window_index convention
         energy["window_index"] = (
-            ((energy[energy_ts_col].astype("float64") - t0) / window_s)
-            .floordiv(1)
-            .astype(int)
-        )
+            (
+                energy[energy_ts_col].astype("float64")  # type: ignore[index]
+                - float(t0)
+            )
+            / float(window_s)
+        ).floordiv(1).astype(int)
 
         energy_agg = (
             energy.groupby("window_index", as_index=False)[energy_col]
@@ -720,6 +825,16 @@ def attach_energy_to_windows(
             how="left",
             validate="1:1",
         )
+
+        # Average power = energy / window_s
+        if "energy_j_per_window" in merged.columns:
+            try:
+                merged["avg_power_w"] = (
+                    merged["energy_j_per_window"].astype("float64")
+                    / merged["window_s"].astype("float64").replace(0.0, np.nan)
+                )
+            except Exception as e:
+                logging.warning("Failed to compute avg_power_w: %s", e)
 
         merged["energy_per_request"] = (
             merged["energy_j_per_window"]
@@ -739,7 +854,10 @@ def attach_energy_to_windows(
             except Exception as e:
                 logging.warning(f"Failed to compute load/energy correlation: {e}")
 
-        if "idle_label" in merged.columns and "energy_j_per_window" in merged.columns:
+        if (
+            "idle_label" in merged.columns
+            and "energy_j_per_window" in merged.columns
+        ):
             try:
                 idle_energy = merged.loc[
                     merged["idle_label"] == 1, "energy_j_per_window"
@@ -749,36 +867,25 @@ def attach_energy_to_windows(
                 ].dropna()
                 if not idle_energy.empty and not busy_energy.empty:
                     logging.info(
-                        "Idle vs busy energy: "
+                        "Idle vs busy energy_j_per_window: "
                         f"idle_mean={idle_energy.mean():.2f}J, "
                         f"busy_mean={busy_energy.mean():.2f}J"
                     )
             except Exception as e:
                 logging.warning(f"Failed to compute idle/busy energy stats: {e}")
 
-        if (
-            idle_power_threshold_w is not None
-            and "energy_j_per_window" in merged.columns
-        ):
-            try:
-                mask_valid = merged["energy_j_per_window"].notna()
-                thr_energy_j = idle_power_threshold_w * window_s
-                energy_idle = merged["energy_j_per_window"] <= thr_energy_j
-                merged["energy_idle_label"] = np.where(
-                    mask_valid,
-                    energy_idle.astype(int),
-                    np.nan,
-                )
-                n_idle = int((merged["energy_idle_label"] == 1).sum())
-                n_total = int(mask_valid.sum())
-                logging.info(
-                    "Energy-idle threshold %.2fW: %d/%d windows flagged idle",
-                    idle_power_threshold_w,
-                    n_idle,
-                    n_total,
-                )
-            except Exception as e:
-                logging.warning(f"Failed to compute energy_idle_label: {e}")
+        # Decide which idle power threshold to use (manual beats auto)
+        effective_idle_thr_w: Optional[float]
+        if idle_power_threshold_w is not None and idle_power_threshold_w > 0.0:
+            effective_idle_thr_w = float(idle_power_threshold_w)
+            logging.info(
+                "Using user-provided idle_power_threshold_w=%.2fW",
+                effective_idle_thr_w,
+            )
+        else:
+            effective_idle_thr_w = auto_idle_thr_w
+
+        _apply_energy_idle_label(merged, effective_idle_thr_w)
 
         try:
             merged.to_csv(windows_csv_path, index=False)
@@ -827,6 +934,7 @@ def attach_energy_to_windows(
 
         merged = windows.copy()
         merged["energy_j_per_window"] = energy_per_window
+        merged["avg_power_w"] = avg_power_w
 
         merged["energy_per_request"] = (
             merged["energy_j_per_window"]
@@ -834,27 +942,18 @@ def attach_energy_to_windows(
         )
         merged.loc[merged["requests_started"] == 0, "energy_per_request"] = np.nan
 
-        if idle_power_threshold_w is not None:
-            try:
-                mask_valid = merged["energy_j_per_window"].notna()
-                thr_energy_j = idle_power_threshold_w * window_duration_s
-                energy_idle = merged["energy_j_per_window"] <= thr_energy_j
-                merged["energy_idle_label"] = np.where(
-                    mask_valid,
-                    energy_idle.astype(int),
-                    np.nan,
-                )
-                n_idle = int((merged["energy_idle_label"] == 1).sum())
-                n_total = int(mask_valid.sum())
-                logging.info(
-                    "Energy-idle threshold %.2fW (summary-based): %d/%d "
-                    "windows flagged idle",
-                    idle_power_threshold_w,
-                    n_idle,
-                    n_total,
-                )
-            except Exception as e:
-                logging.warning(f"Failed to compute energy_idle_label (summary): {e}")
+        # Decide threshold (manual beats auto)
+        effective_idle_thr_w: Optional[float]
+        if idle_power_threshold_w is not None and idle_power_threshold_w > 0.0:
+            effective_idle_thr_w = float(idle_power_threshold_w)
+            logging.info(
+                "Using user-provided idle_power_threshold_w=%.2fW (summary-based)",
+                effective_idle_thr_w,
+            )
+        else:
+            effective_idle_thr_w = auto_idle_thr_w
+
+        _apply_energy_idle_label(merged, effective_idle_thr_w)
 
         try:
             merged.to_csv(windows_csv_path, index=False)
@@ -902,6 +1001,7 @@ def run_load(
     power_device_index: int = 0,
     phases_total_seconds: Optional[int] = None,
     idle_power_threshold_w: Optional[float] = None,
+    idle_calibration_seconds: float = 0.0,
 ) -> None:
     samples = load_samples(mode)
 
@@ -914,6 +1014,16 @@ def run_load(
             sample_period_s=power_sample_period_s,
             device_index=power_device_index,
         )
+
+    # Optional pre-load idle calibration period (no requests, only power sampling).
+    # This lets us capture a clean GPU idle baseline at the start of the run.
+    if idle_calibration_seconds and idle_calibration_seconds > 0.0:
+        logging.info(
+            "Idle calibration: sleeping for %.1fs with no requests to measure "
+            "GPU baseline power",
+            idle_calibration_seconds,
+        )
+        time.sleep(idle_calibration_seconds)
 
     if warmup_requests > 0:
         logging.info(f"Warmup: sending {warmup_requests} requests (not recorded)")
@@ -1106,6 +1216,7 @@ def run_load(
                 windows_csv_path=windows_csv_path,
                 energy_csv_path=energy_csv_path,
                 idle_power_threshold_w=idle_power_threshold_w,
+                idle_calibration_seconds=idle_calibration_seconds,
             )
 
 
@@ -1246,8 +1357,10 @@ def main() -> None:
         default=None,
         help=(
             "Optional energy-based idle threshold in watts. When set and "
-            "--energy-csv is provided, windows with energy_j_per_window "
-            "less than or equal to this are marked with energy_idle_label=1."
+            "--energy-csv is provided, windows with avg_power_w "
+            "less than or equal to this are marked with energy_idle_label=1. "
+            "If not set and --idle-calibration-seconds is provided, an idle "
+            "threshold is derived from early power samples."
         ),
     )
     parser.add_argument(
@@ -1271,6 +1384,18 @@ def main() -> None:
         type=int,
         default=None,
         help="Optional random seed for reproducible load patterns.",
+    )
+    parser.add_argument(
+        "--idle-calibration-seconds",
+        type=float,
+        default=0.0,
+        help=(
+            "Optional: seconds to spend at the beginning of the run with "
+            "no requests, only GPU power sampling. When provided and "
+            "--idle-power-threshold-w is not set, this period is used to "
+            "automatically calibrate an idle power threshold from NVML "
+            "power samples."
+        ),
     )
 
     args = parser.parse_args()
@@ -1303,6 +1428,7 @@ def main() -> None:
             windows_csv_path=args.windows_csv,
             energy_csv_path=args.energy_csv,
             idle_power_threshold_w=args.idle_power_threshold_w,
+            idle_calibration_seconds=args.idle_calibration_seconds,
         )
         return
 
@@ -1346,6 +1472,7 @@ def main() -> None:
         power_device_index=args.power_device_index,
         phases_total_seconds=args.phases_total_seconds,
         idle_power_threshold_w=args.idle_power_threshold_w,
+        idle_calibration_seconds=args.idle_calibration_seconds,
     )
 
 

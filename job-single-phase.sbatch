@@ -26,8 +26,10 @@ ENV_DIR="$PROJECT_DIR/.venv_torchserve"
 RUN_DIR="$PROJECT_DIR/runs/resnet18_${PHASE_NAME}_$(date +%Y%m%d_%H%M%S)"
 MODEL_STORE="$PROJECT_DIR/model_store"
 
-# Idle baseline ~53.64 W → use a slightly higher threshold
-IDLE_POWER_THRESHOLD_W=58.0
+# Idle calibration: collect GPU idle power samples before load (seconds).
+# This is used to automatically derive an idle power threshold per run.
+# You can tune this down or up (e.g., 30–120 seconds).
+IDLE_CALIBRATION_SECONDS=60
 
 # <<< TUNE THIS: window size in seconds for aggregated metrics >>>
 # Examples:
@@ -115,6 +117,18 @@ sleep 20
 echo "Checking TorchServe /ping"
 curl -s "http://$HOSTNAME:8080/ping" || echo "/ping may 404 until models are loaded"
 
+########################################
+# NEW: scale resnet-18 to use 1 GPU
+########################################
+echo "Scaling resnet-18 to 1 GPU worker via management API"
+curl -s -X PUT "http://127.0.0.1:8081/models/resnet-18" \
+  -H "Content-Type: application/json" \
+  -d '{"min_worker": 1, "max_worker": 1, "number_gpu": 1}' \
+  || echo "Warning: failed to scale resnet-18 to GPU"
+
+# Optional: show model status
+curl -s "http://127.0.0.1:8081/models/resnet-18" || true
+
 echo "Running image workload against resnet-18 (Zeus monitored), phase=${PHASE_NAME}"
 
 POWER_CSV="$RUN_DIR/power_samples_resnet18.csv"
@@ -138,17 +152,16 @@ python "$PROJECT_DIR/measure_with_zeus.py" \
     --window-s "$WINDOW_S" \
     --power-csv "$POWER_CSV" \
     --power-sample-period "$POWER_SAMPLE_PERIOD" \
+    --idle-calibration-seconds "$IDLE_CALIBRATION_SECONDS" \
     --random-seed 42 \
   > "$RUN_DIR/client_resnet18_${PHASE_NAME}.log" 2>&1 || true
 
 # Figure out the window CSV name based on WINDOW_S (must match client.py logic):
 WINDOW_SUFFIX=$(python - <<PY
-import sys
-ws = float(sys.argv[1])
+ws = float("$WINDOW_S")
 suffix = f"{ws:.3f}".rstrip("0").rstrip(".").replace(".", "p")
 print(suffix)
 PY
-"$WINDOW_S"
 )
 
 WINDOWS_CSV="$RUN_DIR/requests_resnet18_windows_${WINDOW_SUFFIX}s.csv"
@@ -163,7 +176,7 @@ if [[ -f "$WINDOWS_CSV" && -f "$POWER_CSV" ]]; then
     --attach-energy-only \
     --windows-csv "$WINDOWS_CSV" \
     --energy-csv "$POWER_CSV" \
-    --idle-power-threshold-w "$IDLE_POWER_THRESHOLD_W" \
+    --idle-calibration-seconds "$IDLE_CALIBRATION_SECONDS" \
     > "$RUN_DIR/attach_energy_resnet18_${PHASE_NAME}.log" 2>&1 || true
 else
   echo "Skipping energy/window join: $WINDOWS_CSV or $POWER_CSV missing"
