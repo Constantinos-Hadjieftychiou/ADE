@@ -29,6 +29,16 @@ MODEL_STORE="$PROJECT_DIR/model_store"
 # Idle baseline ~53.64 W → use a slightly higher threshold
 IDLE_POWER_THRESHOLD_W=58.0
 
+# <<< TUNE THIS: window size in seconds for aggregated metrics >>>
+# Examples:
+#   WINDOW_S=1.0  # 1s
+#   WINDOW_S=0.5  # 500ms
+#   WINDOW_S=0.25 # 250ms
+WINDOW_S=0.5
+
+# High-frequency power sampling (seconds) via NVML
+POWER_SAMPLE_PERIOD=0.1
+
 mkdir -p "$RUN_DIR" "$MODEL_STORE"
 
 export OMP_NUM_THREADS=1
@@ -79,7 +89,7 @@ PIP_ONLY_BINARY=":all:" pip install --index-url https://download.pytorch.org/whl
 }
 
 pip install --quiet \
-  torchserve torch-model-archiver pillow requests transformers pandas numpy
+  torchserve torch-model-archiver pillow requests transformers pandas numpy nvidia-ml-py3
 
 pip install --quiet --no-deps captum
 
@@ -107,6 +117,8 @@ curl -s "http://$HOSTNAME:8080/ping" || echo "/ping may 404 until models are loa
 
 echo "Running image workload against resnet-18 (Zeus monitored), phase=${PHASE_NAME}"
 
+POWER_CSV="$RUN_DIR/power_samples_resnet18.csv"
+
 python "$PROJECT_DIR/measure_with_zeus.py" \
   --window-name "resnet18_${PHASE_NAME}" \
   --zeus-update-period 1.0 \
@@ -123,28 +135,38 @@ python "$PROJECT_DIR/measure_with_zeus.py" \
     --phases-json "$PROJECT_DIR/phases.json" \
     --phase-name "$PHASE_NAME" \
     --csv "$RUN_DIR/requests_resnet18.csv" \
+    --window-s "$WINDOW_S" \
+    --power-csv "$POWER_CSV" \
+    --power-sample-period "$POWER_SAMPLE_PERIOD" \
     --random-seed 42 \
   > "$RUN_DIR/client_resnet18_${PHASE_NAME}.log" 2>&1 || true
 
-# After client.py finishes, it will have written:
-#   $RUN_DIR/requests_resnet18.csv
-#   $RUN_DIR/requests_resnet18_windows_1s.csv
-# Zeus wrote:
-#   $RUN_DIR/zeus_windows_resnet18.csv
-# Now attach energy to the windows CSV in a separate, clean pass.
+# Figure out the window CSV name based on WINDOW_S (must match client.py logic):
+WINDOW_SUFFIX=$(python - <<PY
+import sys
+ws = float(sys.argv[1])
+suffix = f"{ws:.3f}".rstrip("0").rstrip(".").replace(".", "p")
+print(suffix)
+PY
+"$WINDOW_S"
+)
 
-WINDOWS_CSV="$RUN_DIR/requests_resnet18_windows_1s.csv"
+WINDOWS_CSV="$RUN_DIR/requests_resnet18_windows_${WINDOW_SUFFIX}s.csv"
 
-if [[ -f "$WINDOWS_CSV" && -f "$RUN_DIR/zeus_windows_resnet18.csv" ]]; then
-  echo "Post-processing: attaching energy to windows CSV for phase=${PHASE_NAME}"
+echo "Expecting windows CSV at: $WINDOWS_CSV"
+
+# Now attach NVML-based energy to the windows CSV in a separate pass.
+
+if [[ -f "$WINDOWS_CSV" && -f "$POWER_CSV" ]]; then
+  echo "Post-processing: attaching NVML energy to windows CSV for phase=${PHASE_NAME}"
   python "$PROJECT_DIR/client.py" \
     --attach-energy-only \
     --windows-csv "$WINDOWS_CSV" \
-    --energy-csv "$RUN_DIR/zeus_windows_resnet18.csv" \
+    --energy-csv "$POWER_CSV" \
     --idle-power-threshold-w "$IDLE_POWER_THRESHOLD_W" \
     > "$RUN_DIR/attach_energy_resnet18_${PHASE_NAME}.log" 2>&1 || true
 else
-  echo "Skipping energy/window join: $WINDOWS_CSV or energy CSV missing"
+  echo "Skipping energy/window join: $WINDOWS_CSV or $POWER_CSV missing"
 fi
 
 echo "Fetching TorchServe metrics"

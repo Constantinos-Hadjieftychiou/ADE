@@ -372,6 +372,22 @@ def schedule_pattern(
 
 
 def aggregate_window_metrics(csv_path: str, window_s: float = 1.0) -> Optional[str]:
+    """
+    Aggregate per-request metrics into fixed windows.
+
+    window_s may be < 1.0 for sub-second windows; the resulting CSV
+    will have:
+      - window_index
+      - window_start_ts
+      - window_start_dt
+      - requests_started
+      - avg_latency_ms
+      - p50_latency_ms
+      - error_rate
+      - rps (requests_started / window_s)
+      - is_idle / idle_label
+      - window_s (constant column)
+    """
     try:
         import pandas as pd
         import numpy as np
@@ -397,13 +413,21 @@ def aggregate_window_metrics(csv_path: str, window_s: float = 1.0) -> Optional[s
         )
         return None
 
+    if window_s <= 0:
+        logging.warning(
+            f"Invalid window_s={window_s}; using default 1.0s for aggregation"
+        )
+        window_s = 1.0
+
     t_min = df["ts_start"].min()
     t_max = df["ts_start"].max()
     if t_min is None or (isinstance(t_min, float) and (t_min != t_min)):
         logging.warning("ts_start has no valid values; skipping window aggregation")
         return None
 
-    df["window_index"] = np.floor((df["ts_start"] - t_min) / window_s).astype(int)
+    df["window_index"] = (
+        ((df["ts_start"] - t_min) / window_s).astype("float64").floordiv(1).astype(int)
+    )
     grouped = df.groupby("window_index")
 
     window_stats = grouped.agg(
@@ -413,15 +437,20 @@ def aggregate_window_metrics(csv_path: str, window_s: float = 1.0) -> Optional[s
         error_rate=("status_code", lambda s: (s != 200).mean() * 100.0),
     )
 
-    max_index = int(np.floor((t_max - t_min) / window_s))
-    full_index = np.arange(0, max_index + 1, dtype=int)
+    max_index = int(((t_max - t_min) / window_s) // 1)
+    full_index = pd.Index(range(0, max_index + 1), name="window_index")
     window_stats = window_stats.reindex(full_index)
 
-    window_stats["requests_started"] = window_stats["requests_started"].fillna(0).astype(int)
+    window_stats["requests_started"] = window_stats["requests_started"].fillna(0).astype(
+        int
+    )
     window_stats["error_rate"] = window_stats["error_rate"].fillna(0.0)
 
-    window_stats = window_stats.reset_index().rename(columns={"index": "window_index"})
-    window_stats["window_start_ts"] = t_min + window_stats["window_index"] * window_s
+    window_stats = window_stats.reset_index()
+
+    window_stats["window_start_ts"] = (
+        t_min + window_stats["window_index"] * float(window_s)
+    )
 
     try:
         window_stats["window_start_dt"] = pd.to_datetime(
@@ -433,7 +462,16 @@ def aggregate_window_metrics(csv_path: str, window_s: float = 1.0) -> Optional[s
     window_stats["is_idle"] = window_stats["requests_started"] == 0
     window_stats["idle_label"] = window_stats["is_idle"].astype(int)
 
-    out_path = csv_path.replace(".csv", f"_windows_{int(window_s)}s.csv")
+    # Effective requests-per-second in each window
+    window_stats["window_s"] = float(window_s)
+    window_stats["rps"] = (
+        window_stats["requests_started"] / window_stats["window_s"].replace(0.0, 1.0)
+    )
+
+    # Make the output file name stable for both integer and fractional window_s
+    suffix = f"{window_s:.3f}".rstrip("0").rstrip(".").replace(".", "p")
+    out_path = csv_path.replace(".csv", f"_windows_{suffix}s.csv")
+
     try:
         window_stats.to_csv(out_path, index=False)
         logging.info(f"Wrote window-level metrics to {out_path}")
@@ -443,6 +481,131 @@ def aggregate_window_metrics(csv_path: str, window_s: float = 1.0) -> Optional[s
         return None
 
 
+def power_sampler_loop(
+    csv_path: str,
+    sample_period_s: float,
+    device_index: int,
+    stop_event: threading.Event,
+) -> None:
+    """
+    Background loop that samples GPU power via NVML and writes:
+      timestamp (s since epoch),
+      power_w,
+      energy_j (approx power * sample_period_s)
+    """
+    try:
+        import pynvml  # type: ignore[import]
+    except Exception as e:
+        logging.warning("pynvml/NVML not available; power sampling disabled: %s", e)
+        return
+
+    try:
+        pynvml.nvmlInit()
+    except Exception as e:
+        logging.warning("Failed to initialize NVML; power sampling disabled: %s", e)
+        return
+
+    try:
+        handle = pynvml.nvmlDeviceGetHandleByIndex(device_index)
+    except Exception as e:
+        logging.warning(
+            "Failed to get NVML handle for device index %d: %s", device_index, e
+        )
+        try:
+            pynvml.nvmlShutdown()
+        except Exception:
+            pass
+        return
+
+    csv_dir = os.path.dirname(csv_path)
+    if csv_dir:
+        os.makedirs(csv_dir, exist_ok=True)
+
+    try:
+        f = open(csv_path, "w", newline="")
+    except Exception as e:
+        logging.warning("Failed to open power CSV %s: %s", csv_path, e)
+        try:
+            pynvml.nvmlShutdown()
+        except Exception:
+            pass
+        return
+
+    writer = csv.DictWriter(f, fieldnames=["timestamp", "power_w", "energy_j"])
+    writer.writeheader()
+    f.flush()
+
+    logging.info(
+        "Starting power sampler: device_index=%d, period=%.3fs, csv=%s",
+        device_index,
+        sample_period_s,
+        csv_path,
+    )
+
+    try:
+        while not stop_event.is_set():
+            t0 = time.time()
+            try:
+                power_mw = pynvml.nvmlDeviceGetPowerUsage(handle)
+                power_w = float(power_mw) / 1000.0
+                energy_j = power_w * float(sample_period_s)
+            except Exception as e:
+                logging.warning("Failed to query NVML power: %s", e)
+                power_w = float("nan")
+                energy_j = float("nan")
+
+            writer.writerow(
+                {
+                    "timestamp": f"{t0:.6f}",
+                    "power_w": f"{power_w:.6f}",
+                    "energy_j": f"{energy_j:.6f}",
+                }
+            )
+            f.flush()
+
+            elapsed = time.time() - t0
+            sleep_for = sample_period_s - elapsed
+            if sleep_for > 0:
+                time.sleep(sleep_for)
+    finally:
+        try:
+            f.close()
+        except Exception:
+            pass
+        try:
+            pynvml.nvmlShutdown()
+        except Exception:
+            pass
+
+    logging.info("Power sampler stopped")
+
+
+def start_power_sampler(
+    csv_path: Optional[str],
+    sample_period_s: float,
+    device_index: int,
+) -> (Optional[threading.Thread], Optional[threading.Event]):
+    """
+    Helper to start the power sampler thread if csv_path is provided.
+    Returns (thread, stop_event) or (None, None) if disabled/failed.
+    """
+    if not csv_path:
+        return None, None
+
+    stop_event: threading.Event = threading.Event()
+    thread = threading.Thread(
+        target=power_sampler_loop,
+        args=(csv_path, sample_period_s, device_index, stop_event),
+        daemon=True,
+    )
+    try:
+        thread.start()
+        return thread, stop_event
+    except Exception as e:
+        logging.warning("Failed to start power sampler: %s", e)
+        return None, None
+
+
 def attach_energy_to_windows(
     windows_csv_path: str,
     energy_csv_path: str,
@@ -450,6 +613,25 @@ def attach_energy_to_windows(
     energy_col: str = "energy_j",
     idle_power_threshold_w: Optional[float] = None,
 ) -> None:
+    """
+    Attach energy information to window-level metrics.
+
+    Supports two kinds of energy CSVs:
+
+    1) Per-sample energy CSV (preferred, e.g. NVML sampler):
+       - Columns: `energy_ts_col` (default: 'timestamp'),
+                  `energy_col`   (default: 'energy_j')
+       - `energy_j` is the Joules for that sample interval.
+       We compute window_index for each energy sample based on
+       the windows' time origin and window_s, aggregate by
+       window_index, and join.
+
+    2) Zeus summary CSV from measure_with_zeus.py:
+       - Columns: 'wall_time_s', 'zeus_total_energy_j'
+       - Single-row summary for the whole run
+       In this case we compute a *constant* per-window energy based on
+       average power = total_energy / wall_time and the window size.
+    """
     try:
         import pandas as pd
         import numpy as np
@@ -480,97 +662,223 @@ def attach_energy_to_windows(
         logging.warning("Windows or energy CSV is empty; skipping join")
         return
 
-    if "window_start_ts" not in windows.columns:
+    if "window_start_ts" not in windows.columns or "window_index" not in windows.columns:
         logging.warning(
-            f"{windows_csv_path} missing window_start_ts; skipping energy/window join"
+            f"{windows_csv_path} missing window_start_ts/window_index; "
+            "skipping energy/window join"
         )
         return
 
-    if energy_ts_col not in energy.columns or energy_col not in energy.columns:
-        logging.warning(
-            f"{energy_csv_path} missing required columns "
-            f"({energy_ts_col}, {energy_col}); skipping energy/window join"
-        )
+    # Determine the window size used during aggregation (defaults to 1.0)
+    window_s = 1.0
+    if "window_s" in windows.columns:
+        try:
+            ws = float(windows["window_s"].iloc[0])
+            if ws > 0:
+                window_s = ws
+        except Exception:
+            pass
+
+    t0 = windows["window_start_ts"].min()
+    if not isinstance(t0, (int, float)) or not (t0 == t0):
+        logging.warning("window_start_ts has no valid values; skipping energy join")
         return
 
-    windows["second"] = windows["window_start_ts"].round().astype("int64")
-    energy["second"] = energy[energy_ts_col].round().astype("int64")
-
-    energy_agg = (
-        energy.groupby("second", as_index=False)[energy_col]
-        .sum()
-        .rename(columns={energy_col: "energy_j_per_window"})
-    )
-
-    merged = windows.merge(
-        energy_agg,
-        on="second",
-        how="left",
-        validate="m:1",
-    )
-
-    merged["energy_per_request"] = (
-        merged["energy_j_per_window"] /
-        merged["requests_started"].clip(lower=1)
-    )
-    merged.loc[merged["requests_started"] == 0, "energy_per_request"] = np.nan
-
-    if "energy_j_per_window" in merged.columns:
-        try:
-            corr_df = merged[["requests_started", "energy_j_per_window"]].dropna()
-            if not corr_df.empty:
-                corr = corr_df.corr().iloc[0, 1]
-                logging.info(
-                    f"Corr(requests_started, energy_j_per_window) = {corr:.4f}"
-                )
-        except Exception as e:
-            logging.warning(f"Failed to compute load/energy correlation: {e}")
-
-    if "idle_label" in merged.columns and "energy_j_per_window" in merged.columns:
-        try:
-            idle_energy = merged.loc[merged["idle_label"] == 1, "energy_j_per_window"].dropna()
-            busy_energy = merged.loc[merged["idle_label"] == 0, "energy_j_per_window"].dropna()
-            if not idle_energy.empty and not busy_energy.empty:
-                logging.info(
-                    "Idle vs busy energy: "
-                    f"idle_mean={idle_energy.mean():.2f}J, "
-                    f"busy_mean={busy_energy.mean():.2f}J"
-                )
-        except Exception as e:
-            logging.warning(f"Failed to compute idle/busy energy stats: {e}")
-
-    if idle_power_threshold_w is not None and "energy_j_per_window" in merged.columns:
-        try:
-            mask_valid = merged["energy_j_per_window"].notna()
-            energy_idle = merged["energy_j_per_window"] <= idle_power_threshold_w
-            merged["energy_idle_label"] = np.where(
-                mask_valid,
-                energy_idle.astype(int),
-                np.nan,
-            )
-            n_idle = int((merged["energy_idle_label"] == 1).sum())
-            n_total = int(mask_valid.sum())
-            logging.info(
-                "Energy-idle threshold %.2fW: %d/%d windows flagged idle",
-                idle_power_threshold_w,
-                n_idle,
-                n_total,
-            )
-        except Exception as e:
-            logging.warning(f"Failed to compute energy_idle_label: {e}")
-
-    try:
-        merged.drop(columns=["second"], inplace=True)
-    except KeyError:
-        pass
-
-    try:
-        merged.to_csv(windows_csv_path, index=False)
+    # ------------------------------------------------------------------
+    # CASE 1: Per-sample energy CSV with timestamp + energy_j
+    # ------------------------------------------------------------------
+    if energy_ts_col in energy.columns and energy_col in energy.columns:
         logging.info(
-            f"Attached energy features to window metrics in {windows_csv_path}"
+            f"Energy CSV {energy_csv_path} has per-sample columns "
+            f"({energy_ts_col}, {energy_col}); using window-index-based join."
         )
-    except Exception as e:
-        logging.warning(f"Failed to write energy-augmented CSV {windows_csv_path}: {e}")
+
+        try:
+            import numpy as np
+        except ImportError:
+            logging.warning("numpy not available; cannot compute window indices")
+            return
+
+        # Filter to valid timestamps
+        energy = energy[energy[energy_ts_col].notna()].copy()
+        # Map each energy sample to the same window_index convention
+        energy["window_index"] = (
+            ((energy[energy_ts_col].astype("float64") - t0) / window_s)
+            .floordiv(1)
+            .astype(int)
+        )
+
+        energy_agg = (
+            energy.groupby("window_index", as_index=False)[energy_col]
+            .sum()
+            .rename(columns={energy_col: "energy_j_per_window"})
+        )
+
+        merged = windows.merge(
+            energy_agg,
+            on="window_index",
+            how="left",
+            validate="1:1",
+        )
+
+        merged["energy_per_request"] = (
+            merged["energy_j_per_window"]
+            / merged["requests_started"].clip(lower=1)
+        )
+        merged.loc[merged["requests_started"] == 0, "energy_per_request"] = np.nan
+
+        # Some helpful correlations / stats
+        if "energy_j_per_window" in merged.columns:
+            try:
+                corr_df = merged[["requests_started", "energy_j_per_window"]].dropna()
+                if not corr_df.empty:
+                    corr = corr_df.corr().iloc[0, 1]
+                    logging.info(
+                        f"Corr(requests_started, energy_j_per_window) = {corr:.4f}"
+                    )
+            except Exception as e:
+                logging.warning(f"Failed to compute load/energy correlation: {e}")
+
+        if "idle_label" in merged.columns and "energy_j_per_window" in merged.columns:
+            try:
+                idle_energy = merged.loc[
+                    merged["idle_label"] == 1, "energy_j_per_window"
+                ].dropna()
+                busy_energy = merged.loc[
+                    merged["idle_label"] == 0, "energy_j_per_window"
+                ].dropna()
+                if not idle_energy.empty and not busy_energy.empty:
+                    logging.info(
+                        "Idle vs busy energy: "
+                        f"idle_mean={idle_energy.mean():.2f}J, "
+                        f"busy_mean={busy_energy.mean():.2f}J"
+                    )
+            except Exception as e:
+                logging.warning(f"Failed to compute idle/busy energy stats: {e}")
+
+        if (
+            idle_power_threshold_w is not None
+            and "energy_j_per_window" in merged.columns
+        ):
+            try:
+                mask_valid = merged["energy_j_per_window"].notna()
+                thr_energy_j = idle_power_threshold_w * window_s
+                energy_idle = merged["energy_j_per_window"] <= thr_energy_j
+                merged["energy_idle_label"] = np.where(
+                    mask_valid,
+                    energy_idle.astype(int),
+                    np.nan,
+                )
+                n_idle = int((merged["energy_idle_label"] == 1).sum())
+                n_total = int(mask_valid.sum())
+                logging.info(
+                    "Energy-idle threshold %.2fW: %d/%d windows flagged idle",
+                    idle_power_threshold_w,
+                    n_idle,
+                    n_total,
+                )
+            except Exception as e:
+                logging.warning(f"Failed to compute energy_idle_label: {e}")
+
+        try:
+            merged.to_csv(windows_csv_path, index=False)
+            logging.info(
+                f"Attached energy features to window metrics in {windows_csv_path}"
+            )
+        except Exception as e:
+            logging.warning(
+                f"Failed to write energy-augmented CSV {windows_csv_path}: {e}"
+            )
+
+        return  # Done with case 1
+
+    # ------------------------------------------------------------------
+    # CASE 2: Zeus summary CSV (wall_time_s, zeus_total_energy_j)
+    # ------------------------------------------------------------------
+    if {"wall_time_s", "zeus_total_energy_j"}.issubset(energy.columns):
+        logging.info(
+            f"Energy CSV {energy_csv_path} looks like a Zeus summary "
+            "(wall_time_s, zeus_total_energy_j); deriving per-window energy "
+            "from average power."
+        )
+
+        summary = energy.iloc[0]
+        try:
+            wall_time_s = float(summary["wall_time_s"])
+            total_energy_j = float(summary["zeus_total_energy_j"])
+        except Exception as e:
+            logging.warning(
+                f"Failed to parse wall_time_s/zeus_total_energy_j from "
+                f"{energy_csv_path}: {e}"
+            )
+            return
+
+        if wall_time_s <= 0 or total_energy_j < 0:
+            logging.warning(
+                f"Non-positive wall_time_s ({wall_time_s}) or "
+                f"zeus_total_energy_j ({total_energy_j}); "
+                "skipping energy/window join"
+            )
+            return
+
+        avg_power_w = total_energy_j / wall_time_s
+        window_duration_s = float(window_s)
+        energy_per_window = avg_power_w * window_duration_s
+
+        merged = windows.copy()
+        merged["energy_j_per_window"] = energy_per_window
+
+        merged["energy_per_request"] = (
+            merged["energy_j_per_window"]
+            / merged["requests_started"].clip(lower=1)
+        )
+        merged.loc[merged["requests_started"] == 0, "energy_per_request"] = np.nan
+
+        if idle_power_threshold_w is not None:
+            try:
+                mask_valid = merged["energy_j_per_window"].notna()
+                thr_energy_j = idle_power_threshold_w * window_duration_s
+                energy_idle = merged["energy_j_per_window"] <= thr_energy_j
+                merged["energy_idle_label"] = np.where(
+                    mask_valid,
+                    energy_idle.astype(int),
+                    np.nan,
+                )
+                n_idle = int((merged["energy_idle_label"] == 1).sum())
+                n_total = int(mask_valid.sum())
+                logging.info(
+                    "Energy-idle threshold %.2fW (summary-based): %d/%d "
+                    "windows flagged idle",
+                    idle_power_threshold_w,
+                    n_idle,
+                    n_total,
+                )
+            except Exception as e:
+                logging.warning(f"Failed to compute energy_idle_label (summary): {e}")
+
+        try:
+            merged.to_csv(windows_csv_path, index=False)
+            logging.info(
+                f"Attached summary-based energy features to window metrics in "
+                f"{windows_csv_path}"
+            )
+        except Exception as e:
+            logging.warning(
+                f"Failed to write energy-augmented CSV (summary) "
+                f"{windows_csv_path}: {e}"
+            )
+
+        return  # Done with case 2
+
+    # ------------------------------------------------------------------
+    # CASE 3: Unknown CSV format
+    # ------------------------------------------------------------------
+    logging.warning(
+        f"{energy_csv_path} missing required columns for energy join. "
+        f"Tried per-sample ({energy_ts_col}, {energy_col}) and "
+        f"summary ('wall_time_s', 'zeus_total_energy_j'). "
+        f"Available columns: {list(energy.columns)}"
+    )
 
 
 def run_load(
@@ -586,12 +894,26 @@ def run_load(
     pattern: TrafficPattern,
     warmup_requests: int,
     csv_path: Optional[str],
+    window_s: float,
     phases: Optional[List[Dict[str, Any]]] = None,
     energy_csv_path: Optional[str] = None,
+    power_csv_path: Optional[str] = None,
+    power_sample_period_s: float = 0.1,
+    power_device_index: int = 0,
     phases_total_seconds: Optional[int] = None,
     idle_power_threshold_w: Optional[float] = None,
 ) -> None:
     samples = load_samples(mode)
+
+    # Optional GPU power sampling (high-frequency, NVML-based)
+    power_thread: Optional[threading.Thread] = None
+    power_stop_event: Optional[threading.Event] = None
+    if power_csv_path:
+        power_thread, power_stop_event = start_power_sampler(
+            csv_path=power_csv_path,
+            sample_period_s=power_sample_period_s,
+            device_index=power_device_index,
+        )
 
     if warmup_requests > 0:
         logging.info(f"Warmup: sending {warmup_requests} requests (not recorded)")
@@ -712,6 +1034,11 @@ def run_load(
     for t in threads:
         t.join()
 
+    # Stop power sampler once all load has finished
+    if power_stop_event is not None and power_thread is not None:
+        power_stop_event.set()
+        power_thread.join()
+
     if not results:
         logging.warning("No successful requests recorded (results list is empty)")
         return
@@ -772,7 +1099,7 @@ def run_load(
             logging.warning(f"Failed to write per-request CSV {csv_path}: {e}")
             return
 
-        windows_csv_path = aggregate_window_metrics(csv_path, window_s=1.0)
+        windows_csv_path = aggregate_window_metrics(csv_path, window_s=window_s)
 
         if windows_csv_path and energy_csv_path:
             attach_energy_to_windows(
@@ -850,6 +1177,12 @@ def main() -> None:
         help="Path to write per-request CSV metrics (optional)",
     )
     parser.add_argument(
+        "--window-s",
+        type=float,
+        default=1.0,
+        help="Window size in seconds for aggregated metrics (default: 1.0)",
+    )
+    parser.add_argument(
         "--token",
         default=None,
         help="Auth token for TorchServe (optional)",
@@ -871,9 +1204,31 @@ def main() -> None:
         "--energy-csv",
         default=None,
         help=(
-            "Optional path to a per-second energy CSV with columns "
-            "'timestamp' and 'energy_j'."
+            "Optional path to an energy CSV. Supports either per-sample "
+            "columns 'timestamp'/'energy_j' or a Zeus summary CSV with "
+            "'wall_time_s'/'zeus_total_energy_j'."
         ),
+    )
+    parser.add_argument(
+        "--power-csv",
+        default=None,
+        help=(
+            "Optional path to a power sampling CSV collected via NVML "
+            "(timestamp, power_w, energy_j). When provided, a background "
+            "sampler will run during the load test."
+        ),
+    )
+    parser.add_argument(
+        "--power-sample-period",
+        type=float,
+        default=0.1,
+        help="Sampling period in seconds for --power-csv (default: 0.1)",
+    )
+    parser.add_argument(
+        "--power-device-index",
+        type=int,
+        default=0,
+        help="NVML GPU device index to sample with --power-csv (default: 0)",
     )
     parser.add_argument(
         "--phases-total-seconds",
@@ -983,8 +1338,12 @@ def main() -> None:
         pattern=args.pattern,  # type: ignore[arg-type]
         warmup_requests=args.warmup_requests,
         csv_path=args.csv,
+        window_s=args.window_s,
         phases=phases,
         energy_csv_path=args.energy_csv,
+        power_csv_path=args.power_csv,
+        power_sample_period_s=args.power_sample_period,
+        power_device_index=args.power_device_index,
         phases_total_seconds=args.phases_total_seconds,
         idle_power_threshold_w=args.idle_power_threshold_w,
     )

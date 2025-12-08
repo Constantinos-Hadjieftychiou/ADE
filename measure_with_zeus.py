@@ -54,7 +54,7 @@ def main() -> None:
         "--zeus-update-period",
         type=float,
         default=None,
-        help="Optional Zeus power sampling period in seconds (if supported).",
+        help="Optional Zeus power sampling period in seconds.",
     )
     parser.add_argument(
         "cmd",
@@ -81,53 +81,20 @@ def main() -> None:
         print("[Zeus] Zeus is not installed or failed to import. Running without measurement.")
         monitor = None
     else:
-        # Try to initialise with update_period if supported; otherwise fall back.
         try:
             if args.zeus_update_period is not None:
-                try:
-                    monitor = ZeusMonitor(update_period=args.zeus_update_period)  # type: ignore[call-arg]
-                    print("[Zeus] ZeusMonitor initialised.")
-                except TypeError:
-                    # Older Zeus versions: no update_period argument
-                    monitor = ZeusMonitor()  # type: ignore[call-arg]
-                    print("[Zeus] ZeusMonitor initialised (no update_period support).")
+                monitor = ZeusMonitor(update_period=args.zeus_update_period)  # type: ignore[call-arg]
+                print("[Zeus] ZeusMonitor initialised.")
             else:
                 monitor = ZeusMonitor()  # type: ignore[call-arg]
                 print("[Zeus] ZeusMonitor initialised.")
-        except Exception as e:
-            print(
-                f"[Zeus] Failed to initialise ZeusMonitor: {e}. "
-                "Running without measurement.",
-                file=sys.stderr,
-            )
-            monitor = None
+        except TypeError:
+            # Fallback for older Zeus versions without update_period argument
+            monitor = ZeusMonitor()  # type: ignore[call-arg]
+            print("[Zeus] ZeusMonitor initialised (no update_period support).")
 
-    # --- IMPORTANT: protect begin_window from CUDA OOM so the job doesn't crash ---
     if monitor is not None:
-        try:
-            monitor.begin_window(args.window_name)
-        except RuntimeError as e:
-            msg = str(e)
-            if "out of memory" in msg.lower():
-                print(
-                    "[Zeus] CUDA OOM during begin_window; "
-                    "disabling Zeus measurement for this run.",
-                    file=sys.stderr,
-                )
-            else:
-                print(
-                    f"[Zeus] begin_window failed: {e}; "
-                    "disabling Zeus measurement for this run.",
-                    file=sys.stderr,
-                )
-            monitor = None
-        except Exception as e:
-            print(
-                f"[Zeus] begin_window failed: {e}; "
-                "disabling Zeus measurement for this run.",
-                file=sys.stderr,
-            )
-            monitor = None
+        monitor.begin_window(args.window_name)
 
     start_time = time.time()
     return_code = 1
@@ -164,7 +131,7 @@ def main() -> None:
             with json_path.open("w") as f:
                 json.dump(measurement_dict, f, indent=2)
 
-        if args.log_ccsv:
+        if args.log_csv:
             write_csv_row(Path(args.log_csv), measurement_dict)
 
     sys.exit(return_code)
