@@ -11,7 +11,7 @@
 set -u
 set -o pipefail
 
-echo "Starting TorchServe ResNet-18 job on $HOSTNAME"
+echo "🚀 Starting TorchServe ResNet-18 job on $HOSTNAME"
 echo "SLURM_JOBID=${SLURM_JOB_ID:-unknown} | CUDA_VISIBLE_DEVICES=${CUDA_VISIBLE_DEVICES:-unset}"
 
 PROJECT_DIR="$SLURM_SUBMIT_DIR"
@@ -19,19 +19,29 @@ ENV_DIR="$PROJECT_DIR/.venv_torchserve"
 RUN_DIR="$PROJECT_DIR/runs/resnet18_run_$(date +%Y%m%d_%H%M%S)"
 MODEL_STORE="$PROJECT_DIR/model_store"
 
+# ------------------------------------------------------------------------------
+# Configurable parameters (can be overridden via sbatch --export or env)
+# ------------------------------------------------------------------------------
+
 # Idle calibration: collect GPU idle power samples before load (seconds).
 # This is used to automatically derive an idle power threshold per run.
-IDLE_CALIBRATION_SECONDS=60
+IDLE_CALIBRATION_SECONDS="${IDLE_CALIBRATION_SECONDS:-60}"
 
-# <<< TUNE THIS: window size in seconds for aggregated metrics >>>
-# Examples:
-#   WINDOW_S=1.0  # 1s
-#   WINDOW_S=0.5  # 500ms
-#   WINDOW_S=0.25 # 250ms
-WINDOW_S=0.5
+# Window size in seconds for aggregated metrics
+#   e.g. 1.0 (1s), 0.5 (500ms), 0.25 (250ms)
+WINDOW_S="${WINDOW_S:-0.5}"
 
-# High-frequency power sampling (seconds) via NVML
-POWER_SAMPLE_PERIOD=0.1
+# High-frequency power sampling period (seconds) via NVML
+POWER_SAMPLE_PERIOD="${POWER_SAMPLE_PERIOD:-0.1}"
+
+# Client/workload parameters
+CONCURRENCY="${CONCURRENCY:-16}"
+WARMUP_REQUESTS="${WARMUP_REQUESTS:-100}"
+PATTERN="${PATTERN:-steady}"  # can be burst/steady/poisson
+PHASES_JSON="${PHASES_JSON:-$PROJECT_DIR/phases.json}"
+SEED="${SEED:-42}"
+
+POWER_CSV="$RUN_DIR/power_samples_resnet18.csv"
 
 mkdir -p "$RUN_DIR" "$MODEL_STORE"
 
@@ -44,6 +54,15 @@ export TORCH_HOME="$PROJECT_DIR/.torch_cache"
 
 echo "PROJECT_DIR=$PROJECT_DIR"
 echo "RUN_DIR=$RUN_DIR"
+echo "MODEL_STORE=$MODEL_STORE"
+echo "WINDOW_S=$WINDOW_S"
+echo "POWER_SAMPLE_PERIOD=$POWER_SAMPLE_PERIOD"
+echo "CONCURRENCY=$CONCURRENCY"
+echo "WARMUP_REQUESTS=$WARMUP_REQUESTS"
+echo "PATTERN=$PATTERN"
+echo "PHASES_JSON=$PHASES_JSON"
+echo "SEED=$SEED"
+echo "IDLE_CALIBRATION_SECONDS=$IDLE_CALIBRATION_SECONDS"
 
 unset PYTHONPATH || true
 
@@ -70,6 +89,7 @@ if [[ ! -d "$ENV_DIR" ]]; then
   python -m venv "$ENV_DIR"
 fi
 
+# shellcheck source=/dev/null
 source "$ENV_DIR/bin/activate"
 
 export PIP_NO_BUILD_ISOLATION=1
@@ -97,6 +117,26 @@ python "$PROJECT_DIR/build_resnet_mar.py" || {
 
 cd "$PROJECT_DIR"
 
+# ------------------------------------------------------------------------------
+# Record run configuration for reproducibility
+# ------------------------------------------------------------------------------
+cat > "$RUN_DIR/config_resnet18_run.json" <<EOF
+{
+  "job_name": "torchserve_resnet18",
+  "slurm_job_id": "${SLURM_JOB_ID:-unknown}",
+  "host": "${HOSTNAME}",
+  "window_s": ${WINDOW_S},
+  "power_sample_period": ${POWER_SAMPLE_PERIOD},
+  "idle_calibration_seconds": ${IDLE_CALIBRATION_SECONDS},
+  "concurrency": ${CONCURRENCY},
+  "warmup_requests": ${WARMUP_REQUESTS},
+  "pattern": "${PATTERN}",
+  "phases_json": "${PHASES_JSON}",
+  "seed": ${SEED},
+  "model_name": "resnet-18"
+}
+EOF
+
 echo "Starting TorchServe (ResNet-18)"
 torchserve --start --ncs \
   --disable-token-auth \
@@ -110,7 +150,7 @@ echo "Checking TorchServe /ping"
 curl -s "http://$HOSTNAME:8080/ping" || echo "/ping may 404 until models are loaded"
 
 ########################################
-# NEW: scale resnet-18 to 1 GPU worker
+# Scale resnet-18 to 1 GPU worker
 ########################################
 echo "Scaling resnet-18 to 1 GPU worker via management API"
 curl -s -X PUT "http://127.0.0.1:8081/models/resnet-18" \
@@ -123,8 +163,6 @@ curl -s "http://127.0.0.1:8081/models/resnet-18" || true
 
 echo "Running image workload against resnet-18 across ALL phases (Zeus + NVML monitored)"
 
-POWER_CSV="$RUN_DIR/power_samples_resnet18.csv"
-
 python "$PROJECT_DIR/measure_with_zeus.py" \
   --window-name "resnet18_phases" \
   --zeus-update-period 1.0 \
@@ -135,16 +173,16 @@ python "$PROJECT_DIR/measure_with_zeus.py" \
     --url "http://$HOSTNAME:8080" \
     --mode image \
     --model-name resnet-18 \
-    --pattern steady \
-    --warmup-requests 100 \
-    --concurrency 16 \
-    --phases-json "$PROJECT_DIR/phases.json" \
+    --pattern "$PATTERN" \
+    --warmup-requests "$WARMUP_REQUESTS" \
+    --concurrency "$CONCURRENCY" \
+    --phases-json "$PHASES_JSON" \
     --csv "$RUN_DIR/requests_resnet18.csv" \
     --window-s "$WINDOW_S" \
     --power-csv "$POWER_CSV" \
     --power-sample-period "$POWER_SAMPLE_PERIOD" \
     --idle-calibration-seconds "$IDLE_CALIBRATION_SECONDS" \
-    --random-seed 42 \
+    --random-seed "$SEED" \
   > "$RUN_DIR/client_resnet18.log" 2>&1 || true
 
 # Figure out the window CSV name based on WINDOW_S (must match client.py logic):
@@ -168,7 +206,7 @@ if [[ -f "$WINDOWS_CSV" && -f "$POWER_CSV" ]]; then
     --windows-csv "$WINDOWS_CSV" \
     --energy-csv "$POWER_CSV" \
     --idle-calibration-seconds "$IDLE_CALIBRATION_SECONDS" \
-    > "$RUN_DIR/attach_energy_resnet18.log" 2>&1 || true
+  > "$RUN_DIR/attach_energy_resnet18.log" 2>&1 || true
 else
   echo "Skipping energy/window join: $WINDOWS_CSV or $POWER_CSV missing"
 fi
@@ -187,4 +225,4 @@ fi
 
 tar -czf "$RUN_DIR/logs_resnet18.tar.gz" -C "$RUN_DIR" . 2>/dev/null || true
 
-echo "ResNet-18 multi-phase job complete. Logs archived to $RUN_DIR/logs_resnet18.tar.gz"
+echo "✅ ResNet-18 multi-phase job complete. Logs archived to $RUN_DIR/logs_resnet18.tar.gz"

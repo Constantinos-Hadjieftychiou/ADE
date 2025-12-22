@@ -385,7 +385,9 @@ def aggregate_window_metrics(csv_path: str, window_s: float = 1.0) -> Optional[s
       - p50_latency_ms
       - error_rate
       - rps (requests_started / window_s)
-      - is_idle / idle_label
+      - is_idle
+      - idle_label
+      - label_idle_gt (alias of idle_label; 1 if no requests in the window)
       - window_s (constant column)
     """
     try:
@@ -459,8 +461,11 @@ def aggregate_window_metrics(csv_path: str, window_s: float = 1.0) -> Optional[s
     except Exception:
         pass
 
+    # Ground-truth idle from traffic: no requests in window
     window_stats["is_idle"] = window_stats["requests_started"] == 0
     window_stats["idle_label"] = window_stats["is_idle"].astype(int)
+    # Explicit alias for modelling: label_idle_gt
+    window_stats["label_idle_gt"] = window_stats["idle_label"]
 
     # Effective requests-per-second in each window
     window_stats["window_s"] = float(window_s)
@@ -678,6 +683,10 @@ def attach_energy_to_windows(
             "skipping energy/window join"
         )
         return
+
+    # Ensure we always have a ground truth idle label column
+    if "label_idle_gt" not in windows.columns and "idle_label" in windows.columns:
+        windows["label_idle_gt"] = windows["idle_label"]
 
     # Determine the window size used during aggregation (defaults to 1.0)
     window_s = 1.0
