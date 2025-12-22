@@ -1,0 +1,38 @@
+[
+    {
+        "model_name": "resnet-18",
+        "repeats": 3,
+        "concurrency": 16,
+        "window_s": 0.5,
+        "pattern": "steady",
+        "idle_calibration_seconds": 90,
+        "phase_duration_scale": 1.0
+    },
+    {
+        "model_name": "resnet-18",
+        "repeats": 3,
+        "concurrency": 16,
+        "window_s": 0.5,
+        "pattern": "burst",
+        "idle_calibration_seconds": 90,
+        "phase_duration_scale": 1.0
+    },
+    {
+        "model_name": "resnet-50",
+        "repeats": 3,
+        "concurrency": 16,
+        "window_s": 0.5,
+        "pattern": "steady",
+        "idle_calibration_seconds": 90,
+        "phase_duration_scale": 1.0
+    },
+    {
+        "model_name": "mobilenet-v2",
+        "repeats": 3,
+        "concurrency": 16,
+        "window_s": 0.25,
+        "pattern": "steady",
+        "idle_calibration_seconds": 90,
+        "phase_duration_scale": 0.5
+    }
+]
