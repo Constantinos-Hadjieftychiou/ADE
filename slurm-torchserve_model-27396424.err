@@ -1,0 +1,2 @@
+WARNING: There was an error checking the latest version of pip.
+slurmstepd: error: *** JOB 27396424 ON gpu-0-2 CANCELLED AT 2025-12-25T21:34:54 DUE TO TIME LIMIT ***
