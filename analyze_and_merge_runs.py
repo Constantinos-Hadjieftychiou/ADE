@@ -2,6 +2,13 @@
 """
 Merge all per-run window CSVs for a TorchServe model experiment and run sanity checks.
 
+This script:
+1. Finds all run_*/requests_<MODEL>_windows_*.csv files under runs_root
+2. Reads and concatenates them into one DataFrame
+3. Runs validation checks (label consistency, class balance, etc.)
+4. Saves merged CSV
+5. Optionally plots histograms
+
 Usage (typically from sbatch):
   python analyze_and_merge_runs.py --runs-root /path/to/RUN_DIR --model-name resnet-18
 """
@@ -12,9 +19,11 @@ import os
 from typing import List, Optional
 
 import pandas as pd
+# Main data manipulation library
 
 
 def parse_args() -> argparse.Namespace:
+    """Parse command-line arguments."""
     p = argparse.ArgumentParser(
         description="Merge and analyze window-level metrics from multiple runs."
     )
@@ -47,40 +56,61 @@ def find_window_csvs(runs_root: str, model_name: str) -> List[str]:
     pattern = os.path.join(
         runs_root, "run_*", f"requests_{model_name}_windows_*s.csv"
     )
+    # Use glob to find all matching files (e.g., run_1/requests_resnet-18_windows_0p5s.csv)
     return sorted(glob.glob(pattern))
 
 
 def summarize_class_balance(df: pd.DataFrame, col: str) -> None:
+    """Print value counts for a column (useful for imbalanced labels)."""
     if col not in df.columns:
         print(f"[WARN] Column '{col}' not found; skipping class balance.")
         return
     print(f"\n=== CLASS BALANCE for {col} ===")
+    # Count occurrences of each value
     counts = df[col].value_counts(dropna=False)
+    # Include NaN values in counts (useful for finding missing data)
     total = len(df)
+    # Total rows for percentage calculation
     for val, cnt in counts.items():
+        # Iterate through each unique value and its count
         frac = cnt / total * 100.0
+        # Calculate percentage
         print(f"  {col}={val}: {cnt} ({frac:.2f}%)")
 
 
 def check_label_consistency(df: pd.DataFrame) -> None:
+    """
+    Validate that label_idle_gt matches requests (no requests = idle).
+    
+    This is a sanity check: if a window has NO requests, label_idle_gt should be 1.
+    If a window HAS requests, label_idle_gt should be 0.
+    """
     print("\n=== LABEL CONSISTENCY CHECKS (label_idle_gt vs requests) ===")
+    # Check that required columns exist
     needed = {"requests_started", "requests_finished", "label_idle_gt"}
     if not needed.issubset(df.columns):
         print(f"[WARN] Missing one of {needed}.")
         return
 
+    # Define windows with no traffic
     no_traffic = (df["requests_started"] == 0) & (df["requests_finished"] == 0)
+    # Define windows with some traffic
     some_traffic = (df["requests_started"] > 0) | (df["requests_finished"] > 0)
 
+    # Find inconsistencies: no_traffic windows but label says busy (1)
     wrong_idle = df[no_traffic & (df["label_idle_gt"] != 1)]
+    # Find inconsistencies: traffic windows but label says idle (1)
     wrong_busy = df[some_traffic & (df["label_idle_gt"] != 0)]
 
     print(f"Total windows: {len(df)}")
     print(f"  No-traffic windows:   {int(no_traffic.sum())}")
     print(f"  Traffic windows:      {int(some_traffic.sum())}")
     print(f"  Inconsistent idle windows:  {len(wrong_idle)}")
+    # Ideally 0 (means our labeling is correct)
     print(f"  Inconsistent busy windows:  {len(wrong_busy)}")
+    # Ideally 0
 
+    # Print examples of inconsistencies for debugging
     if len(wrong_idle) > 0:
         print("\nExample inconsistent idle windows (first 5):")
         print(
@@ -104,8 +134,9 @@ def maybe_plot_histograms(
     label_col: str = "energy_idle_label",
 ) -> None:
     """
-    If matplotlib is available, save simple histograms of selected value columns
-    split by label_col.
+    If matplotlib is available, save histograms of value_cols split by label_col.
+    
+    Useful for visualizing power/energy distributions across idle vs busy periods.
     """
     try:
         import matplotlib.pyplot as plt
@@ -113,27 +144,36 @@ def maybe_plot_histograms(
         print("[INFO] matplotlib not available; skipping plots.")
         return
 
+    # Default columns to plot
     if value_cols is None:
         value_cols = ["avg_power_w", "energy_j_per_window"]
 
     os.makedirs(runs_root, exist_ok=True)
 
+    # Generate one histogram per value column
     for vcol in value_cols:
         if vcol not in df.columns:
+            # Skip if column doesn't exist
             continue
         if label_col not in df.columns:
+            # Skip if label column doesn't exist
             continue
 
+        # Select rows with valid data
         sub = df[[vcol, label_col]].dropna()
         if sub.empty:
             continue
 
+        # Create figure
         plt.figure(figsize=(8, 5))
+        # Plot histogram for each label value separately
         for label_val in sorted(sub[label_col].dropna().unique()):
             mask = sub[label_col] == label_val
+            # Filter to rows with this label value
             vals = sub.loc[mask, vcol].values
             if len(vals) == 0:
                 continue
+            # Plot histogram with transparency for overlapping bins
             plt.hist(vals, bins=50, alpha=0.5, label=f"{label_col}={label_val}")
         plt.xlabel(vcol)
         plt.ylabel("Count")
@@ -141,6 +181,7 @@ def maybe_plot_histograms(
         plt.legend()
         plt.tight_layout()
 
+        # Save plot
         out_path = os.path.join(runs_root, f"{vcol}_by_{label_col}.png")
         plt.savefig(out_path)
         plt.close()
@@ -148,10 +189,12 @@ def maybe_plot_histograms(
 
 
 def main() -> None:
+    """Main entry point: load CSVs, merge, validate, save."""
     args = parse_args()
     runs_root = os.path.abspath(args.runs_root)
     model_name = args.model_name
 
+    # Determine output path
     if args.output_csv is None:
         sanitized_model = model_name.replace("/", "_")
         output_csv = os.path.join(
@@ -164,6 +207,7 @@ def main() -> None:
     print(f"Model name: {model_name}")
     print(f"Merged output CSV: {output_csv}")
 
+    # Find all window CSVs
     csvs = find_window_csvs(runs_root, model_name)
     if not csvs:
         print(f"[ERROR] No window CSVs found under {runs_root} for model {model_name}")
@@ -173,10 +217,12 @@ def main() -> None:
     for p in csvs:
         print(f"  - {p}")
 
+    # Read and merge all CSVs
     frames = []
     for p in csvs:
         try:
             df = pd.read_csv(p)
+            # Add source directory as a column (useful for debugging multi-run merges)
             df["source_run_dir"] = os.path.dirname(p)
             frames.append(df)
         except Exception as e:
@@ -186,42 +232,51 @@ def main() -> None:
         print("[ERROR] No CSVs could be read successfully.")
         return
 
+    # Concatenate all dataframes (stack on top of each other)
     merged = pd.concat(frames, ignore_index=True)
     print(f"\nMerged rows: {len(merged)}")
 
-    # Basic info
+    # Print basic info
     print("\n=== BASIC COLUMNS ===")
     print(", ".join(merged.columns))
 
-    # Class balances
+    # Class balance checks (useful for understanding data distribution)
     summarize_class_balance(merged, "label_idle_gt")
+    # Check idle vs busy label distribution
     summarize_class_balance(merged, "energy_idle_label")
+    # Check energy-based idle label distribution (if present)
 
-    # Consistency checks
+    # Consistency checks (validate our ground-truth labeling)
     check_label_consistency(merged)
 
-    # Simple stats on energy and power if available
+    # Simple statistics on energy and power columns
     if "energy_j_per_window" in merged.columns:
         print("\n=== ENERGY_j_PER_WINDOW SUMMARY ===")
         print(merged["energy_j_per_window"].describe())
+        # Print count, mean, std, min, 25%, 50%, 75%, max
 
     if "avg_power_w" in merged.columns:
         print("\n=== AVG_POWER_W SUMMARY ===")
         print(merged["avg_power_w"].describe())
 
-    # Some correlations that are directly interesting for the thesis
+    # Correlation analysis (useful for ML feature engineering)
     for cols in [
         ("requests_started", "energy_j_per_window"),
+        # Does more load = more energy? (should correlate)
         ("requests_started", "avg_power_w"),
+        # Does more load = more power? (should correlate)
     ]:
         c1, c2 = cols
         if c1 in merged.columns and c2 in merged.columns:
+            # Only compute if both columns exist
             sub = merged[[c1, c2]].dropna()
+            # Drop rows with missing values
             if not sub.empty:
                 corr = sub.corr().iloc[0, 1]
+                # Pearson correlation coefficient
                 print(f"\nCorr({c1}, {c2}) = {corr:.4f}")
 
-    # Optional histograms of power/energy by energy_idle_label
+    # Optional: save plots
     maybe_plot_histograms(merged, runs_root)
 
     # Save merged CSV
