@@ -1,66 +1,82 @@
+// JSON file defining multi-phase load test workloads
+// Each phase specifies traffic pattern, duration, and intensity
+// TorchServe client loads and executes these phases in randomized order
+
 [
-    {
-        "name": "cold-start-steady-1rps",
-        "pattern": "steady",
-        "duration": 120,
-        "rps": 1
-    },
-    {
-        "name": "low-traffic-steady-2rps",
-        "pattern": "steady",
-        "duration": 300,
-        "rps": 2
-    },
-    {
-        "name": "low-traffic-poisson-5rps",
-        "pattern": "poisson",
-        "duration": 300,
-        "rps": 5
-    },
-    {
-        "name": "mid-traffic-steady-10rps",
-        "pattern": "steady",
-        "duration": 300,
-        "rps": 10
-    },
-    {
-        "name": "mid-peak-poisson",
-        "pattern": "poisson",
-        "duration": 300,
-        "rps": 20
-    },
-    {
-        "name": "burst-medium-15rps",
-        "pattern": "burst",
-        "duration": 240,
-        "rps": 15,
-        "burst": 30,
-        "idle": 15
-    },
-    {
-        "name": "burst-high-30rps",
-        "pattern": "burst",
-        "duration": 240,
-        "rps": 30,
-        "burst": 40,
-        "idle": 20
-    },
-    {
-        "name": "high-traffic-steady-25rps",
-        "pattern": "steady",
-        "duration": 300,
-        "rps": 25
-    },
-    {
-        "name": "evening-cooldown-steady-3rps",
-        "pattern": "steady",
-        "duration": 300,
-        "rps": 3
-    },
-    {
-        "name": "long-idle",
-        "pattern": "steady",
-        "duration": 600,
-        "rps": 0
-    }
+  {
+    "name": "cold-start-steady-1rps",
+    // Unique phase identifier; used with --phase-name to select single phases
+    // "cold-start" suggests low traffic after idle period
+    "pattern": "steady",
+    // Traffic pattern: "steady" (constant RPS), "poisson" (random arrivals), "burst" (on/off cycles)
+    "duration": 120,
+    // Phase duration in seconds (how long to maintain this traffic pattern)
+    "rps": 1,
+    // Target requests per second (for steady and poisson patterns)
+    "burst": 30,
+    // (Unused for steady pattern; used for burst pattern only)
+    // Mean duration of active period in burst cycles (seconds)
+    "idle": 15
+    // (Unused for steady pattern; used for burst pattern only)
+    // Mean duration of quiet period in burst cycles (seconds)
+  },
+  {
+    "name": "mid-traffic-steady-10rps",
+    // Moderate steady traffic load
+    "pattern": "steady",
+    "duration": 300,
+    // 5 minutes at 10 RPS
+    "rps": 10,
+    // 10 requests per second
+    "burst": 30,
+    "idle": 15
+  },
+  {
+    "name": "high-traffic-steady-25rps",
+    // High steady traffic load
+    "pattern": "steady",
+    "duration": 300,
+    // 5 minutes at 25 RPS
+    "rps": 25,
+    // 25 requests per second
+    "burst": 30,
+    "idle": 15
+  },
+  {
+    "name": "low-traffic-poisson-5rps",
+    // Poisson arrivals (realistic, exponential inter-arrival times)
+    // Mimics real-world traffic patterns where requests arrive randomly
+    "pattern": "poisson",
+    "duration": 300,
+    // 5 minutes of Poisson traffic
+    "rps": 5,
+    // Average 5 requests per second (but timing is random/exponential)
+    "burst": 30,
+    "idle": 15
+  },
+  {
+    "name": "burst-30s-on-15s-idle-10rps",
+    // Alternating burst and idle periods (realistic for many workloads)
+    "pattern": "burst",
+    "duration": 300,
+    // Total phase duration: 5 minutes (multiple burst/idle cycles)
+    "rps": 10,
+    // Target rate during active bursts (10 req/s)
+    "burst": 30,
+    // Duration of active burst period (seconds; randomized ±20% around mean)
+    "idle": 15
+    // Duration of idle/quiet period (seconds; randomized ±30% around mean)
+  },
+  {
+    "name": "long-idle",
+    // Extended idle period (0 RPS) for baseline power measurement
+    // Useful for establishing "idle" vs "busy" power baselines
+    "pattern": "steady",
+    "duration": 600,
+    // 10 minutes of no traffic
+    "rps": 0,
+    // Zero requests per second (completely idle)
+    "burst": 30,
+    "idle": 15
+  }
 ]
