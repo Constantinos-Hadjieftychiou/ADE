@@ -56,6 +56,62 @@ UCI_SENTIMENT_ZIP_URL = (
 UCI_SENTENCE_CACHE = os.path.join("data", "uci_sentiment_sentences.txt")
 
 
+def _load_phases_json(path: str) -> List[Dict[str, Any]]:
+    """
+    Load and validate the phases JSON file.
+
+    Fixes the common failure:
+      JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+    which typically means the file is empty (0 bytes) or truncated / not JSON.
+
+    Accepts either:
+      - a list: [ {phase}, {phase}, ... ]
+      - a dict wrapper: {"phases": [ ... ]}
+    """
+    if not path:
+        raise SystemExit("ERROR: --phases-json path is empty")
+
+    if not os.path.exists(path):
+        raise SystemExit(f"ERROR: phases JSON not found: {path}")
+
+    if os.path.getsize(path) == 0:
+        raise SystemExit(f"ERROR: phases JSON is empty (0 bytes): {path}")
+
+    try:
+        with open(path, "r", encoding="utf-8") as f:
+            raw = f.read()
+    except Exception as e:
+        raise SystemExit(f"ERROR: cannot read phases JSON {path}: {e}")
+
+    prefix = raw[:200].replace("\n", "\\n")
+
+    try:
+        data = json.loads(raw)
+    except json.JSONDecodeError as e:
+        raise SystemExit(
+            f"ERROR: invalid JSON in phases file: {path}\n"
+            f"JSON error: {e}\n"
+            f"File starts with: {prefix!r}"
+        )
+
+    if isinstance(data, dict) and "phases" in data:
+        data = data["phases"]
+
+    if not isinstance(data, list):
+        raise SystemExit(
+            f"ERROR: phases JSON must be a list (or {{'phases': [...]}}). Got {type(data).__name__}"
+        )
+
+    # Basic validation: ensure each phase is a dict
+    for i, p in enumerate(data):
+        if not isinstance(p, dict):
+            raise SystemExit(
+                f"ERROR: phases[{i}] must be an object/dict. Got {type(p).__name__}"
+            )
+
+    return data
+
+
 def img_to_bytes(img: Image.Image) -> bytes:
     """Convert PIL Image to JPEG bytes for HTTP POST."""
     buf = io.BytesIO()
@@ -82,7 +138,7 @@ def send_request(
 ) -> RequestResult:
     """
     Send a single request to TorchServe and measure latency.
-    
+
     Handles both image (POST binary JPEG) and text (POST JSON) modes.
     Returns RequestResult with timing and status info.
     """
@@ -296,7 +352,7 @@ def worker_loop(
 ):
     """
     Worker thread that pulls requests from task_queue and sends them to TorchServe.
-    
+
     Stops when receiving None token. Appends results to shared result_list (thread-safe).
     """
     while True:
@@ -324,7 +380,7 @@ def schedule_burst_pattern(
 ):
     """
     Schedule burst pattern: alternating active bursts and quiet periods.
-    
+
     Durations are randomized around mean values using Gaussian distribution.
     """
     if base_rps <= 0:
@@ -362,7 +418,7 @@ def schedule_steady_pattern(
 ):
     """
     Schedule steady pattern: deterministic fixed requests-per-second.
-    
+
     Uses precise inter-arrival timing to maintain constant RPS.
     """
     if rps <= 0:
@@ -394,7 +450,7 @@ def schedule_poisson_pattern(
 ):
     """
     Schedule Poisson pattern: exponential inter-arrival times (realistic traffic).
-    
+
     Average RPS is maintained but timing is random (exponential distribution).
     """
     if rps <= 0:
@@ -443,13 +499,13 @@ def aggregate_window_metrics(
 ) -> Optional[str]:
     """
     Aggregate per-request CSV into fixed-size windows.
-    
+
     Computes window-level metrics:
     - requests_started/finished: request counts
     - latency percentiles (avg, p50)
     - error_rate: % of non-200 responses
     - idle_label: 1 if no requests in window
-    
+
     Outputs: <csv_path>_windows_<window_s>s.csv
     """
     try:
@@ -584,7 +640,7 @@ def power_sampler_loop(
 ) -> None:
     """
     Background thread that periodically samples GPU power via NVML.
-    
+
     Writes: timestamp, power_w, energy_j (≈ power * sample_period_s)
     Stops when stop_event is set.
     """
@@ -711,12 +767,12 @@ def attach_energy_to_windows(
 ) -> None:
     """
     Join per-sample power/energy data into window CSV.
-    
+
     Adds:
     - energy_j_per_window: sum of energy_j in that window
     - avg_power_w: energy / window_s
     - energy_idle_label: 1 if avg_power_w <= threshold
-    
+
     Modifies windows_csv_path in-place.
     """
     try:
@@ -930,7 +986,7 @@ def run_load(
 ) -> None:
     """
     Main load generation orchestrator.
-    
+
     Coordinates:
     1. Sample loading
     2. Power sampling thread
@@ -938,7 +994,6 @@ def run_load(
     4. Traffic scheduling
     5. Result aggregation and energy attachment
     """
-    # ... existing code ...
     samples = load_samples(mode)
 
     power_thread: Optional[threading.Thread] = None
@@ -991,7 +1046,6 @@ def run_load(
         t.start()
         threads.append(t)
 
-    # ... existing phase/pattern scheduling code ...
     phases_used_names: List[str] = []
     if phases:
         for p in phases:
@@ -1422,8 +1476,7 @@ def main() -> None:
     # Load phases if provided
     phases = None
     if args.phases_json:
-        with open(args.phases_json) as f:
-            phases = json.load(f)
+        phases = _load_phases_json(args.phases_json)
 
         # Filter to single phase by name if requested
         if args.phase_name:
