@@ -1,8 +1,0 @@
-[
-  {
-    "name": "test-steady",
-    "pattern": "steady",
-    "duration": 30,
-    "rps": 2
-  }
-]

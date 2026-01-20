@@ -34,3 +34,7 @@ Pipeline implemented: TorchServe config + load generator + NVML sampling + windo
 **Weeks 6–8:** Feature engineering (rolling stats, lag features) and temporal modeling if needed; cross-pattern generalization tests.  
 **Weeks 9–11:** Scale experiments across more models/workloads; validate robustness to baseline drift and sampling jitter (use real Δt for energy integration).  
 **Weeks 12–14:** Write methodology/results; finalize figures/tables; document reproducibility and deliverables.
+
+
+
+
