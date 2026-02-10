@@ -85,6 +85,7 @@ if [[ ! -f "$ENV_DIR/.deps_installed" ]]; then
   PIP_ONLY_BINARY=":all:" pip install --index-url https://download.pytorch.org/whl/cu121 \
     torch==2.5.1 torchvision==0.20.1 --no-cache-dir || { log "Failed to install torch"; exit 1; }
   pip install --quiet torchserve torch-model-archiver pillow requests pandas numpy nvidia-ml-py3
+  pip install zeus-ml-energy
   touch "$ENV_DIR/.deps_installed"
 else
   log "Dependencies already installed; skipping pip installs."
