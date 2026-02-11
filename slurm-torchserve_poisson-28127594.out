@@ -151,3 +151,359 @@ Model server started.
 2026-02-10T19:11:35,276 [INFO ] W-9000-resnet-18_1.0 ACCESS_LOG - /127.0.0.1:58878 "POST /predictions/resnet-18 HTTP/1.1" 200 11
 2026-02-10T19:11:35,276 [DEBUG] W-9000-resnet-18_1.0 org.pytorch.serve.job.RestJob - Waiting time ns: 209485, Backend time ns: 10709630
 2026-02-10T19:11:35,276 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Backend response time: 9
+2026-02-10T19:11:50,763 [DEBUG] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Flushing req.cmd PREDICT repeats 1 to backend at: 1770743510763
+2026-02-10T19:11:50,764 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Looping backend response at: 1770743510764
+2026-02-10T19:11:50,771 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.BatchAggregator - Sending response for jobId 4ac54401-2454-4e4b-af93-e54b18aee4a6
+2026-02-10T19:11:50,771 [INFO ] W-9000-resnet-18_1.0-stdout MODEL_LOG - Backend received inference at: 1770743510
+2026-02-10T19:11:50,772 [INFO ] W-9000-resnet-18_1.0-stdout org.pytorch.serve.wlm.WorkerLifeCycle - result=[METRICS]PredictionTime.Milliseconds:4.54|#ModelName:resnet-18,Level:Model|#type:GAUGE|#hostname:gpu-0-3.local,1770743510,4ac54401-2454-4e4b-af93-e54b18aee4a6, pattern=[METRICS]
+2026-02-10T19:11:50,771 [INFO ] W-9000-resnet-18_1.0 ACCESS_LOG - /127.0.0.1:58880 "POST /predictions/resnet-18 HTTP/1.1" 200 9
+2026-02-10T19:11:50,773 [DEBUG] W-9000-resnet-18_1.0 org.pytorch.serve.job.RestJob - Waiting time ns: 867140, Backend time ns: 10577869
+2026-02-10T19:11:50,773 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Backend response time: 7
+2026-02-10T19:12:04,960 [DEBUG] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Flushing req.cmd PREDICT repeats 1 to backend at: 1770743524960
+2026-02-10T19:12:04,966 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Looping backend response at: 1770743524966
+2026-02-10T19:12:04,975 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.BatchAggregator - Sending response for jobId 808c78fa-5e5c-4a64-a481-d8e0f18e176a
+2026-02-10T19:12:04,975 [INFO ] W-9000-resnet-18_1.0 ACCESS_LOG - /127.0.0.1:58882 "POST /predictions/resnet-18 HTTP/1.1" 200 16
+2026-02-10T19:12:04,975 [DEBUG] W-9000-resnet-18_1.0 org.pytorch.serve.job.RestJob - Waiting time ns: 222773, Backend time ns: 15224441
+2026-02-10T19:12:04,975 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Backend response time: 8
+2026-02-10T19:12:04,974 [INFO ] W-9000-resnet-18_1.0-stdout MODEL_LOG - Backend received inference at: 1770743524
+2026-02-10T19:12:04,976 [INFO ] W-9000-resnet-18_1.0-stdout org.pytorch.serve.wlm.WorkerLifeCycle - result=[METRICS]PredictionTime.Milliseconds:4.64|#ModelName:resnet-18,Level:Model|#type:GAUGE|#hostname:gpu-0-3.local,1770743524,808c78fa-5e5c-4a64-a481-d8e0f18e176a, pattern=[METRICS]
+2026-02-10T19:12:05,410 [DEBUG] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Flushing req.cmd PREDICT repeats 1 to backend at: 1770743525410
+2026-02-10T19:12:05,411 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Looping backend response at: 1770743525411
+2026-02-10T19:12:05,419 [INFO ] W-9000-resnet-18_1.0-stdout MODEL_LOG - Backend received inference at: 1770743525
+2026-02-10T19:12:05,421 [INFO ] W-9000-resnet-18_1.0-stdout org.pytorch.serve.wlm.WorkerLifeCycle - result=[METRICS]PredictionTime.Milliseconds:6.93|#ModelName:resnet-18,Level:Model|#type:GAUGE|#hostname:gpu-0-3.local,1770743525,8b14ccac-fcc1-4975-8c1b-789a88c7ccfe, pattern=[METRICS]
+2026-02-10T19:12:05,423 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.BatchAggregator - Sending response for jobId 8b14ccac-fcc1-4975-8c1b-789a88c7ccfe
+2026-02-10T19:12:05,423 [INFO ] W-9000-resnet-18_1.0 ACCESS_LOG - /127.0.0.1:58884 "POST /predictions/resnet-18 HTTP/1.1" 200 13
+2026-02-10T19:12:05,423 [DEBUG] W-9000-resnet-18_1.0 org.pytorch.serve.job.RestJob - Waiting time ns: 155119, Backend time ns: 13072733
+2026-02-10T19:12:05,423 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Backend response time: 12
+2026-02-10T19:12:27,474 [DEBUG] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Flushing req.cmd PREDICT repeats 1 to backend at: 1770743547474
+2026-02-10T19:12:27,476 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Looping backend response at: 1770743547476
+2026-02-10T19:12:27,484 [INFO ] W-9000-resnet-18_1.0-stdout MODEL_LOG - Backend received inference at: 1770743547
+2026-02-10T19:12:27,485 [INFO ] W-9000-resnet-18_1.0-stdout org.pytorch.serve.wlm.WorkerLifeCycle - result=[METRICS]PredictionTime.Milliseconds:7.27|#ModelName:resnet-18,Level:Model|#type:GAUGE|#hostname:gpu-0-3.local,1770743547,84eab326-878e-45fa-aea3-c92a15930a89, pattern=[METRICS]
+2026-02-10T19:12:27,488 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.BatchAggregator - Sending response for jobId 84eab326-878e-45fa-aea3-c92a15930a89
+2026-02-10T19:12:27,488 [INFO ] W-9000-resnet-18_1.0 ACCESS_LOG - /127.0.0.1:58886 "POST /predictions/resnet-18 HTTP/1.1" 200 14
+2026-02-10T19:12:27,489 [DEBUG] W-9000-resnet-18_1.0 org.pytorch.serve.job.RestJob - Waiting time ns: 210037, Backend time ns: 14580117
+2026-02-10T19:12:27,489 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Backend response time: 12
+2026-02-10T19:12:43,158 [DEBUG] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Flushing req.cmd PREDICT repeats 1 to backend at: 1770743563158
+2026-02-10T19:12:43,160 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Looping backend response at: 1770743563160
+2026-02-10T19:12:43,166 [INFO ] W-9000-resnet-18_1.0-stdout MODEL_LOG - Backend received inference at: 1770743563
+2026-02-10T19:12:43,168 [INFO ] W-9000-resnet-18_1.0-stdout org.pytorch.serve.wlm.WorkerLifeCycle - result=[METRICS]PredictionTime.Milliseconds:6.69|#ModelName:resnet-18,Level:Model|#type:GAUGE|#hostname:gpu-0-3.local,1770743563,515b997c-afee-4c25-8402-2b7638b31211, pattern=[METRICS]
+2026-02-10T19:12:43,168 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.BatchAggregator - Sending response for jobId 515b997c-afee-4c25-8402-2b7638b31211
+2026-02-10T19:12:43,169 [INFO ] W-9000-resnet-18_1.0 ACCESS_LOG - /127.0.0.1:58890 "POST /predictions/resnet-18 HTTP/1.1" 200 12
+2026-02-10T19:12:43,169 [DEBUG] W-9000-resnet-18_1.0 org.pytorch.serve.job.RestJob - Waiting time ns: 1380953, Backend time ns: 10640425
+2026-02-10T19:12:43,169 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Backend response time: 8
+2026-02-10T19:12:57,118 [DEBUG] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Flushing req.cmd PREDICT repeats 1 to backend at: 1770743577118
+2026-02-10T19:12:57,119 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Looping backend response at: 1770743577119
+2026-02-10T19:12:57,126 [INFO ] W-9000-resnet-18_1.0-stdout MODEL_LOG - Backend received inference at: 1770743577
+2026-02-10T19:12:57,128 [INFO ] W-9000-resnet-18_1.0-stdout org.pytorch.serve.wlm.WorkerLifeCycle - result=[METRICS]PredictionTime.Milliseconds:7.78|#ModelName:resnet-18,Level:Model|#type:GAUGE|#hostname:gpu-0-3.local,1770743577,adcd6c82-0b9d-4b58-a4ad-acf377f6e83e, pattern=[METRICS]
+2026-02-10T19:12:57,129 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.BatchAggregator - Sending response for jobId adcd6c82-0b9d-4b58-a4ad-acf377f6e83e
+2026-02-10T19:12:57,129 [INFO ] W-9000-resnet-18_1.0 ACCESS_LOG - /127.0.0.1:58892 "POST /predictions/resnet-18 HTTP/1.1" 200 12
+2026-02-10T19:12:57,130 [DEBUG] W-9000-resnet-18_1.0 org.pytorch.serve.job.RestJob - Waiting time ns: 169935, Backend time ns: 12135110
+2026-02-10T19:12:57,130 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Backend response time: 10
+2026-02-10T19:13:05,442 [DEBUG] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Flushing req.cmd PREDICT repeats 1 to backend at: 1770743585442
+2026-02-10T19:13:05,444 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Looping backend response at: 1770743585444
+2026-02-10T19:13:05,453 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.BatchAggregator - Sending response for jobId ffb3d765-d134-4acb-b5e8-282929f1c0cd
+2026-02-10T19:13:05,454 [INFO ] W-9000-resnet-18_1.0 ACCESS_LOG - /127.0.0.1:58894 "POST /predictions/resnet-18 HTTP/1.1" 200 13
+2026-02-10T19:13:05,454 [DEBUG] W-9000-resnet-18_1.0 org.pytorch.serve.job.RestJob - Waiting time ns: 1052926, Backend time ns: 11961424
+2026-02-10T19:13:05,454 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Backend response time: 9
+2026-02-10T19:13:05,453 [INFO ] W-9000-resnet-18_1.0-stdout MODEL_LOG - Backend received inference at: 1770743585
+2026-02-10T19:13:05,455 [INFO ] W-9000-resnet-18_1.0-stdout org.pytorch.serve.wlm.WorkerLifeCycle - result=[METRICS]PredictionTime.Milliseconds:4.38|#ModelName:resnet-18,Level:Model|#type:GAUGE|#hostname:gpu-0-3.local,1770743585,ffb3d765-d134-4acb-b5e8-282929f1c0cd, pattern=[METRICS]
+2026-02-10T19:13:32,561 [DEBUG] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Flushing req.cmd PREDICT repeats 1 to backend at: 1770743612561
+2026-02-10T19:13:32,565 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Looping backend response at: 1770743612565
+2026-02-10T19:13:32,572 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.BatchAggregator - Sending response for jobId 3fd3964d-c375-4ff8-8675-0b890b9a66e8
+2026-02-10T19:13:32,572 [INFO ] W-9000-resnet-18_1.0-stdout MODEL_LOG - Backend received inference at: 1770743612
+2026-02-10T19:13:32,575 [INFO ] W-9000-resnet-18_1.0-stdout org.pytorch.serve.wlm.WorkerLifeCycle - result=[METRICS]PredictionTime.Milliseconds:5.68|#ModelName:resnet-18,Level:Model|#type:GAUGE|#hostname:gpu-0-3.local,1770743612,3fd3964d-c375-4ff8-8675-0b890b9a66e8, pattern=[METRICS]
+2026-02-10T19:13:32,573 [INFO ] W-9000-resnet-18_1.0 ACCESS_LOG - /127.0.0.1:58896 "POST /predictions/resnet-18 HTTP/1.1" 200 14
+2026-02-10T19:13:32,578 [DEBUG] W-9000-resnet-18_1.0 org.pytorch.serve.job.RestJob - Waiting time ns: 1466192, Backend time ns: 17125866
+2026-02-10T19:13:32,578 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Backend response time: 7
+2026-02-10T19:13:32,578 [DEBUG] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Flushing req.cmd PREDICT repeats 1 to backend at: 1770743612578
+2026-02-10T19:13:32,580 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Looping backend response at: 1770743612580
+2026-02-10T19:13:32,584 [INFO ] W-9000-resnet-18_1.0-stdout MODEL_LOG - Backend received inference at: 1770743612
+2026-02-10T19:13:32,585 [INFO ] W-9000-resnet-18_1.0-stdout org.pytorch.serve.wlm.WorkerLifeCycle - result=[METRICS]PredictionTime.Milliseconds:3.36|#ModelName:resnet-18,Level:Model|#type:GAUGE|#hostname:gpu-0-3.local,1770743612,898fabc8-2a80-4583-aecd-242a125715e7, pattern=[METRICS]
+2026-02-10T19:13:32,585 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.BatchAggregator - Sending response for jobId 898fabc8-2a80-4583-aecd-242a125715e7
+2026-02-10T19:13:32,585 [INFO ] W-9000-resnet-18_1.0 ACCESS_LOG - /127.0.0.1:58898 "POST /predictions/resnet-18 HTTP/1.1" 200 10
+2026-02-10T19:13:32,585 [DEBUG] W-9000-resnet-18_1.0 org.pytorch.serve.job.RestJob - Waiting time ns: 2964127, Backend time ns: 7205500
+2026-02-10T19:13:32,585 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Backend response time: 5
+2026-02-10T19:13:32,851 [DEBUG] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Flushing req.cmd PREDICT repeats 1 to backend at: 1770743612851
+2026-02-10T19:13:32,859 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Looping backend response at: 1770743612859
+2026-02-10T19:13:32,865 [INFO ] W-9000-resnet-18_1.0-stdout MODEL_LOG - Backend received inference at: 1770743612
+2026-02-10T19:13:32,865 [INFO ] W-9000-resnet-18_1.0-stdout org.pytorch.serve.wlm.WorkerLifeCycle - result=[METRICS]PredictionTime.Milliseconds:3.99|#ModelName:resnet-18,Level:Model|#type:GAUGE|#hostname:gpu-0-3.local,1770743612,70d2cf5a-9183-4e61-bbd5-6e2bcfbf549d, pattern=[METRICS]
+2026-02-10T19:13:32,865 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.BatchAggregator - Sending response for jobId 70d2cf5a-9183-4e61-bbd5-6e2bcfbf549d
+2026-02-10T19:13:32,865 [INFO ] W-9000-resnet-18_1.0 ACCESS_LOG - /127.0.0.1:58900 "POST /predictions/resnet-18 HTTP/1.1" 200 15
+2026-02-10T19:13:32,865 [DEBUG] W-9000-resnet-18_1.0 org.pytorch.serve.job.RestJob - Waiting time ns: 556330, Backend time ns: 14585734
+2026-02-10T19:13:32,865 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Backend response time: 6
+2026-02-10T19:13:38,749 [DEBUG] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Flushing req.cmd PREDICT repeats 1 to backend at: 1770743618749
+2026-02-10T19:13:38,752 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Looping backend response at: 1770743618752
+2026-02-10T19:13:38,758 [INFO ] W-9000-resnet-18_1.0-stdout MODEL_LOG - Backend received inference at: 1770743618
+2026-02-10T19:13:38,760 [INFO ] W-9000-resnet-18_1.0-stdout org.pytorch.serve.wlm.WorkerLifeCycle - result=[METRICS]PredictionTime.Milliseconds:6.1|#ModelName:resnet-18,Level:Model|#type:GAUGE|#hostname:gpu-0-3.local,1770743618,44cf4cad-c167-4906-8256-51475a3255d7, pattern=[METRICS]
+2026-02-10T19:13:38,761 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.BatchAggregator - Sending response for jobId 44cf4cad-c167-4906-8256-51475a3255d7
+2026-02-10T19:13:38,762 [INFO ] W-9000-resnet-18_1.0 ACCESS_LOG - /127.0.0.1:58902 "POST /predictions/resnet-18 HTTP/1.1" 200 14
+2026-02-10T19:13:38,763 [DEBUG] W-9000-resnet-18_1.0 org.pytorch.serve.job.RestJob - Waiting time ns: 189074, Backend time ns: 14545766
+2026-02-10T19:13:38,763 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Backend response time: 9
+2026-02-10T19:13:46,313 [DEBUG] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Flushing req.cmd PREDICT repeats 1 to backend at: 1770743626313
+2026-02-10T19:13:46,318 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Looping backend response at: 1770743626318
+2026-02-10T19:13:46,325 [INFO ] W-9000-resnet-18_1.0-stdout MODEL_LOG - Backend received inference at: 1770743626
+2026-02-10T19:13:46,325 [INFO ] W-9000-resnet-18_1.0-stdout org.pytorch.serve.wlm.WorkerLifeCycle - result=[METRICS]PredictionTime.Milliseconds:4.61|#ModelName:resnet-18,Level:Model|#type:GAUGE|#hostname:gpu-0-3.local,1770743626,7e31802c-2189-40ca-b416-5a7c99489d1e, pattern=[METRICS]
+2026-02-10T19:13:46,326 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.BatchAggregator - Sending response for jobId 7e31802c-2189-40ca-b416-5a7c99489d1e
+2026-02-10T19:13:46,326 [INFO ] W-9000-resnet-18_1.0 ACCESS_LOG - /127.0.0.1:58904 "POST /predictions/resnet-18 HTTP/1.1" 200 13
+2026-02-10T19:13:46,327 [DEBUG] W-9000-resnet-18_1.0 org.pytorch.serve.job.RestJob - Waiting time ns: 198754, Backend time ns: 14345938
+2026-02-10T19:13:46,328 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Backend response time: 8
+2026-02-10T19:14:05,959 [DEBUG] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Flushing req.cmd PREDICT repeats 1 to backend at: 1770743645959
+2026-02-10T19:14:05,961 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Looping backend response at: 1770743645961
+2026-02-10T19:14:05,968 [INFO ] W-9000-resnet-18_1.0-stdout MODEL_LOG - Backend received inference at: 1770743645
+2026-02-10T19:14:05,968 [INFO ] W-9000-resnet-18_1.0-stdout org.pytorch.serve.wlm.WorkerLifeCycle - result=[METRICS]PredictionTime.Milliseconds:5.27|#ModelName:resnet-18,Level:Model|#type:GAUGE|#hostname:gpu-0-3.local,1770743645,aa8e36bd-7453-4b7c-9e63-0960c922aa66, pattern=[METRICS]
+2026-02-10T19:14:05,969 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.BatchAggregator - Sending response for jobId aa8e36bd-7453-4b7c-9e63-0960c922aa66
+2026-02-10T19:14:05,969 [INFO ] W-9000-resnet-18_1.0 ACCESS_LOG - /127.0.0.1:58906 "POST /predictions/resnet-18 HTTP/1.1" 200 11
+2026-02-10T19:14:05,970 [DEBUG] W-9000-resnet-18_1.0 org.pytorch.serve.job.RestJob - Waiting time ns: 727436, Backend time ns: 10874584
+2026-02-10T19:14:05,970 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Backend response time: 8
+2026-02-10T19:14:22,856 [DEBUG] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Flushing req.cmd PREDICT repeats 1 to backend at: 1770743662855
+2026-02-10T19:14:22,863 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Looping backend response at: 1770743662863
+2026-02-10T19:14:22,870 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.BatchAggregator - Sending response for jobId 688d041b-50b1-4b3f-bbdd-004819c11dd3
+2026-02-10T19:14:22,870 [INFO ] W-9000-resnet-18_1.0-stdout MODEL_LOG - Backend received inference at: 1770743662
+2026-02-10T19:14:22,870 [INFO ] W-9000-resnet-18_1.0-stdout org.pytorch.serve.wlm.WorkerLifeCycle - result=[METRICS]PredictionTime.Milliseconds:4.62|#ModelName:resnet-18,Level:Model|#type:GAUGE|#hostname:gpu-0-3.local,1770743662,688d041b-50b1-4b3f-bbdd-004819c11dd3, pattern=[METRICS]
+2026-02-10T19:14:22,870 [INFO ] W-9000-resnet-18_1.0 ACCESS_LOG - /127.0.0.1:58910 "POST /predictions/resnet-18 HTTP/1.1" 200 16
+2026-02-10T19:14:22,870 [DEBUG] W-9000-resnet-18_1.0 org.pytorch.serve.job.RestJob - Waiting time ns: 1616755, Backend time ns: 14872535
+2026-02-10T19:14:22,870 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Backend response time: 7
+2026-02-10T19:14:44,066 [DEBUG] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Flushing req.cmd PREDICT repeats 1 to backend at: 1770743684066
+2026-02-10T19:14:44,067 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Looping backend response at: 1770743684067
+2026-02-10T19:14:44,074 [INFO ] W-9000-resnet-18_1.0-stdout MODEL_LOG - Backend received inference at: 1770743684
+2026-02-10T19:14:44,075 [INFO ] W-9000-resnet-18_1.0-stdout org.pytorch.serve.wlm.WorkerLifeCycle - result=[METRICS]PredictionTime.Milliseconds:7.45|#ModelName:resnet-18,Level:Model|#type:GAUGE|#hostname:gpu-0-3.local,1770743684,13bbf4a5-ada0-45e1-abe7-3fed1fe4453c, pattern=[METRICS]
+2026-02-10T19:14:44,078 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.BatchAggregator - Sending response for jobId 13bbf4a5-ada0-45e1-abe7-3fed1fe4453c
+2026-02-10T19:14:44,078 [INFO ] W-9000-resnet-18_1.0 ACCESS_LOG - /127.0.0.1:58912 "POST /predictions/resnet-18 HTTP/1.1" 200 14
+2026-02-10T19:14:44,078 [DEBUG] W-9000-resnet-18_1.0 org.pytorch.serve.job.RestJob - Waiting time ns: 1219545, Backend time ns: 12362254
+2026-02-10T19:14:44,078 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Backend response time: 11
+2026-02-10T19:14:48,292 [DEBUG] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Flushing req.cmd PREDICT repeats 1 to backend at: 1770743688292
+2026-02-10T19:14:48,293 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Looping backend response at: 1770743688293
+2026-02-10T19:14:48,299 [INFO ] W-9000-resnet-18_1.0-stdout MODEL_LOG - Backend received inference at: 1770743688
+2026-02-10T19:14:48,301 [INFO ] W-9000-resnet-18_1.0-stdout org.pytorch.serve.wlm.WorkerLifeCycle - result=[METRICS]PredictionTime.Milliseconds:6.54|#ModelName:resnet-18,Level:Model|#type:GAUGE|#hostname:gpu-0-3.local,1770743688,b5edfb2d-d43e-42f2-993a-6f659c30f9b5, pattern=[METRICS]
+2026-02-10T19:14:48,301 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.BatchAggregator - Sending response for jobId b5edfb2d-d43e-42f2-993a-6f659c30f9b5
+2026-02-10T19:14:48,302 [INFO ] W-9000-resnet-18_1.0 ACCESS_LOG - /127.0.0.1:58914 "POST /predictions/resnet-18 HTTP/1.1" 200 12
+2026-02-10T19:14:48,302 [DEBUG] W-9000-resnet-18_1.0 org.pytorch.serve.job.RestJob - Waiting time ns: 1687404, Backend time ns: 9788102
+2026-02-10T19:14:48,302 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Backend response time: 8
+2026-02-10T19:14:49,074 [DEBUG] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Flushing req.cmd PREDICT repeats 1 to backend at: 1770743689074
+2026-02-10T19:14:49,075 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Looping backend response at: 1770743689075
+2026-02-10T19:14:49,081 [INFO ] W-9000-resnet-18_1.0-stdout MODEL_LOG - Backend received inference at: 1770743689
+2026-02-10T19:14:49,081 [INFO ] W-9000-resnet-18_1.0-stdout org.pytorch.serve.wlm.WorkerLifeCycle - result=[METRICS]PredictionTime.Milliseconds:4.8|#ModelName:resnet-18,Level:Model|#type:GAUGE|#hostname:gpu-0-3.local,1770743689,04dcf057-214a-4b8a-8156-a5a8a09d449e, pattern=[METRICS]
+2026-02-10T19:14:49,082 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.BatchAggregator - Sending response for jobId 04dcf057-214a-4b8a-8156-a5a8a09d449e
+2026-02-10T19:14:49,082 [INFO ] W-9000-resnet-18_1.0 ACCESS_LOG - /127.0.0.1:58916 "POST /predictions/resnet-18 HTTP/1.1" 200 9
+2026-02-10T19:14:49,082 [DEBUG] W-9000-resnet-18_1.0 org.pytorch.serve.job.RestJob - Waiting time ns: 1227831, Backend time ns: 7702468
+2026-02-10T19:14:49,082 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Backend response time: 7
+2026-02-10T19:14:54,265 [DEBUG] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Flushing req.cmd PREDICT repeats 1 to backend at: 1770743694265
+2026-02-10T19:14:54,268 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Looping backend response at: 1770743694268
+2026-02-10T19:14:54,279 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.BatchAggregator - Sending response for jobId 1ca676c5-1ceb-43d0-9395-47e1f716e305
+2026-02-10T19:14:54,279 [INFO ] W-9000-resnet-18_1.0-stdout MODEL_LOG - Backend received inference at: 1770743694
+2026-02-10T19:14:54,279 [INFO ] W-9000-resnet-18_1.0-stdout org.pytorch.serve.wlm.WorkerLifeCycle - result=[METRICS]PredictionTime.Milliseconds:4.58|#ModelName:resnet-18,Level:Model|#type:GAUGE|#hostname:gpu-0-3.local,1770743694,1ca676c5-1ceb-43d0-9395-47e1f716e305, pattern=[METRICS]
+2026-02-10T19:14:54,279 [INFO ] W-9000-resnet-18_1.0 ACCESS_LOG - /127.0.0.1:58918 "POST /predictions/resnet-18 HTTP/1.1" 200 15
+2026-02-10T19:14:54,280 [DEBUG] W-9000-resnet-18_1.0 org.pytorch.serve.job.RestJob - Waiting time ns: 189054, Backend time ns: 15299145
+2026-02-10T19:14:54,280 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Backend response time: 11
+2026-02-10T19:15:04,319 [DEBUG] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Flushing req.cmd PREDICT repeats 1 to backend at: 1770743704319
+2026-02-10T19:15:04,324 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Looping backend response at: 1770743704324
+2026-02-10T19:15:04,331 [INFO ] W-9000-resnet-18_1.0-stdout MODEL_LOG - Backend received inference at: 1770743704
+2026-02-10T19:15:04,332 [INFO ] W-9000-resnet-18_1.0-stdout org.pytorch.serve.wlm.WorkerLifeCycle - result=[METRICS]PredictionTime.Milliseconds:6.23|#ModelName:resnet-18,Level:Model|#type:GAUGE|#hostname:gpu-0-3.local,1770743704,0d293225-8a73-42e5-8982-8be145647aab, pattern=[METRICS]
+2026-02-10T19:15:04,333 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.BatchAggregator - Sending response for jobId 0d293225-8a73-42e5-8982-8be145647aab
+2026-02-10T19:15:04,333 [INFO ] W-9000-resnet-18_1.0 ACCESS_LOG - /127.0.0.1:58920 "POST /predictions/resnet-18 HTTP/1.1" 200 14
+2026-02-10T19:15:04,333 [DEBUG] W-9000-resnet-18_1.0 org.pytorch.serve.job.RestJob - Waiting time ns: 159393, Backend time ns: 14069093
+2026-02-10T19:15:04,333 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Backend response time: 9
+2026-02-10T19:15:10,558 [DEBUG] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Flushing req.cmd PREDICT repeats 1 to backend at: 1770743710557
+2026-02-10T19:15:10,561 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Looping backend response at: 1770743710561
+2026-02-10T19:15:10,568 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.BatchAggregator - Sending response for jobId 89051706-81c6-40b6-b6f2-093854353308
+2026-02-10T19:15:10,568 [INFO ] W-9000-resnet-18_1.0 ACCESS_LOG - /127.0.0.1:58922 "POST /predictions/resnet-18 HTTP/1.1" 200 11
+2026-02-10T19:15:10,568 [DEBUG] W-9000-resnet-18_1.0 org.pytorch.serve.job.RestJob - Waiting time ns: 190577, Backend time ns: 10535588
+2026-02-10T19:15:10,568 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Backend response time: 7
+2026-02-10T19:15:10,567 [INFO ] W-9000-resnet-18_1.0-stdout MODEL_LOG - Backend received inference at: 1770743710
+2026-02-10T19:15:10,569 [INFO ] W-9000-resnet-18_1.0-stdout org.pytorch.serve.wlm.WorkerLifeCycle - result=[METRICS]PredictionTime.Milliseconds:4.79|#ModelName:resnet-18,Level:Model|#type:GAUGE|#hostname:gpu-0-3.local,1770743710,89051706-81c6-40b6-b6f2-093854353308, pattern=[METRICS]
+2026-02-10T19:15:11,453 [DEBUG] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Flushing req.cmd PREDICT repeats 1 to backend at: 1770743711453
+2026-02-10T19:15:11,453 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Looping backend response at: 1770743711453
+2026-02-10T19:15:11,460 [INFO ] W-9000-resnet-18_1.0-stdout MODEL_LOG - Backend received inference at: 1770743711
+2026-02-10T19:15:11,462 [INFO ] W-9000-resnet-18_1.0-stdout org.pytorch.serve.wlm.WorkerLifeCycle - result=[METRICS]PredictionTime.Milliseconds:6.45|#ModelName:resnet-18,Level:Model|#type:GAUGE|#hostname:gpu-0-3.local,1770743711,279e09f4-f336-4d43-b4b0-923aca037ef6, pattern=[METRICS]
+2026-02-10T19:15:11,464 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.BatchAggregator - Sending response for jobId 279e09f4-f336-4d43-b4b0-923aca037ef6
+2026-02-10T19:15:11,464 [INFO ] W-9000-resnet-18_1.0 ACCESS_LOG - /127.0.0.1:58924 "POST /predictions/resnet-18 HTTP/1.1" 200 14
+2026-02-10T19:15:11,464 [DEBUG] W-9000-resnet-18_1.0 org.pytorch.serve.job.RestJob - Waiting time ns: 2282162, Backend time ns: 11671610
+2026-02-10T19:15:11,464 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Backend response time: 10
+2026-02-10T19:15:21,317 [DEBUG] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Flushing req.cmd PREDICT repeats 1 to backend at: 1770743721317
+2026-02-10T19:15:21,320 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Looping backend response at: 1770743721320
+2026-02-10T19:15:21,333 [INFO ] W-9000-resnet-18_1.0-stdout MODEL_LOG - Backend received inference at: 1770743721
+2026-02-10T19:15:21,333 [INFO ] W-9000-resnet-18_1.0-stdout org.pytorch.serve.wlm.WorkerLifeCycle - result=[METRICS]PredictionTime.Milliseconds:4.2|#ModelName:resnet-18,Level:Model|#type:GAUGE|#hostname:gpu-0-3.local,1770743721,f95fe374-04ac-4c63-96df-95de50a6a4c4, pattern=[METRICS]
+2026-02-10T19:15:21,334 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.BatchAggregator - Sending response for jobId f95fe374-04ac-4c63-96df-95de50a6a4c4
+2026-02-10T19:15:21,334 [INFO ] W-9000-resnet-18_1.0 ACCESS_LOG - /127.0.0.1:58926 "POST /predictions/resnet-18 HTTP/1.1" 200 18
+2026-02-10T19:15:21,334 [DEBUG] W-9000-resnet-18_1.0 org.pytorch.serve.job.RestJob - Waiting time ns: 173730, Backend time ns: 17346483
+2026-02-10T19:15:21,334 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Backend response time: 14
+2026-02-10T19:15:39,507 [DEBUG] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Flushing req.cmd PREDICT repeats 1 to backend at: 1770743739507
+2026-02-10T19:15:39,510 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Looping backend response at: 1770743739509
+2026-02-10T19:15:39,517 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.BatchAggregator - Sending response for jobId f53fe865-0a35-4240-984c-cda4a8999bf1
+2026-02-10T19:15:39,518 [INFO ] W-9000-resnet-18_1.0 ACCESS_LOG - /127.0.0.1:58928 "POST /predictions/resnet-18 HTTP/1.1" 200 11
+2026-02-10T19:15:39,518 [DEBUG] W-9000-resnet-18_1.0 org.pytorch.serve.job.RestJob - Waiting time ns: 201885, Backend time ns: 10521236
+2026-02-10T19:15:39,518 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Backend response time: 7
+2026-02-10T19:15:39,517 [INFO ] W-9000-resnet-18_1.0-stdout MODEL_LOG - Backend received inference at: 1770743739
+2026-02-10T19:15:39,518 [INFO ] W-9000-resnet-18_1.0-stdout org.pytorch.serve.wlm.WorkerLifeCycle - result=[METRICS]PredictionTime.Milliseconds:4.7|#ModelName:resnet-18,Level:Model|#type:GAUGE|#hostname:gpu-0-3.local,1770743739,f53fe865-0a35-4240-984c-cda4a8999bf1, pattern=[METRICS]
+2026-02-10T19:15:40,560 [DEBUG] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Flushing req.cmd PREDICT repeats 1 to backend at: 1770743740560
+2026-02-10T19:15:40,561 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Looping backend response at: 1770743740561
+2026-02-10T19:15:40,567 [INFO ] W-9000-resnet-18_1.0-stdout MODEL_LOG - Backend received inference at: 1770743740
+2026-02-10T19:15:40,569 [INFO ] W-9000-resnet-18_1.0-stdout org.pytorch.serve.wlm.WorkerLifeCycle - result=[METRICS]PredictionTime.Milliseconds:6.04|#ModelName:resnet-18,Level:Model|#type:GAUGE|#hostname:gpu-0-3.local,1770743740,14ed144e-3d87-4079-bc60-2a8ed16abaad, pattern=[METRICS]
+2026-02-10T19:15:40,569 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.BatchAggregator - Sending response for jobId 14ed144e-3d87-4079-bc60-2a8ed16abaad
+2026-02-10T19:15:40,570 [INFO ] W-9000-resnet-18_1.0 ACCESS_LOG - /127.0.0.1:58932 "POST /predictions/resnet-18 HTTP/1.1" 200 12
+2026-02-10T19:15:40,570 [DEBUG] W-9000-resnet-18_1.0 org.pytorch.serve.job.RestJob - Waiting time ns: 1262123, Backend time ns: 9821466
+2026-02-10T19:15:40,570 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Backend response time: 8
+2026-02-10T19:15:45,027 [DEBUG] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Flushing req.cmd PREDICT repeats 1 to backend at: 1770743745027
+2026-02-10T19:15:45,027 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Looping backend response at: 1770743745027
+2026-02-10T19:15:45,034 [INFO ] W-9000-resnet-18_1.0-stdout MODEL_LOG - Backend received inference at: 1770743745
+2026-02-10T19:15:45,036 [INFO ] W-9000-resnet-18_1.0-stdout org.pytorch.serve.wlm.WorkerLifeCycle - result=[METRICS]PredictionTime.Milliseconds:7.66|#ModelName:resnet-18,Level:Model|#type:GAUGE|#hostname:gpu-0-3.local,1770743745,00f163ff-0c44-4dbd-b205-6f1c9f939967, pattern=[METRICS]
+2026-02-10T19:15:45,037 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.BatchAggregator - Sending response for jobId 00f163ff-0c44-4dbd-b205-6f1c9f939967
+2026-02-10T19:15:45,037 [INFO ] W-9000-resnet-18_1.0 ACCESS_LOG - /127.0.0.1:58934 "POST /predictions/resnet-18 HTTP/1.1" 200 13
+2026-02-10T19:15:45,037 [DEBUG] W-9000-resnet-18_1.0 org.pytorch.serve.job.RestJob - Waiting time ns: 2411033, Backend time ns: 10494641
+2026-02-10T19:15:45,037 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Backend response time: 9
+2026-02-10T19:15:45,103 [DEBUG] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Flushing req.cmd PREDICT repeats 1 to backend at: 1770743745102
+2026-02-10T19:15:45,106 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Looping backend response at: 1770743745106
+2026-02-10T19:15:45,112 [INFO ] W-9000-resnet-18_1.0-stdout MODEL_LOG - Backend received inference at: 1770743745
+2026-02-10T19:15:45,112 [INFO ] W-9000-resnet-18_1.0-stdout org.pytorch.serve.wlm.WorkerLifeCycle - result=[METRICS]PredictionTime.Milliseconds:4.67|#ModelName:resnet-18,Level:Model|#type:GAUGE|#hostname:gpu-0-3.local,1770743745,c853017e-1f1f-46ab-bc84-d0ca5db01176, pattern=[METRICS]
+2026-02-10T19:15:45,113 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.BatchAggregator - Sending response for jobId c853017e-1f1f-46ab-bc84-d0ca5db01176
+2026-02-10T19:15:45,113 [INFO ] W-9000-resnet-18_1.0 ACCESS_LOG - /127.0.0.1:58936 "POST /predictions/resnet-18 HTTP/1.1" 200 11
+2026-02-10T19:15:45,113 [DEBUG] W-9000-resnet-18_1.0 org.pytorch.serve.job.RestJob - Waiting time ns: 149069, Backend time ns: 10793186
+2026-02-10T19:15:45,113 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Backend response time: 7
+2026-02-10T19:15:47,487 [DEBUG] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Flushing req.cmd PREDICT repeats 1 to backend at: 1770743747487
+2026-02-10T19:15:47,489 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Looping backend response at: 1770743747489
+2026-02-10T19:15:47,495 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.BatchAggregator - Sending response for jobId 6283c940-cf00-41b8-a545-373dcbca3476
+2026-02-10T19:15:47,495 [INFO ] W-9000-resnet-18_1.0 ACCESS_LOG - /127.0.0.1:58938 "POST /predictions/resnet-18 HTTP/1.1" 200 10
+2026-02-10T19:15:47,495 [DEBUG] W-9000-resnet-18_1.0 org.pytorch.serve.job.RestJob - Waiting time ns: 1577911, Backend time ns: 8529318
+2026-02-10T19:15:47,495 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Backend response time: 6
+2026-02-10T19:15:47,494 [INFO ] W-9000-resnet-18_1.0-stdout MODEL_LOG - Backend received inference at: 1770743747
+2026-02-10T19:15:47,496 [INFO ] W-9000-resnet-18_1.0-stdout org.pytorch.serve.wlm.WorkerLifeCycle - result=[METRICS]PredictionTime.Milliseconds:4.34|#ModelName:resnet-18,Level:Model|#type:GAUGE|#hostname:gpu-0-3.local,1770743747,6283c940-cf00-41b8-a545-373dcbca3476, pattern=[METRICS]
+2026-02-10T19:16:15,002 [DEBUG] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Flushing req.cmd PREDICT repeats 1 to backend at: 1770743775002
+2026-02-10T19:16:15,007 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Looping backend response at: 1770743775007
+2026-02-10T19:16:15,014 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.BatchAggregator - Sending response for jobId bbb0800c-b5f8-448b-a129-488308eacddb
+2026-02-10T19:16:15,014 [INFO ] W-9000-resnet-18_1.0-stdout MODEL_LOG - Backend received inference at: 1770743775
+2026-02-10T19:16:15,015 [INFO ] W-9000-resnet-18_1.0-stdout org.pytorch.serve.wlm.WorkerLifeCycle - result=[METRICS]PredictionTime.Milliseconds:5.16|#ModelName:resnet-18,Level:Model|#type:GAUGE|#hostname:gpu-0-3.local,1770743775,bbb0800c-b5f8-448b-a129-488308eacddb, pattern=[METRICS]
+2026-02-10T19:16:15,015 [INFO ] W-9000-resnet-18_1.0 ACCESS_LOG - /127.0.0.1:58940 "POST /predictions/resnet-18 HTTP/1.1" 200 14
+2026-02-10T19:16:15,016 [DEBUG] W-9000-resnet-18_1.0 org.pytorch.serve.job.RestJob - Waiting time ns: 191738, Backend time ns: 14076201
+2026-02-10T19:16:15,016 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Backend response time: 7
+2026-02-10T19:16:23,048 [DEBUG] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Flushing req.cmd PREDICT repeats 1 to backend at: 1770743783048
+2026-02-10T19:16:23,050 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Looping backend response at: 1770743783050
+2026-02-10T19:16:23,056 [INFO ] W-9000-resnet-18_1.0-stdout MODEL_LOG - Backend received inference at: 1770743783
+2026-02-10T19:16:23,057 [INFO ] W-9000-resnet-18_1.0-stdout org.pytorch.serve.wlm.WorkerLifeCycle - result=[METRICS]PredictionTime.Milliseconds:5.22|#ModelName:resnet-18,Level:Model|#type:GAUGE|#hostname:gpu-0-3.local,1770743783,211930e1-150b-4a20-93fd-16bbd6ca875f, pattern=[METRICS]
+2026-02-10T19:16:23,057 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.BatchAggregator - Sending response for jobId 211930e1-150b-4a20-93fd-16bbd6ca875f
+2026-02-10T19:16:23,057 [INFO ] W-9000-resnet-18_1.0 ACCESS_LOG - /127.0.0.1:58942 "POST /predictions/resnet-18 HTTP/1.1" 200 10
+2026-02-10T19:16:23,058 [DEBUG] W-9000-resnet-18_1.0 org.pytorch.serve.job.RestJob - Waiting time ns: 926145, Backend time ns: 9850572
+2026-02-10T19:16:23,058 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Backend response time: 7
+2026-02-10T19:16:28,250 [DEBUG] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Flushing req.cmd PREDICT repeats 1 to backend at: 1770743788250
+2026-02-10T19:16:28,253 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Looping backend response at: 1770743788253
+2026-02-10T19:16:28,259 [INFO ] W-9000-resnet-18_1.0-stdout MODEL_LOG - Backend received inference at: 1770743788
+2026-02-10T19:16:28,259 [INFO ] W-9000-resnet-18_1.0-stdout org.pytorch.serve.wlm.WorkerLifeCycle - result=[METRICS]PredictionTime.Milliseconds:5.19|#ModelName:resnet-18,Level:Model|#type:GAUGE|#hostname:gpu-0-3.local,1770743788,b8f63367-aa8b-4851-9fed-3c23023aa64d, pattern=[METRICS]
+2026-02-10T19:16:28,261 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.BatchAggregator - Sending response for jobId b8f63367-aa8b-4851-9fed-3c23023aa64d
+2026-02-10T19:16:28,261 [INFO ] W-9000-resnet-18_1.0 ACCESS_LOG - /127.0.0.1:58944 "POST /predictions/resnet-18 HTTP/1.1" 200 14
+2026-02-10T19:16:28,261 [DEBUG] W-9000-resnet-18_1.0 org.pytorch.serve.job.RestJob - Waiting time ns: 2552199, Backend time ns: 11288012
+2026-02-10T19:16:28,261 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Backend response time: 8
+2026-02-10T19:16:28,867 [DEBUG] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Flushing req.cmd PREDICT repeats 1 to backend at: 1770743788867
+2026-02-10T19:16:28,870 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Looping backend response at: 1770743788870
+2026-02-10T19:16:28,877 [INFO ] W-9000-resnet-18_1.0-stdout MODEL_LOG - Backend received inference at: 1770743788
+2026-02-10T19:16:28,877 [INFO ] W-9000-resnet-18_1.0-stdout org.pytorch.serve.wlm.WorkerLifeCycle - result=[METRICS]PredictionTime.Milliseconds:6.11|#ModelName:resnet-18,Level:Model|#type:GAUGE|#hostname:gpu-0-3.local,1770743788,359c3bda-e81f-46a8-9c23-3f5dfb33de85, pattern=[METRICS]
+2026-02-10T19:16:28,883 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.BatchAggregator - Sending response for jobId 359c3bda-e81f-46a8-9c23-3f5dfb33de85
+2026-02-10T19:16:28,883 [INFO ] W-9000-resnet-18_1.0 ACCESS_LOG - /127.0.0.1:58946 "POST /predictions/resnet-18 HTTP/1.1" 200 17
+2026-02-10T19:16:28,883 [DEBUG] W-9000-resnet-18_1.0 org.pytorch.serve.job.RestJob - Waiting time ns: 591198, Backend time ns: 16460879
+2026-02-10T19:16:28,883 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Backend response time: 13
+2026-02-10T19:16:53,815 [DEBUG] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Flushing req.cmd PREDICT repeats 1 to backend at: 1770743813815
+2026-02-10T19:16:53,816 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Looping backend response at: 1770743813816
+2026-02-10T19:16:53,821 [INFO ] W-9000-resnet-18_1.0-stdout MODEL_LOG - Backend received inference at: 1770743813
+2026-02-10T19:16:53,824 [INFO ] W-9000-resnet-18_1.0-stdout org.pytorch.serve.wlm.WorkerLifeCycle - result=[METRICS]PredictionTime.Milliseconds:6.8|#ModelName:resnet-18,Level:Model|#type:GAUGE|#hostname:gpu-0-3.local,1770743813,6c2c8f33-8168-4e94-81f9-f041216e3d01, pattern=[METRICS]
+2026-02-10T19:16:53,825 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.BatchAggregator - Sending response for jobId 6c2c8f33-8168-4e94-81f9-f041216e3d01
+2026-02-10T19:16:53,825 [INFO ] W-9000-resnet-18_1.0 ACCESS_LOG - /127.0.0.1:58948 "POST /predictions/resnet-18 HTTP/1.1" 200 10
+2026-02-10T19:16:53,825 [DEBUG] W-9000-resnet-18_1.0 org.pytorch.serve.job.RestJob - Waiting time ns: 127830, Backend time ns: 10310536
+2026-02-10T19:16:53,825 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Backend response time: 9
+2026-02-10T19:17:44,491 [DEBUG] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Flushing req.cmd PREDICT repeats 1 to backend at: 1770743864491
+2026-02-10T19:17:44,492 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Looping backend response at: 1770743864492
+2026-02-10T19:17:44,498 [INFO ] W-9000-resnet-18_1.0-stdout MODEL_LOG - Backend received inference at: 1770743864
+2026-02-10T19:17:44,499 [INFO ] W-9000-resnet-18_1.0-stdout org.pytorch.serve.wlm.WorkerLifeCycle - result=[METRICS]PredictionTime.Milliseconds:5.4|#ModelName:resnet-18,Level:Model|#type:GAUGE|#hostname:gpu-0-3.local,1770743864,d33bd952-c914-4fff-aab6-369881b7834c, pattern=[METRICS]
+2026-02-10T19:17:44,500 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.BatchAggregator - Sending response for jobId d33bd952-c914-4fff-aab6-369881b7834c
+2026-02-10T19:17:44,500 [INFO ] W-9000-resnet-18_1.0 ACCESS_LOG - /127.0.0.1:58952 "POST /predictions/resnet-18 HTTP/1.1" 200 14
+2026-02-10T19:17:44,500 [DEBUG] W-9000-resnet-18_1.0 org.pytorch.serve.job.RestJob - Waiting time ns: 4133081, Backend time ns: 9388860
+2026-02-10T19:17:44,500 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Backend response time: 7
+2026-02-10T19:17:50,595 [DEBUG] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Flushing req.cmd PREDICT repeats 1 to backend at: 1770743870595
+2026-02-10T19:17:50,598 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Looping backend response at: 1770743870598
+2026-02-10T19:17:50,604 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.BatchAggregator - Sending response for jobId 6bb60d3c-64ec-4449-bb7e-f0bc331cb12b
+2026-02-10T19:17:50,604 [INFO ] W-9000-resnet-18_1.0-stdout MODEL_LOG - Backend received inference at: 1770743870
+2026-02-10T19:17:50,605 [INFO ] W-9000-resnet-18_1.0-stdout org.pytorch.serve.wlm.WorkerLifeCycle - result=[METRICS]PredictionTime.Milliseconds:4.86|#ModelName:resnet-18,Level:Model|#type:GAUGE|#hostname:gpu-0-3.local,1770743870,6bb60d3c-64ec-4449-bb7e-f0bc331cb12b, pattern=[METRICS]
+2026-02-10T19:17:50,604 [INFO ] W-9000-resnet-18_1.0 ACCESS_LOG - /127.0.0.1:58954 "POST /predictions/resnet-18 HTTP/1.1" 200 9
+2026-02-10T19:17:50,605 [DEBUG] W-9000-resnet-18_1.0 org.pytorch.serve.job.RestJob - Waiting time ns: 160178, Backend time ns: 10001021
+2026-02-10T19:17:50,605 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Backend response time: 6
+2026-02-10T19:18:36,442 [DEBUG] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Flushing req.cmd PREDICT repeats 1 to backend at: 1770743916442
+2026-02-10T19:18:36,443 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Looping backend response at: 1770743916443
+2026-02-10T19:18:36,449 [INFO ] W-9000-resnet-18_1.0-stdout MODEL_LOG - Backend received inference at: 1770743916
+2026-02-10T19:18:36,451 [INFO ] W-9000-resnet-18_1.0-stdout org.pytorch.serve.wlm.WorkerLifeCycle - result=[METRICS]PredictionTime.Milliseconds:6.65|#ModelName:resnet-18,Level:Model|#type:GAUGE|#hostname:gpu-0-3.local,1770743916,6cbb2219-8f40-4bd7-99da-c183ce18fff0, pattern=[METRICS]
+2026-02-10T19:18:36,453 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.BatchAggregator - Sending response for jobId 6cbb2219-8f40-4bd7-99da-c183ce18fff0
+2026-02-10T19:18:36,453 [INFO ] W-9000-resnet-18_1.0 ACCESS_LOG - /127.0.0.1:58956 "POST /predictions/resnet-18 HTTP/1.1" 200 13
+2026-02-10T19:18:36,453 [DEBUG] W-9000-resnet-18_1.0 org.pytorch.serve.job.RestJob - Waiting time ns: 1643011, Backend time ns: 11058393
+2026-02-10T19:18:36,453 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Backend response time: 9
+2026-02-10T19:18:39,094 [DEBUG] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Flushing req.cmd PREDICT repeats 1 to backend at: 1770743919094
+2026-02-10T19:18:39,095 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Looping backend response at: 1770743919095
+2026-02-10T19:18:39,101 [INFO ] W-9000-resnet-18_1.0-stdout MODEL_LOG - Backend received inference at: 1770743919
+2026-02-10T19:18:39,102 [INFO ] W-9000-resnet-18_1.0-stdout org.pytorch.serve.wlm.WorkerLifeCycle - result=[METRICS]PredictionTime.Milliseconds:5.94|#ModelName:resnet-18,Level:Model|#type:GAUGE|#hostname:gpu-0-3.local,1770743919,33b8a8ab-714c-4a5a-9dd9-c840dfc0ebd2, pattern=[METRICS]
+2026-02-10T19:18:39,102 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.BatchAggregator - Sending response for jobId 33b8a8ab-714c-4a5a-9dd9-c840dfc0ebd2
+2026-02-10T19:18:39,102 [INFO ] W-9000-resnet-18_1.0 ACCESS_LOG - /127.0.0.1:58958 "POST /predictions/resnet-18 HTTP/1.1" 200 12
+2026-02-10T19:18:39,102 [DEBUG] W-9000-resnet-18_1.0 org.pytorch.serve.job.RestJob - Waiting time ns: 4103114, Backend time ns: 8399541
+2026-02-10T19:18:39,102 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Backend response time: 7
+2026-02-10T19:18:40,311 [DEBUG] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Flushing req.cmd PREDICT repeats 1 to backend at: 1770743920311
+2026-02-10T19:18:40,315 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Looping backend response at: 1770743920315
+2026-02-10T19:18:40,322 [INFO ] W-9000-resnet-18_1.0-stdout MODEL_LOG - Backend received inference at: 1770743920
+2026-02-10T19:18:40,322 [INFO ] W-9000-resnet-18_1.0-stdout org.pytorch.serve.wlm.WorkerLifeCycle - result=[METRICS]PredictionTime.Milliseconds:5.04|#ModelName:resnet-18,Level:Model|#type:GAUGE|#hostname:gpu-0-3.local,1770743920,ba0f6a64-9cc5-4167-b07f-9b0112b798c1, pattern=[METRICS]
+2026-02-10T19:18:40,322 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.BatchAggregator - Sending response for jobId ba0f6a64-9cc5-4167-b07f-9b0112b798c1
+2026-02-10T19:18:40,323 [INFO ] W-9000-resnet-18_1.0 ACCESS_LOG - /127.0.0.1:58962 "POST /predictions/resnet-18 HTTP/1.1" 200 12
+2026-02-10T19:18:40,323 [DEBUG] W-9000-resnet-18_1.0 org.pytorch.serve.job.RestJob - Waiting time ns: 171738, Backend time ns: 11638260
+2026-02-10T19:18:40,323 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Backend response time: 6
+2026-02-10T19:18:50,419 [DEBUG] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Flushing req.cmd PREDICT repeats 1 to backend at: 1770743930419
+2026-02-10T19:18:50,420 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Looping backend response at: 1770743930419
+2026-02-10T19:18:50,427 [INFO ] W-9000-resnet-18_1.0-stdout MODEL_LOG - Backend received inference at: 1770743930
+2026-02-10T19:18:50,428 [INFO ] W-9000-resnet-18_1.0-stdout org.pytorch.serve.wlm.WorkerLifeCycle - result=[METRICS]PredictionTime.Milliseconds:7.3|#ModelName:resnet-18,Level:Model|#type:GAUGE|#hostname:gpu-0-3.local,1770743930,b6a675ff-a303-400c-8ee8-8426f49fe63c, pattern=[METRICS]
+2026-02-10T19:18:50,429 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.BatchAggregator - Sending response for jobId b6a675ff-a303-400c-8ee8-8426f49fe63c
+2026-02-10T19:18:50,429 [INFO ] W-9000-resnet-18_1.0 ACCESS_LOG - /127.0.0.1:58964 "POST /predictions/resnet-18 HTTP/1.1" 200 11
+2026-02-10T19:18:50,429 [DEBUG] W-9000-resnet-18_1.0 org.pytorch.serve.job.RestJob - Waiting time ns: 194628, Backend time ns: 10682399
+2026-02-10T19:18:50,429 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Backend response time: 9
+2026-02-10T19:19:21,090 [DEBUG] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Flushing req.cmd PREDICT repeats 1 to backend at: 1770743961090
+2026-02-10T19:19:21,091 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Looping backend response at: 1770743961091
+2026-02-10T19:19:21,099 [INFO ] W-9000-resnet-18_1.0-stdout MODEL_LOG - Backend received inference at: 1770743961
+2026-02-10T19:19:21,102 [INFO ] W-9000-resnet-18_1.0-stdout org.pytorch.serve.wlm.WorkerLifeCycle - result=[METRICS]PredictionTime.Milliseconds:6.87|#ModelName:resnet-18,Level:Model|#type:GAUGE|#hostname:gpu-0-3.local,1770743961,3bbfc50d-dea0-40d3-9e60-9bd17e8dbdcd, pattern=[METRICS]
+2026-02-10T19:19:21,104 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.BatchAggregator - Sending response for jobId 3bbfc50d-dea0-40d3-9e60-9bd17e8dbdcd
+2026-02-10T19:19:21,104 [INFO ] W-9000-resnet-18_1.0 ACCESS_LOG - /127.0.0.1:58966 "POST /predictions/resnet-18 HTTP/1.1" 200 14
+2026-02-10T19:19:21,105 [DEBUG] W-9000-resnet-18_1.0 org.pytorch.serve.job.RestJob - Waiting time ns: 179518, Backend time ns: 14361104
+2026-02-10T19:19:21,105 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Backend response time: 13
+2026-02-10T19:19:33,498 [DEBUG] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Flushing req.cmd PREDICT repeats 1 to backend at: 1770743973498
+2026-02-10T19:19:33,500 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Looping backend response at: 1770743973500
+2026-02-10T19:19:33,507 [INFO ] W-9000-resnet-18_1.0-stdout MODEL_LOG - Backend received inference at: 1770743973
+2026-02-10T19:19:33,508 [INFO ] W-9000-resnet-18_1.0-stdout org.pytorch.serve.wlm.WorkerLifeCycle - result=[METRICS]PredictionTime.Milliseconds:6.72|#ModelName:resnet-18,Level:Model|#type:GAUGE|#hostname:gpu-0-3.local,1770743973,f79b9d69-6636-45ff-bdb0-4c9451a7e9c2, pattern=[METRICS]
+2026-02-10T19:19:33,509 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.BatchAggregator - Sending response for jobId f79b9d69-6636-45ff-bdb0-4c9451a7e9c2
+2026-02-10T19:19:33,509 [INFO ] W-9000-resnet-18_1.0 ACCESS_LOG - /127.0.0.1:58968 "POST /predictions/resnet-18 HTTP/1.1" 200 12
+2026-02-10T19:19:33,509 [DEBUG] W-9000-resnet-18_1.0 org.pytorch.serve.job.RestJob - Waiting time ns: 540840, Backend time ns: 11673326
+2026-02-10T19:19:33,509 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Backend response time: 9
+2026-02-10T19:19:44,815 [DEBUG] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Flushing req.cmd PREDICT repeats 1 to backend at: 1770743984815
+2026-02-10T19:19:44,816 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Looping backend response at: 1770743984816
+2026-02-10T19:19:44,823 [INFO ] W-9000-resnet-18_1.0-stdout MODEL_LOG - Backend received inference at: 1770743984
+2026-02-10T19:19:44,826 [INFO ] W-9000-resnet-18_1.0-stdout org.pytorch.serve.wlm.WorkerLifeCycle - result=[METRICS]PredictionTime.Milliseconds:8.31|#ModelName:resnet-18,Level:Model|#type:GAUGE|#hostname:gpu-0-3.local,1770743984,8e3d61a5-ad8d-4f84-8b79-feb14903781c, pattern=[METRICS]
+2026-02-10T19:19:44,827 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.BatchAggregator - Sending response for jobId 8e3d61a5-ad8d-4f84-8b79-feb14903781c
+2026-02-10T19:19:44,827 [INFO ] W-9000-resnet-18_1.0 ACCESS_LOG - /127.0.0.1:58970 "POST /predictions/resnet-18 HTTP/1.1" 200 12
+2026-02-10T19:19:44,827 [DEBUG] W-9000-resnet-18_1.0 org.pytorch.serve.job.RestJob - Waiting time ns: 169656, Backend time ns: 12163247
+2026-02-10T19:19:44,827 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Backend response time: 11
+2026-02-10T19:20:17,788 [DEBUG] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Flushing req.cmd PREDICT repeats 1 to backend at: 1770744017788
+2026-02-10T19:20:17,792 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Looping backend response at: 1770744017792
+2026-02-10T19:20:17,800 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.BatchAggregator - Sending response for jobId 0ddc5719-6891-4c31-a1e4-99e4cb77ef1b
+2026-02-10T19:20:17,799 [INFO ] W-9000-resnet-18_1.0-stdout MODEL_LOG - Backend received inference at: 1770744017
+2026-02-10T19:20:17,801 [INFO ] W-9000-resnet-18_1.0-stdout org.pytorch.serve.wlm.WorkerLifeCycle - result=[METRICS]PredictionTime.Milliseconds:6.88|#ModelName:resnet-18,Level:Model|#type:GAUGE|#hostname:gpu-0-3.local,1770744017,0ddc5719-6891-4c31-a1e4-99e4cb77ef1b, pattern=[METRICS]
+2026-02-10T19:20:17,801 [INFO ] W-9000-resnet-18_1.0 ACCESS_LOG - /127.0.0.1:58974 "POST /predictions/resnet-18 HTTP/1.1" 200 14
+2026-02-10T19:20:17,803 [DEBUG] W-9000-resnet-18_1.0 org.pytorch.serve.job.RestJob - Waiting time ns: 188944, Backend time ns: 15740340
+2026-02-10T19:20:17,803 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Backend response time: 8
+2026-02-10T19:20:45,819 [DEBUG] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Flushing req.cmd PREDICT repeats 1 to backend at: 1770744045819
+2026-02-10T19:20:45,822 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Looping backend response at: 1770744045822
+2026-02-10T19:20:45,829 [INFO ] W-9000-resnet-18_1.0-stdout MODEL_LOG - Backend received inference at: 1770744045
+2026-02-10T19:20:45,830 [INFO ] W-9000-resnet-18_1.0-stdout org.pytorch.serve.wlm.WorkerLifeCycle - result=[METRICS]PredictionTime.Milliseconds:6.76|#ModelName:resnet-18,Level:Model|#type:GAUGE|#hostname:gpu-0-3.local,1770744045,72e12cf6-f077-40ea-a526-1739b29d5525, pattern=[METRICS]
+2026-02-10T19:20:45,830 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.BatchAggregator - Sending response for jobId 72e12cf6-f077-40ea-a526-1739b29d5525
+2026-02-10T19:20:45,830 [INFO ] W-9000-resnet-18_1.0 ACCESS_LOG - /127.0.0.1:58976 "POST /predictions/resnet-18 HTTP/1.1" 200 11
+2026-02-10T19:20:45,831 [DEBUG] W-9000-resnet-18_1.0 org.pytorch.serve.job.RestJob - Waiting time ns: 164819, Backend time ns: 11935775
+2026-02-10T19:20:45,831 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Backend response time: 8
+2026-02-10T19:21:03,750 [DEBUG] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Flushing req.cmd PREDICT repeats 1 to backend at: 1770744063750
+2026-02-10T19:21:03,754 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Looping backend response at: 1770744063754
+2026-02-10T19:21:03,761 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.BatchAggregator - Sending response for jobId ada50f43-0857-4155-9f75-7aa3d7080757
+2026-02-10T19:21:03,761 [INFO ] W-9000-resnet-18_1.0-stdout MODEL_LOG - Backend received inference at: 1770744063
+2026-02-10T19:21:03,762 [INFO ] W-9000-resnet-18_1.0-stdout org.pytorch.serve.wlm.WorkerLifeCycle - result=[METRICS]PredictionTime.Milliseconds:5.31|#ModelName:resnet-18,Level:Model|#type:GAUGE|#hostname:gpu-0-3.local,1770744063,ada50f43-0857-4155-9f75-7aa3d7080757, pattern=[METRICS]
+2026-02-10T19:21:03,761 [INFO ] W-9000-resnet-18_1.0 ACCESS_LOG - /127.0.0.1:58978 "POST /predictions/resnet-18 HTTP/1.1" 200 12
+2026-02-10T19:21:03,762 [DEBUG] W-9000-resnet-18_1.0 org.pytorch.serve.job.RestJob - Waiting time ns: 181899, Backend time ns: 12189463
+2026-02-10T19:21:03,762 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Backend response time: 7
+[2026-02-10T19:21:20+0200] Stopping TorchServe
+[2026-02-10T19:21:24+0200] Run directory: /home/chadji10/ADE/runs/resnet-18_poisson_20260210_191046
+[2026-02-10T19:21:24+0200] Stopping TorchServe
+[2026-02-10T19:21:28+0200] Run directory: /home/chadji10/ADE/runs/resnet-18_poisson_20260210_191046
