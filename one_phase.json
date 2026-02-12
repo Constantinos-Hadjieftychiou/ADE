@@ -1,0 +1,10 @@
+[
+    {
+        "name": "poisson-2min-1rps",
+        "pattern": "poisson",
+        "duration": 120,
+        "rps": 1,
+        "burst": 30,
+        "idle": 15
+    }
+]

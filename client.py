@@ -265,7 +265,7 @@ def run_load(
             "window_index",
             "phase",
             "rps",
-            "requests",
+            "completed_requests",
             "is_idle_window",
             "energy_j",
             "avg_power_w",
@@ -326,10 +326,10 @@ def run_load(
 
                 # Compute number of requests completed in this window
                 window_results = results[start_count:]
-                reqs = len(window_results)
+                completed = len(window_results)
 
                 # Request-level idleness
-                is_idle = (reqs == 0)
+                is_idle = (completed == 0)
 
                 # Binary GPU activity flag (did NVML ever see activity?)
                 gpu_active = int(any(u > 0 for u in util_samples))
@@ -339,7 +339,7 @@ def run_load(
                     window_idx,
                     phase_name,
                     rps,
-                    reqs,
+                    completed,
                     is_idle,
                     meas.total_energy,
                     meas.total_energy / window_s,

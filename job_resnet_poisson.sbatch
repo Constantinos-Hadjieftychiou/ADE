@@ -23,7 +23,7 @@ REPEATS="${REPEATS:-1}"
 
 # Load / sampling parameters (AGGRESSIVE but VALID)
 CONCURRENCY="${CONCURRENCY:-16}"
-WINDOW_S="${WINDOW_S:-0.1}"          # 100 ms windows
+WINDOW_S="${WINDOW_S:-0.05}"          # 100 ms windows
 UTIL_SAMPLE_MS="${UTIL_SAMPLE_MS:-2}" # 2 ms GPU util sampling
 SEED_BASE="${SEED_BASE:-42}"
 
