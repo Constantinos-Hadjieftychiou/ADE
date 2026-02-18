@@ -1,106 +1,14 @@
 [
-  {
-    "name": "poisson-2min-1rps",
-    "pattern": "poisson",
-    "duration": 120,
-    "rps": 1,
-    "burst": 30,
-    "idle": 15
-  },
-  {
-    "name": "poisson-2min-5rps",
-    "pattern": "poisson",
-    "duration": 120,
-    "rps": 5,
-    "burst": 30,
-    "idle": 15
-  },
-  {
-    "name": "poisson-2min-10rps",
-    "pattern": "poisson",
-    "duration": 120,
-    "rps": 10,
-    "burst": 30,
-    "idle": 15
-  },
-  {
-    "name": "poisson-2min-20rps",
-    "pattern": "poisson",
-    "duration": 120,
-    "rps": 20,
-    "burst": 30,
-    "idle": 15
-  },
-  {
-    "name": "poisson-5min-1rps",
-    "pattern": "poisson",
-    "duration": 300,
-    "rps": 1,
-    "burst": 30,
-    "idle": 15
-  },
-  {
-    "name": "poisson-5min-5rps",
-    "pattern": "poisson",
-    "duration": 300,
-    "rps": 5,
-    "burst": 30,
-    "idle": 15
-  },
-  {
-    "name": "poisson-5min-10rps",
-    "pattern": "poisson",
-    "duration": 300,
-    "rps": 10,
-    "burst": 30,
-    "idle": 15
-  },
-  {
-    "name": "poisson-5min-20rps",
-    "pattern": "poisson",
-    "duration": 300,
-    "rps": 20,
-    "burst": 30,
-    "idle": 15
-  },
-  {
-    "name": "poisson-10min-1rps",
-    "pattern": "poisson",
-    "duration": 600,
-    "rps": 1,
-    "burst": 30,
-    "idle": 15
-  },
-  {
-    "name": "poisson-10min-5rps",
-    "pattern": "poisson",
-    "duration": 600,
-    "rps": 5,
-    "burst": 30,
-    "idle": 15
-  },
-  {
-    "name": "poisson-10min-10rps",
-    "pattern": "poisson",
-    "duration": 600,
-    "rps": 10,
-    "burst": 30,
-    "idle": 15
-  },
-  {
-    "name": "poisson-10min-20rps",
-    "pattern": "poisson",
-    "duration": 600,
-    "rps": 20,
-    "burst": 30,
-    "idle": 15
-  },
-  {
-    "name": "poisson-5min-idle",
-    "pattern": "poisson",
-    "duration": 300,
-    "rps": 0,
-    "burst": 30,
-    "idle": 15
-  }
+  { "name": "poisson-2min-1rps",  "pattern": "poisson", "duration": 120, "rps": 1,  "burst": 30, "idle": 15 },
+  { "name": "poisson-2min-2rps",  "pattern": "poisson", "duration": 120, "rps": 2,  "burst": 30, "idle": 15 },
+  { "name": "poisson-2min-5rps",  "pattern": "poisson", "duration": 120, "rps": 5,  "burst": 30, "idle": 15 },
+  { "name": "poisson-2min-10rps", "pattern": "poisson", "duration": 120, "rps": 10, "burst": 30, "idle": 15 },
+  { "name": "poisson-2min-15rps", "pattern": "poisson", "duration": 120, "rps": 15, "burst": 30, "idle": 15 },
+  { "name": "poisson-2min-20rps", "pattern": "poisson", "duration": 120, "rps": 20, "burst": 30, "idle": 15 },
+  { "name": "poisson-2min-30rps", "pattern": "poisson", "duration": 120, "rps": 30, "burst": 30, "idle": 15 },
+  { "name": "poisson-2min-40rps", "pattern": "poisson", "duration": 120, "rps": 40, "burst": 30, "idle": 15 },
+  { "name": "poisson-2min-50rps", "pattern": "poisson", "duration": 120, "rps": 50, "burst": 30, "idle": 15 },
+  { "name": "poisson-2min-60rps", "pattern": "poisson", "duration": 120, "rps": 60, "burst": 30, "idle": 15 },
+  { "name": "poisson-2min-70rps", "pattern": "poisson", "duration": 120, "rps": 70, "burst": 30, "idle": 15 },
+  { "name": "poisson-2min-80rps", "pattern": "poisson", "duration": 120, "rps": 80, "burst": 30, "idle": 15 }
 ]
