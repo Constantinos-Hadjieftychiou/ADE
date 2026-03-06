@@ -125,22 +125,13 @@
 
 # if __name__ == "__main__":
 #     main()
-
-
 #!/usr/bin/env python3
 """
 Workload generator for TorchServe inference.
 
-Responsibilities:
-- Generate Poisson arrivals
-- Send HTTP inference requests
-- Log completion timestamps
-
-Design notes:
-- CPU-only process
-- No energy measurement
-- No NVML usage
-- Deterministic single-input mode (for stable benchmarking)
+Now logs:
+- request SEND timestamps
+- request COMPLETION timestamps
 """
 
 import argparse
@@ -149,7 +140,7 @@ import queue
 import random
 import threading
 import time
-from typing import List, Optional
+from typing import Optional
 from dataclasses import dataclass
 
 import requests
@@ -197,22 +188,24 @@ def worker_loop(
     model_name: str,
     sample: bytes,
     task_queue: "queue.Queue[Optional[int]]",
+    sent_log,
     completion_log,
 ):
-    """
-    Deterministic worker:
-    Always sends the SAME image payload.
-    This removes input-dependent variance.
-    """
     while True:
         token = task_queue.get()
         try:
             if token is None:
                 return
 
-            # --- Deterministic payload ---
+            # SEND timestamp
+            send_ts = time.perf_counter()
+            sent_log.write(f"{send_ts}\n")
+            sent_log.flush()
+
+            # SEND request
             c = send_request(url, model_name, sample)
 
+            # COMPLETION timestamp
             completion_log.write(f"{c.timestamp}\n")
             completion_log.flush()
 
@@ -235,40 +228,26 @@ def main():
     parser.add_argument("--model-name", required=True)
     parser.add_argument("--phases-json", required=True)
     parser.add_argument("--concurrency", type=int, default=16)
-    parser.add_argument("--log-file", required=True)
+    parser.add_argument("--completion-log", required=True)
+    parser.add_argument("--sent-log", required=True)
     args = parser.parse_args()
 
     wait_for_torchserve(args.url)
 
-    # ------------------------------------------------------------------
-    # DETERMINISTIC INPUT (USED FOR MEASUREMENTS)
-    # ------------------------------------------------------------------
     ds = CIFAR10(root="./data", train=False, download=True)
-
-    fixed_sample = img_to_bytes(ds[0][0])  # <-- single canonical image
-
-    # ------------------------------------------------------------------
-    # ORIGINAL MULTI-IMAGE VERSION (kept for reference / reproducibility)
-    # ------------------------------------------------------------------
-    # ds = CIFAR10(root="./data", train=False, download=True)
-    # samples = [img_to_bytes(ds[i][0]) for i in range(100)]
+    fixed_sample = img_to_bytes(ds[0][0])
 
     q = queue.Queue()
 
-    with open(args.log_file, "w") as log:
+    with open(args.completion_log, "w") as completion_log, \
+         open(args.sent_log, "w") as sent_log:
+
         for _ in range(args.concurrency):
             threading.Thread(
                 target=worker_loop,
-                args=(args.url, args.model_name, fixed_sample, q, log),
+                args=(args.url, args.model_name, fixed_sample, q, sent_log, completion_log),
                 daemon=True,
             ).start()
-
-        # ---------------- Original worker call (commented) ----------------
-        # threading.Thread(
-        #     target=worker_loop,
-        #     args=(args.url, args.model_name, samples, q, log),
-        #     daemon=True,
-        # ).start()
 
         with open(args.phases_json) as f:
             phases = json.load(f)

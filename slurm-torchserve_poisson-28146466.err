@@ -1,0 +1,20 @@
+Exception in thread Thread-13 (worker_loop):
+Traceback (most recent call last):
+  File "/share/apps/eb/software/Python/3.11.5-GCCcore-13.2.0/lib/python3.11/threading.py", line 1038, in _bootstrap_inner
+    self.run()
+  File "/share/apps/eb/software/Python/3.11.5-GCCcore-13.2.0/lib/python3.11/threading.py", line 975, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/chadji10/ADE/workload_generator.py", line 203, in worker_loop
+    sent_log.flush()
+        ^^^^^^^^^^^^
+ValueError: I/O operation on closed file.
+Exception in thread Thread-10 (worker_loop):
+Traceback (most recent call last):
+  File "/share/apps/eb/software/Python/3.11.5-GCCcore-13.2.0/lib/python3.11/threading.py", line 1038, in _bootstrap_inner
+    self.run()
+  File "/share/apps/eb/software/Python/3.11.5-GCCcore-13.2.0/lib/python3.11/threading.py", line 975, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/chadji10/ADE/workload_generator.py", line 203, in worker_loop
+    sent_log.flush()
+        ^^^^^^^^^^^^
+ValueError: I/O operation on closed file.
