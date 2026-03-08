@@ -1,0 +1,111 @@
+Title: Leveraging Machine Learning to Predict Idleness in Microservices on GPUs
+
+Abstract
+
+Keywords
+
+I. Introduction
+   A. Background and Motivation
+   B. Problem Statement
+   C. Research Objectives
+   D. Contributions of the Thesis
+   E. Thesis Organization
+
+II. Background and Related Work
+   A. GPU-Accelerated Machine Learning Inference
+   B. Microservices for Machine Learning Systems
+   C. Model Serving Frameworks
+      1. TorchServe
+      2. TensorFlow Serving
+      3. Triton Inference Server
+   D. GPU Utilization and Energy Efficiency
+   E. Prior Work on Resource Prediction in ML Systems
+
+III. TorchServe Architecture and Deployment
+   A. Overview of TorchServe
+   B. TorchServe System Architecture
+   C. Model Packaging and Deployment
+   D. Request Processing Pipeline
+   E. TorchServe Deployment in This Thesis
+
+IV. Experimental System Architecture
+   A. System Overview
+   B. Hardware and Software Environment
+   C. TorchServe Server Configuration
+   D. Workload Generator Design
+   E. Request Logging Infrastructure
+   F. GPU Monitoring and Energy Measurement
+   G. Window-Based Metric Aggregation
+
+V. Workload Modeling and Traffic Generation
+   A. Microservice Traffic Characteristics
+   B. Poisson Arrival Process
+   C. Workload Phase Design
+   D. Request Rate Sweep Experiments
+   E. Underload, Optimal Load, and Saturation Regions
+
+VI. Dataset Construction
+   A. Request Logs and Latency Computation
+   B. Window-Level Feature Extraction
+   C. GPU Energy Metrics
+   D. GPU Utilization Metrics
+   E. Idle Window Labeling
+      1. Request-Based Idle Detection
+      2. Energy-Based Idle Detection
+   F. Final Dataset Structure
+
+VII. Exploratory Data Analysis
+   A. GPU Power Consumption vs Request Rate
+   B. Energy per Request vs Load
+   C. GPU Utilization Patterns
+   D. Idle Window Misclassification
+   E. Queue Backlog Analysis
+
+VIII. Machine Learning for GPU Idleness Prediction
+   A. Problem Formulation
+   B. Feature Engineering
+   C. Model Selection
+      1. Logistic Regression
+      2. Random Forest
+      3. Gradient Boosting
+      4. Neural Networks
+   D. Training and Validation Methodology
+   E. Evaluation Metrics
+
+IX. Experimental Results
+   A. Prediction Accuracy
+   B. Feature Importance Analysis
+   C. Model Comparison
+   D. Impact of Workload Intensity
+   E. Discussion of Results
+
+X. Discussion
+   A. Interpretation of GPU Idleness Behavior
+   B. Implications for Resource Scheduling
+   C. Limitations of the Current Study
+   D. Opportunities for System Optimization
+
+XI. Future Work
+   A. Online Idle Prediction Systems
+   B. Integration with Cluster Schedulers
+   C. Dynamic GPU Power Management
+   D. Extending to Multi-GPU Systems
+
+XII. Conclusion
+
+References
+
+Appendices
+   A. Experiment Configuration Files
+   B. TorchServe Deployment Scripts
+   C. Data Collection Scripts
+   D. Additional Plots and Results
+
+   | Section               | Your Code                 |
+| --------------------- | ------------------------- |
+| TorchServe Deployment | sbatch + torchserve setup |
+| Workload Generator    | workload_generator.py     |
+| Monitoring System     | energy_monitor.py         |
+| Data Processing       | analyze_idle.py           |
+| Dataset               | windows_resnet18.csv      |
+| ML Prediction         | (future models)           |

@@ -213,6 +213,7 @@ EOF
   # ---------------- ANALYSIS ----------------
   python "$PROJECT_DIR/analyze_idle.py" \
       --csv "$WINDOWS_CSV" \
+      --request-log "$REQUEST_LOG" \
       --epsilon-w "$ENERGY_IDLE_EPS_W" \
       --out-prefix "$ANALYSIS_PREFIX"
 
