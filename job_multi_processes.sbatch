@@ -62,7 +62,6 @@ module load Python/3.11.5-GCCcore-13.2.0
 module load CUDA/12.1
 module load Java
 module load matplotlib
-
 log "GPU info:"
 nvidia-smi
 
@@ -84,7 +83,10 @@ if [[ ! -f "$ENV_DIR/.deps_installed" ]]; then
   pip install \
     torchserve torch-model-archiver \
     pillow requests pandas numpy matplotlib \
-    nvidia-ml-py3 zeus-ml-energy
+    nvidia-ml-py3 \
+    pyyaml
+
+  pip install git+https://github.com/ml-energy/zeus.git
 
   touch "$ENV_DIR/.deps_installed"
 fi

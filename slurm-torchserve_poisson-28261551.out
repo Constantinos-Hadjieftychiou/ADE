@@ -1,0 +1,288 @@
+[2026-03-27T12:50:52+0200] GPU info:
+Fri Mar 27 12:50:52 2026       
++-----------------------------------------------------------------------------------------+
+| NVIDIA-SMI 550.163.01             Driver Version: 550.163.01     CUDA Version: 12.4     |
+|-----------------------------------------+------------------------+----------------------+
+| GPU  Name                 Persistence-M | Bus-Id          Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |
+|                                         |                        |               MIG M. |
+|=========================================+========================+======================|
+|   0  Tesla V100-SXM2-32GB           Off |   00000000:18:00.0 Off |                    0 |
+| N/A   37C    P0             57W /  300W |     370MiB /  32768MiB |      5%      Default |
+|                                         |                        |                  N/A |
++-----------------------------------------+------------------------+----------------------+
+|   1  Tesla V100-SXM2-32GB           Off |   00000000:3B:00.0 Off |                    0 |
+| N/A   32C    P0             55W /  300W |     370MiB /  32768MiB |      0%      Default |
+|                                         |                        |                  N/A |
++-----------------------------------------+------------------------+----------------------+
+|   2  Tesla V100-SXM2-32GB           Off |   00000000:86:00.0 Off |                    0 |
+| N/A   31C    P0             56W /  300W |     370MiB /  32768MiB |      0%      Default |
+|                                         |                        |                  N/A |
++-----------------------------------------+------------------------+----------------------+
+|   3  Tesla V100-SXM2-32GB           Off |   00000000:AF:00.0 Off |                    0 |
+| N/A   33C    P0             41W /  300W |       4MiB /  32768MiB |      0%      Default |
+|                                         |                        |                  N/A |
++-----------------------------------------+------------------------+----------------------+
+                                                                                         
++-----------------------------------------------------------------------------------------+
+| Processes:                                                                              |
+|  GPU   GI   CI        PID   Type   Process name                              GPU Memory |
+|        ID   ID                                                               Usage      |
+|=========================================================================================|
+|    0   N/A  N/A    183324      C   ...on/3.11.3-GCCcore-12.3.0/bin/python        366MiB |
+|    1   N/A  N/A    183325      C   ...on/3.11.3-GCCcore-12.3.0/bin/python        366MiB |
+|    2   N/A  N/A    183326      C   ...on/3.11.3-GCCcore-12.3.0/bin/python        366MiB |
++-----------------------------------------------------------------------------------------+
+[2026-03-27T12:51:10+0200] Starting TorchServe pinned to CPUs 2-3
+WARNING: sun.reflect.Reflection.getCallerClass is not supported. This will impact performance.
+2026-03-27T12:51:11,643 [WARN ] main org.pytorch.serve.util.ConfigManager - Your torchserve instance can access any URL to load models. When deploying to production, make sure to limit the set of allowed_urls in config.properties
+2026-03-27T12:51:11,662 [INFO ] main org.pytorch.serve.servingsdk.impl.PluginsManager - Initializing plugins manager...
+2026-03-27T12:51:11,728 [INFO ] main org.pytorch.serve.metrics.configuration.MetricConfiguration - Successfully loaded metrics configuration from /home/chadji10/ADE/.venv_torchserve/lib/python3.12/site-packages/ts/configs/metrics.yaml
+2026-03-27T12:51:11,790 [INFO ] main org.pytorch.serve.ModelServer - 
+Torchserve version: 0.12.0
+TS Home: /home/chadji10/ADE/.venv_torchserve/lib/python3.12/site-packages
+Current directory: /home/chadji10/ADE
+Temp directory: /tmp
+Metrics config path: /home/chadji10/ADE/.venv_torchserve/lib/python3.12/site-packages/ts/configs/metrics.yaml
+Number of GPUs: 1
+Number of CPUs: 2
+Max heap size: 18032 M
+Python executable: /home/chadji10/ADE/.venv_torchserve/bin/python
+Config file: /home/chadji10/ADE/torchserve.properties
+Inference address: http://127.0.0.1:8080
+Management address: http://127.0.0.1:8081
+Metrics address: http://127.0.0.1:8082
+Model Store: /home/chadji10/ADE/model_store
+Initial Models: resnet-18=resnet-18.mar
+Log dir: /home/chadji10/ADE/logs
+Metrics dir: /home/chadji10/ADE/logs
+Netty threads: 0
+Netty client threads: 0
+Default workers per model: 1
+Blacklist Regex: N/A
+Maximum Response Size: 6553500
+Maximum Request Size: 6553500
+Limit Maximum Image Pixels: true
+Prefer direct buffer: false
+Allowed Urls: [file://.*|http(s)?://.*]
+Custom python dependency for model allowed: false
+Enable metrics API: true
+Metrics mode: PROMETHEUS
+Disable system metrics: true
+Workflow Store: /home/chadji10/ADE/model_store
+CPP log config: N/A
+Model config: N/A
+System metrics command: default
+Model API enabled: false
+2026-03-27T12:51:11,798 [INFO ] main org.pytorch.serve.servingsdk.impl.PluginsManager -  Loading snapshot serializer plugin...
+2026-03-27T12:51:11,820 [INFO ] main org.pytorch.serve.ModelServer - Loading initial models: resnet-18.mar
+2026-03-27T12:51:12,478 [DEBUG] main org.pytorch.serve.wlm.ModelVersionedRefs - Adding new version 1.0 for model resnet-18
+2026-03-27T12:51:12,478 [DEBUG] main org.pytorch.serve.wlm.ModelVersionedRefs - Setting default version to 1.0 for model resnet-18
+2026-03-27T12:51:12,478 [INFO ] main org.pytorch.serve.wlm.ModelManager - Model resnet-18 loaded.
+2026-03-27T12:51:12,479 [DEBUG] main org.pytorch.serve.wlm.ModelManager - updateModel: resnet-18, count: 1
+2026-03-27T12:51:12,489 [INFO ] main org.pytorch.serve.ModelServer - Initialize Inference server with: EpollServerSocketChannel.
+2026-03-27T12:51:12,499 [DEBUG] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerLifeCycle - Worker cmdline: [/home/chadji10/ADE/.venv_torchserve/bin/python, /home/chadji10/ADE/.venv_torchserve/lib/python3.12/site-packages/ts/model_service_worker.py, --sock-type, unix, --sock-name, /tmp/.ts.sock.9000, --metrics-config, /home/chadji10/ADE/.venv_torchserve/lib/python3.12/site-packages/ts/configs/metrics.yaml]
+2026-03-27T12:51:12,555 [INFO ] main org.pytorch.serve.ModelServer - Inference API bind to: http://127.0.0.1:8080
+2026-03-27T12:51:12,555 [INFO ] main org.pytorch.serve.ModelServer - Initialize Management server with: EpollServerSocketChannel.
+2026-03-27T12:51:12,555 [INFO ] main org.pytorch.serve.ModelServer - Management API bind to: http://127.0.0.1:8081
+2026-03-27T12:51:12,556 [INFO ] main org.pytorch.serve.ModelServer - Initialize Metrics server with: EpollServerSocketChannel.
+2026-03-27T12:51:12,556 [INFO ] main org.pytorch.serve.ModelServer - Metrics API bind to: http://127.0.0.1:8082
+Model server started.
+[2026-03-27T12:51:18+0200] Waiting for TorchServe READY...
+2026-03-27T12:51:18,298 [INFO ] pool-2-thread-2 ACCESS_LOG - /127.0.0.1:41068 "GET /ping HTTP/1.1" 200 6
+2026-03-27T12:51:18,393 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /127.0.0.1:40782 "GET /models/resnet-18 HTTP/1.1" 200 46
+2026-03-27T12:51:20,436 [INFO ] pool-2-thread-2 ACCESS_LOG - /127.0.0.1:41072 "GET /ping HTTP/1.1" 200 0
+2026-03-27T12:51:23,483 [INFO ] epollEventLoopGroup-3-4 ACCESS_LOG - /127.0.0.1:40786 "GET /models/resnet-18 HTTP/1.1" 200 3015
+2026-03-27T12:51:25,639 [INFO ] pool-2-thread-2 ACCESS_LOG - /127.0.0.1:41076 "GET /ping HTTP/1.1" 200 0
+2026-03-27T12:51:26,489 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /127.0.0.1:40790 "GET /models/resnet-18 HTTP/1.1" 200 827
+2026-03-27T12:51:28,531 [INFO ] pool-2-thread-2 ACCESS_LOG - /127.0.0.1:41080 "GET /ping HTTP/1.1" 200 0
+2026-03-27T12:51:28,591 [INFO ] epollEventLoopGroup-3-4 ACCESS_LOG - /127.0.0.1:40794 "GET /models/resnet-18 HTTP/1.1" 200 40
+2026-03-27T12:51:30,221 [WARN ] W-9000-resnet-18_1.0-stderr MODEL_LOG - Traceback (most recent call last):
+2026-03-27T12:51:30,226 [WARN ] W-9000-resnet-18_1.0-stderr MODEL_LOG -   File "/home/chadji10/ADE/.venv_torchserve/lib/python3.12/site-packages/ts/model_service_worker.py", line 15, in <module>
+2026-03-27T12:51:30,227 [WARN ] W-9000-resnet-18_1.0-stderr MODEL_LOG -     from ts.async_service import AsyncService
+2026-03-27T12:51:30,228 [WARN ] W-9000-resnet-18_1.0-stderr MODEL_LOG -   File "/home/chadji10/ADE/.venv_torchserve/lib/python3.12/site-packages/ts/async_service.py", line 14, in <module>
+2026-03-27T12:51:30,228 [WARN ] W-9000-resnet-18_1.0-stderr MODEL_LOG -     from ts.handler_utils.utils import create_predict_response
+2026-03-27T12:51:30,229 [WARN ] W-9000-resnet-18_1.0-stderr MODEL_LOG -   File "/home/chadji10/ADE/.venv_torchserve/lib/python3.12/site-packages/ts/handler_utils/utils.py", line 5, in <module>
+2026-03-27T12:51:30,229 [WARN ] W-9000-resnet-18_1.0-stderr MODEL_LOG -     from ts.protocol.otf_message_handler import create_predict_response
+2026-03-27T12:51:30,230 [WARN ] W-9000-resnet-18_1.0-stderr MODEL_LOG -   File "/home/chadji10/ADE/.venv_torchserve/lib/python3.12/site-packages/ts/protocol/otf_message_handler.py", line 16, in <module>
+2026-03-27T12:51:30,230 [WARN ] W-9000-resnet-18_1.0-stderr MODEL_LOG -     from ts.utils.util import deprecated
+2026-03-27T12:51:30,231 [WARN ] W-9000-resnet-18_1.0-stderr MODEL_LOG -   File "/home/chadji10/ADE/.venv_torchserve/lib/python3.12/site-packages/ts/utils/util.py", line 14, in <module>
+2026-03-27T12:51:30,235 [WARN ] W-9000-resnet-18_1.0-stderr MODEL_LOG -     import yaml
+2026-03-27T12:51:30,235 [WARN ] W-9000-resnet-18_1.0-stderr MODEL_LOG - ModuleNotFoundError: No module named 'yaml'
+2026-03-27T12:51:30,632 [INFO ] pool-2-thread-2 ACCESS_LOG - /127.0.0.1:41084 "GET /ping HTTP/1.1" 200 0
+2026-03-27T12:51:30,674 [INFO ] W-9000-resnet-18_1.0-stdout org.pytorch.serve.wlm.WorkerLifeCycle - Stopped Scanner - W-9000-resnet-18_1.0-stdout
+2026-03-27T12:51:30,683 [INFO ] W-9000-resnet-18_1.0-stderr org.pytorch.serve.wlm.WorkerLifeCycle - Stopped Scanner - W-9000-resnet-18_1.0-stderr
+2026-03-27T12:51:30,675 [ERROR] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Backend worker error
+org.pytorch.serve.wlm.WorkerInitializationException: Backend stream closed.
+	at org.pytorch.serve.wlm.WorkerLifeCycle.startWorkerPython(WorkerLifeCycle.java:204) ~[model-server.jar:?]
+	at org.pytorch.serve.wlm.WorkerLifeCycle.startWorker(WorkerLifeCycle.java:106) ~[model-server.jar:?]
+	at org.pytorch.serve.wlm.WorkerThread.connect(WorkerThread.java:375) ~[model-server.jar:?]
+	at org.pytorch.serve.wlm.WorkerThread.run(WorkerThread.java:192) ~[model-server.jar:?]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:572) ~[?:?]
+	at java.util.concurrent.FutureTask.run(FutureTask.java:317) ~[?:?]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144) ~[?:?]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642) ~[?:?]
+	at java.lang.Thread.run(Thread.java:1583) [?:?]
+2026-03-27T12:51:30,687 [DEBUG] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - W-9000-resnet-18_1.0 State change null -> WORKER_STOPPED
+2026-03-27T12:51:30,687 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Auto recovery start timestamp: 1774608690687
+2026-03-27T12:51:30,688 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Retry worker: 9000 in 1 seconds.
+2026-03-27T12:51:31,690 [DEBUG] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerLifeCycle - Worker cmdline: [/home/chadji10/ADE/.venv_torchserve/bin/python, /home/chadji10/ADE/.venv_torchserve/lib/python3.12/site-packages/ts/model_service_worker.py, --sock-type, unix, --sock-name, /tmp/.ts.sock.9000, --metrics-config, /home/chadji10/ADE/.venv_torchserve/lib/python3.12/site-packages/ts/configs/metrics.yaml]
+2026-03-27T12:51:32,959 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /127.0.0.1:40798 "GET /models/resnet-18 HTTP/1.1" 200 2306
+2026-03-27T12:51:34,549 [WARN ] W-9000-resnet-18_1.0-stderr MODEL_LOG - Traceback (most recent call last):
+2026-03-27T12:51:34,582 [WARN ] W-9000-resnet-18_1.0-stderr MODEL_LOG -   File "/home/chadji10/ADE/.venv_torchserve/lib/python3.12/site-packages/ts/model_service_worker.py", line 15, in <module>
+2026-03-27T12:51:34,583 [WARN ] W-9000-resnet-18_1.0-stderr MODEL_LOG -     from ts.async_service import AsyncService
+2026-03-27T12:51:34,583 [WARN ] W-9000-resnet-18_1.0-stderr MODEL_LOG -   File "/home/chadji10/ADE/.venv_torchserve/lib/python3.12/site-packages/ts/async_service.py", line 14, in <module>
+2026-03-27T12:51:34,583 [WARN ] W-9000-resnet-18_1.0-stderr MODEL_LOG -     from ts.handler_utils.utils import create_predict_response
+2026-03-27T12:51:34,584 [WARN ] W-9000-resnet-18_1.0-stderr MODEL_LOG -   File "/home/chadji10/ADE/.venv_torchserve/lib/python3.12/site-packages/ts/handler_utils/utils.py", line 5, in <module>
+2026-03-27T12:51:34,584 [WARN ] W-9000-resnet-18_1.0-stderr MODEL_LOG -     from ts.protocol.otf_message_handler import create_predict_response
+2026-03-27T12:51:34,585 [WARN ] W-9000-resnet-18_1.0-stderr MODEL_LOG -   File "/home/chadji10/ADE/.venv_torchserve/lib/python3.12/site-packages/ts/protocol/otf_message_handler.py", line 16, in <module>
+2026-03-27T12:51:34,585 [WARN ] W-9000-resnet-18_1.0-stderr MODEL_LOG -     from ts.utils.util import deprecated
+2026-03-27T12:51:34,585 [WARN ] W-9000-resnet-18_1.0-stderr MODEL_LOG -   File "/home/chadji10/ADE/.venv_torchserve/lib/python3.12/site-packages/ts/utils/util.py", line 14, in <module>
+2026-03-27T12:51:34,586 [WARN ] W-9000-resnet-18_1.0-stderr MODEL_LOG -     import yaml
+2026-03-27T12:51:34,586 [WARN ] W-9000-resnet-18_1.0-stderr MODEL_LOG - ModuleNotFoundError: No module named 'yaml'
+2026-03-27T12:51:34,844 [INFO ] W-9000-resnet-18_1.0-stderr org.pytorch.serve.wlm.WorkerLifeCycle - Stopped Scanner - W-9000-resnet-18_1.0-stderr
+2026-03-27T12:51:34,844 [INFO ] W-9000-resnet-18_1.0-stdout org.pytorch.serve.wlm.WorkerLifeCycle - Stopped Scanner - W-9000-resnet-18_1.0-stdout
+2026-03-27T12:51:34,876 [ERROR] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Backend worker error
+org.pytorch.serve.wlm.WorkerInitializationException: Backend stream closed.
+	at org.pytorch.serve.wlm.WorkerLifeCycle.startWorkerPython(WorkerLifeCycle.java:204) ~[model-server.jar:?]
+	at org.pytorch.serve.wlm.WorkerLifeCycle.startWorker(WorkerLifeCycle.java:106) ~[model-server.jar:?]
+	at org.pytorch.serve.wlm.WorkerThread.connect(WorkerThread.java:375) ~[model-server.jar:?]
+	at org.pytorch.serve.wlm.WorkerThread.run(WorkerThread.java:192) ~[model-server.jar:?]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144) ~[?:?]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642) ~[?:?]
+	at java.lang.Thread.run(Thread.java:1583) [?:?]
+2026-03-27T12:51:34,877 [DEBUG] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - W-9000-resnet-18_1.0 State change WORKER_STOPPED -> WORKER_STOPPED
+2026-03-27T12:51:34,878 [WARN ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Auto recovery failed again
+2026-03-27T12:51:34,878 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Retry worker: 9000 in 1 seconds.
+2026-03-27T12:51:35,042 [INFO ] W-9000-resnet-18_1.0 ACCESS_LOG - /127.0.0.1:41088 "GET /ping HTTP/1.1" 200 1
+2026-03-27T12:51:35,880 [DEBUG] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerLifeCycle - Worker cmdline: [/home/chadji10/ADE/.venv_torchserve/bin/python, /home/chadji10/ADE/.venv_torchserve/lib/python3.12/site-packages/ts/model_service_worker.py, --sock-type, unix, --sock-name, /tmp/.ts.sock.9000, --metrics-config, /home/chadji10/ADE/.venv_torchserve/lib/python3.12/site-packages/ts/configs/metrics.yaml]
+2026-03-27T12:51:37,368 [INFO ] epollEventLoopGroup-3-4 ACCESS_LOG - /127.0.0.1:40802 "GET /models/resnet-18 HTTP/1.1" 200 2309
+2026-03-27T12:51:38,581 [WARN ] W-9000-resnet-18_1.0-stderr MODEL_LOG - Traceback (most recent call last):
+2026-03-27T12:51:38,585 [WARN ] W-9000-resnet-18_1.0-stderr MODEL_LOG -   File "/home/chadji10/ADE/.venv_torchserve/lib/python3.12/site-packages/ts/model_service_worker.py", line 15, in <module>
+2026-03-27T12:51:38,585 [WARN ] W-9000-resnet-18_1.0-stderr MODEL_LOG -     from ts.async_service import AsyncService
+2026-03-27T12:51:38,585 [WARN ] W-9000-resnet-18_1.0-stderr MODEL_LOG -   File "/home/chadji10/ADE/.venv_torchserve/lib/python3.12/site-packages/ts/async_service.py", line 14, in <module>
+2026-03-27T12:51:38,585 [WARN ] W-9000-resnet-18_1.0-stderr MODEL_LOG -     from ts.handler_utils.utils import create_predict_response
+2026-03-27T12:51:38,585 [WARN ] W-9000-resnet-18_1.0-stderr MODEL_LOG -   File "/home/chadji10/ADE/.venv_torchserve/lib/python3.12/site-packages/ts/handler_utils/utils.py", line 5, in <module>
+2026-03-27T12:51:38,586 [WARN ] W-9000-resnet-18_1.0-stderr MODEL_LOG -     from ts.protocol.otf_message_handler import create_predict_response
+2026-03-27T12:51:38,586 [WARN ] W-9000-resnet-18_1.0-stderr MODEL_LOG -   File "/home/chadji10/ADE/.venv_torchserve/lib/python3.12/site-packages/ts/protocol/otf_message_handler.py", line 16, in <module>
+2026-03-27T12:51:38,586 [WARN ] W-9000-resnet-18_1.0-stderr MODEL_LOG -     from ts.utils.util import deprecated
+2026-03-27T12:51:38,586 [WARN ] W-9000-resnet-18_1.0-stderr MODEL_LOG -   File "/home/chadji10/ADE/.venv_torchserve/lib/python3.12/site-packages/ts/utils/util.py", line 14, in <module>
+2026-03-27T12:51:38,586 [WARN ] W-9000-resnet-18_1.0-stderr MODEL_LOG -     import yaml
+2026-03-27T12:51:38,586 [WARN ] W-9000-resnet-18_1.0-stderr MODEL_LOG - ModuleNotFoundError: No module named 'yaml'
+2026-03-27T12:51:38,890 [INFO ] W-9000-resnet-18_1.0-stdout org.pytorch.serve.wlm.WorkerLifeCycle - Stopped Scanner - W-9000-resnet-18_1.0-stdout
+2026-03-27T12:51:38,891 [ERROR] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Backend worker error
+org.pytorch.serve.wlm.WorkerInitializationException: Backend stream closed.
+	at org.pytorch.serve.wlm.WorkerLifeCycle.startWorkerPython(WorkerLifeCycle.java:204) ~[model-server.jar:?]
+	at org.pytorch.serve.wlm.WorkerLifeCycle.startWorker(WorkerLifeCycle.java:106) ~[model-server.jar:?]
+	at org.pytorch.serve.wlm.WorkerThread.connect(WorkerThread.java:375) ~[model-server.jar:?]
+	at org.pytorch.serve.wlm.WorkerThread.run(WorkerThread.java:192) ~[model-server.jar:?]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144) ~[?:?]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642) ~[?:?]
+	at java.lang.Thread.run(Thread.java:1583) [?:?]
+2026-03-27T12:51:38,892 [DEBUG] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - W-9000-resnet-18_1.0 State change WORKER_STOPPED -> WORKER_STOPPED
+2026-03-27T12:51:38,892 [WARN ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Auto recovery failed again
+2026-03-27T12:51:38,892 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Retry worker: 9000 in 2 seconds.
+2026-03-27T12:51:38,892 [INFO ] W-9000-resnet-18_1.0-stderr org.pytorch.serve.wlm.WorkerLifeCycle - Stopped Scanner - W-9000-resnet-18_1.0-stderr
+2026-03-27T12:51:39,410 [INFO ] W-9000-resnet-18_1.0 ACCESS_LOG - /127.0.0.1:41092 "GET /ping HTTP/1.1" 200 0
+2026-03-27T12:51:39,525 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /127.0.0.1:40806 "GET /models/resnet-18 HTTP/1.1" 200 53
+2026-03-27T12:51:40,893 [DEBUG] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerLifeCycle - Worker cmdline: [/home/chadji10/ADE/.venv_torchserve/bin/python, /home/chadji10/ADE/.venv_torchserve/lib/python3.12/site-packages/ts/model_service_worker.py, --sock-type, unix, --sock-name, /tmp/.ts.sock.9000, --metrics-config, /home/chadji10/ADE/.venv_torchserve/lib/python3.12/site-packages/ts/configs/metrics.yaml]
+2026-03-27T12:51:41,596 [INFO ] pool-2-thread-2 ACCESS_LOG - /127.0.0.1:41096 "GET /ping HTTP/1.1" 200 0
+2026-03-27T12:51:41,713 [INFO ] epollEventLoopGroup-3-4 ACCESS_LOG - /127.0.0.1:40810 "GET /models/resnet-18 HTTP/1.1" 200 99
+2026-03-27T12:51:43,758 [INFO ] pool-2-thread-2 ACCESS_LOG - /127.0.0.1:41100 "GET /ping HTTP/1.1" 200 0
+2026-03-27T12:51:44,034 [WARN ] W-9000-resnet-18_1.0-stderr MODEL_LOG - Traceback (most recent call last):
+2026-03-27T12:51:44,040 [WARN ] W-9000-resnet-18_1.0-stderr MODEL_LOG -   File "/home/chadji10/ADE/.venv_torchserve/lib/python3.12/site-packages/ts/model_service_worker.py", line 15, in <module>
+2026-03-27T12:51:44,040 [WARN ] W-9000-resnet-18_1.0-stderr MODEL_LOG -     from ts.async_service import AsyncService
+2026-03-27T12:51:44,040 [WARN ] W-9000-resnet-18_1.0-stderr MODEL_LOG -   File "/home/chadji10/ADE/.venv_torchserve/lib/python3.12/site-packages/ts/async_service.py", line 14, in <module>
+2026-03-27T12:51:44,041 [WARN ] W-9000-resnet-18_1.0-stderr MODEL_LOG -     from ts.handler_utils.utils import create_predict_response
+2026-03-27T12:51:44,041 [WARN ] W-9000-resnet-18_1.0-stderr MODEL_LOG -   File "/home/chadji10/ADE/.venv_torchserve/lib/python3.12/site-packages/ts/handler_utils/utils.py", line 5, in <module>
+2026-03-27T12:51:44,041 [WARN ] W-9000-resnet-18_1.0-stderr MODEL_LOG -     from ts.protocol.otf_message_handler import create_predict_response
+2026-03-27T12:51:44,042 [WARN ] W-9000-resnet-18_1.0-stderr MODEL_LOG -   File "/home/chadji10/ADE/.venv_torchserve/lib/python3.12/site-packages/ts/protocol/otf_message_handler.py", line 16, in <module>
+2026-03-27T12:51:44,042 [WARN ] W-9000-resnet-18_1.0-stderr MODEL_LOG -     from ts.utils.util import deprecated
+2026-03-27T12:51:44,042 [WARN ] W-9000-resnet-18_1.0-stderr MODEL_LOG -   File "/home/chadji10/ADE/.venv_torchserve/lib/python3.12/site-packages/ts/utils/util.py", line 14, in <module>
+2026-03-27T12:51:44,043 [WARN ] W-9000-resnet-18_1.0-stderr MODEL_LOG -     import yaml
+2026-03-27T12:51:44,043 [WARN ] W-9000-resnet-18_1.0-stderr MODEL_LOG - ModuleNotFoundError: No module named 'yaml'
+2026-03-27T12:51:44,322 [INFO ] W-9000-resnet-18_1.0-stderr org.pytorch.serve.wlm.WorkerLifeCycle - Stopped Scanner - W-9000-resnet-18_1.0-stderr
+2026-03-27T12:51:44,323 [ERROR] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Backend worker error
+org.pytorch.serve.wlm.WorkerInitializationException: Backend stream closed.
+	at org.pytorch.serve.wlm.WorkerLifeCycle.startWorkerPython(WorkerLifeCycle.java:204) ~[model-server.jar:?]
+	at org.pytorch.serve.wlm.WorkerLifeCycle.startWorker(WorkerLifeCycle.java:106) ~[model-server.jar:?]
+	at org.pytorch.serve.wlm.WorkerThread.connect(WorkerThread.java:375) ~[model-server.jar:?]
+	at org.pytorch.serve.wlm.WorkerThread.run(WorkerThread.java:192) ~[model-server.jar:?]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144) ~[?:?]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642) ~[?:?]
+	at java.lang.Thread.run(Thread.java:1583) [?:?]
+2026-03-27T12:51:44,322 [INFO ] W-9000-resnet-18_1.0-stdout org.pytorch.serve.wlm.WorkerLifeCycle - Stopped Scanner - W-9000-resnet-18_1.0-stdout
+2026-03-27T12:51:44,323 [DEBUG] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - W-9000-resnet-18_1.0 State change WORKER_STOPPED -> WORKER_STOPPED
+2026-03-27T12:51:44,324 [WARN ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Auto recovery failed again
+2026-03-27T12:51:44,324 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Retry worker: 9000 in 3 seconds.
+2026-03-27T12:51:46,055 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /127.0.0.1:40814 "GET /models/resnet-18 HTTP/1.1" 200 2276
+2026-03-27T12:51:47,326 [DEBUG] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerLifeCycle - Worker cmdline: [/home/chadji10/ADE/.venv_torchserve/bin/python, /home/chadji10/ADE/.venv_torchserve/lib/python3.12/site-packages/ts/model_service_worker.py, --sock-type, unix, --sock-name, /tmp/.ts.sock.9000, --metrics-config, /home/chadji10/ADE/.venv_torchserve/lib/python3.12/site-packages/ts/configs/metrics.yaml]
+2026-03-27T12:51:48,094 [INFO ] pool-2-thread-2 ACCESS_LOG - /127.0.0.1:41104 "GET /ping HTTP/1.1" 200 0
+2026-03-27T12:51:49,477 [INFO ] epollEventLoopGroup-3-4 ACCESS_LOG - /127.0.0.1:40818 "GET /models/resnet-18 HTTP/1.1" 200 1370
+2026-03-27T12:51:50,007 [WARN ] W-9000-resnet-18_1.0-stderr MODEL_LOG - Traceback (most recent call last):
+2026-03-27T12:51:50,007 [WARN ] W-9000-resnet-18_1.0-stderr MODEL_LOG -   File "/home/chadji10/ADE/.venv_torchserve/lib/python3.12/site-packages/ts/model_service_worker.py", line 15, in <module>
+2026-03-27T12:51:50,007 [WARN ] W-9000-resnet-18_1.0-stderr MODEL_LOG -     from ts.async_service import AsyncService
+2026-03-27T12:51:50,008 [WARN ] W-9000-resnet-18_1.0-stderr MODEL_LOG -   File "/home/chadji10/ADE/.venv_torchserve/lib/python3.12/site-packages/ts/async_service.py", line 14, in <module>
+2026-03-27T12:51:50,008 [WARN ] W-9000-resnet-18_1.0-stderr MODEL_LOG -     from ts.handler_utils.utils import create_predict_response
+2026-03-27T12:51:50,008 [WARN ] W-9000-resnet-18_1.0-stderr MODEL_LOG -   File "/home/chadji10/ADE/.venv_torchserve/lib/python3.12/site-packages/ts/handler_utils/utils.py", line 5, in <module>
+2026-03-27T12:51:50,008 [WARN ] W-9000-resnet-18_1.0-stderr MODEL_LOG -     from ts.protocol.otf_message_handler import create_predict_response
+2026-03-27T12:51:50,008 [WARN ] W-9000-resnet-18_1.0-stderr MODEL_LOG -   File "/home/chadji10/ADE/.venv_torchserve/lib/python3.12/site-packages/ts/protocol/otf_message_handler.py", line 16, in <module>
+2026-03-27T12:51:50,014 [WARN ] W-9000-resnet-18_1.0-stderr MODEL_LOG -     from ts.utils.util import deprecated
+2026-03-27T12:51:50,014 [WARN ] W-9000-resnet-18_1.0-stderr MODEL_LOG -   File "/home/chadji10/ADE/.venv_torchserve/lib/python3.12/site-packages/ts/utils/util.py", line 14, in <module>
+2026-03-27T12:51:50,014 [WARN ] W-9000-resnet-18_1.0-stderr MODEL_LOG -     import yaml
+2026-03-27T12:51:50,014 [WARN ] W-9000-resnet-18_1.0-stderr MODEL_LOG - ModuleNotFoundError: No module named 'yaml'
+2026-03-27T12:51:50,275 [INFO ] W-9000-resnet-18_1.0-stderr org.pytorch.serve.wlm.WorkerLifeCycle - Stopped Scanner - W-9000-resnet-18_1.0-stderr
+2026-03-27T12:51:50,275 [INFO ] W-9000-resnet-18_1.0-stdout org.pytorch.serve.wlm.WorkerLifeCycle - Stopped Scanner - W-9000-resnet-18_1.0-stdout
+2026-03-27T12:51:50,276 [ERROR] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Backend worker error
+org.pytorch.serve.wlm.WorkerInitializationException: Backend stream closed.
+	at org.pytorch.serve.wlm.WorkerLifeCycle.startWorkerPython(WorkerLifeCycle.java:204) ~[model-server.jar:?]
+	at org.pytorch.serve.wlm.WorkerLifeCycle.startWorker(WorkerLifeCycle.java:106) ~[model-server.jar:?]
+	at org.pytorch.serve.wlm.WorkerThread.connect(WorkerThread.java:375) ~[model-server.jar:?]
+	at org.pytorch.serve.wlm.WorkerThread.run(WorkerThread.java:192) ~[model-server.jar:?]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144) ~[?:?]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642) ~[?:?]
+	at java.lang.Thread.run(Thread.java:1583) [?:?]
+2026-03-27T12:51:50,276 [DEBUG] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - W-9000-resnet-18_1.0 State change WORKER_STOPPED -> WORKER_STOPPED
+2026-03-27T12:51:50,276 [WARN ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Auto recovery failed again
+2026-03-27T12:51:50,277 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Retry worker: 9000 in 5 seconds.
+2026-03-27T12:51:51,579 [INFO ] W-9000-resnet-18_1.0 ACCESS_LOG - /127.0.0.1:41108 "GET /ping HTTP/1.1" 200 0
+2026-03-27T12:51:51,629 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /127.0.0.1:40822 "GET /models/resnet-18 HTTP/1.1" 200 33
+2026-03-27T12:51:54,077 [INFO ] W-9000-resnet-18_1.0 ACCESS_LOG - /127.0.0.1:41112 "GET /ping HTTP/1.1" 200 1
+2026-03-27T12:51:55,284 [DEBUG] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerLifeCycle - Worker cmdline: [/home/chadji10/ADE/.venv_torchserve/bin/python, /home/chadji10/ADE/.venv_torchserve/lib/python3.12/site-packages/ts/model_service_worker.py, --sock-type, unix, --sock-name, /tmp/.ts.sock.9000, --metrics-config, /home/chadji10/ADE/.venv_torchserve/lib/python3.12/site-packages/ts/configs/metrics.yaml]
+2026-03-27T12:51:56,622 [INFO ] epollEventLoopGroup-3-4 ACCESS_LOG - /127.0.0.1:40826 "GET /models/resnet-18 HTTP/1.1" 200 2531
+2026-03-27T12:51:58,657 [INFO ] pool-2-thread-2 ACCESS_LOG - /127.0.0.1:41116 "GET /ping HTTP/1.1" 200 0
+2026-03-27T12:52:00,316 [WARN ] W-9000-resnet-18_1.0-stderr MODEL_LOG - Traceback (most recent call last):
+2026-03-27T12:52:00,320 [WARN ] W-9000-resnet-18_1.0-stderr MODEL_LOG -   File "/home/chadji10/ADE/.venv_torchserve/lib/python3.12/site-packages/ts/model_service_worker.py", line 15, in <module>
+2026-03-27T12:52:00,320 [WARN ] W-9000-resnet-18_1.0-stderr MODEL_LOG -     from ts.async_service import AsyncService
+2026-03-27T12:52:00,321 [WARN ] W-9000-resnet-18_1.0-stderr MODEL_LOG -   File "/home/chadji10/ADE/.venv_torchserve/lib/python3.12/site-packages/ts/async_service.py", line 14, in <module>
+2026-03-27T12:52:00,321 [WARN ] W-9000-resnet-18_1.0-stderr MODEL_LOG -     from ts.handler_utils.utils import create_predict_response
+2026-03-27T12:52:00,321 [WARN ] W-9000-resnet-18_1.0-stderr MODEL_LOG -   File "/home/chadji10/ADE/.venv_torchserve/lib/python3.12/site-packages/ts/handler_utils/utils.py", line 5, in <module>
+2026-03-27T12:52:00,321 [WARN ] W-9000-resnet-18_1.0-stderr MODEL_LOG -     from ts.protocol.otf_message_handler import create_predict_response
+2026-03-27T12:52:00,322 [WARN ] W-9000-resnet-18_1.0-stderr MODEL_LOG -   File "/home/chadji10/ADE/.venv_torchserve/lib/python3.12/site-packages/ts/protocol/otf_message_handler.py", line 16, in <module>
+2026-03-27T12:52:00,322 [WARN ] W-9000-resnet-18_1.0-stderr MODEL_LOG -     from ts.utils.util import deprecated
+2026-03-27T12:52:00,322 [WARN ] W-9000-resnet-18_1.0-stderr MODEL_LOG -   File "/home/chadji10/ADE/.venv_torchserve/lib/python3.12/site-packages/ts/utils/util.py", line 14, in <module>
+2026-03-27T12:52:00,322 [WARN ] W-9000-resnet-18_1.0-stderr MODEL_LOG -     import yaml
+2026-03-27T12:52:00,323 [WARN ] W-9000-resnet-18_1.0-stderr MODEL_LOG - ModuleNotFoundError: No module named 'yaml'
+2026-03-27T12:52:00,607 [INFO ] W-9000-resnet-18_1.0-stderr org.pytorch.serve.wlm.WorkerLifeCycle - Stopped Scanner - W-9000-resnet-18_1.0-stderr
+2026-03-27T12:52:00,608 [ERROR] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Backend worker error
+org.pytorch.serve.wlm.WorkerInitializationException: Backend stream closed.
+	at org.pytorch.serve.wlm.WorkerLifeCycle.startWorkerPython(WorkerLifeCycle.java:204) ~[model-server.jar:?]
+	at org.pytorch.serve.wlm.WorkerLifeCycle.startWorker(WorkerLifeCycle.java:106) ~[model-server.jar:?]
+	at org.pytorch.serve.wlm.WorkerThread.connect(WorkerThread.java:375) ~[model-server.jar:?]
+	at org.pytorch.serve.wlm.WorkerThread.run(WorkerThread.java:192) ~[model-server.jar:?]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144) ~[?:?]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642) ~[?:?]
+	at java.lang.Thread.run(Thread.java:1583) [?:?]
+2026-03-27T12:52:00,607 [INFO ] W-9000-resnet-18_1.0-stdout org.pytorch.serve.wlm.WorkerLifeCycle - Stopped Scanner - W-9000-resnet-18_1.0-stdout
+2026-03-27T12:52:00,608 [DEBUG] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - W-9000-resnet-18_1.0 State change WORKER_STOPPED -> WORKER_STOPPED
+2026-03-27T12:52:00,609 [WARN ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Auto recovery failed again
+2026-03-27T12:52:00,609 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Retry worker: 9000 in 8 seconds.
+2026-03-27T12:52:01,027 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /127.0.0.1:40830 "GET /models/resnet-18 HTTP/1.1" 200 2357
+2026-03-27T12:52:03,066 [INFO ] W-9000-resnet-18_1.0 ACCESS_LOG - /127.0.0.1:41120 "GET /ping HTTP/1.1" 200 0
+2026-03-27T12:52:05,415 [INFO ] epollEventLoopGroup-3-4 ACCESS_LOG - /127.0.0.1:40834 "GET /models/resnet-18 HTTP/1.1" 200 2316
+2026-03-27T12:52:07,831 [INFO ] W-9000-resnet-18_1.0 ACCESS_LOG - /127.0.0.1:41124 "GET /ping HTTP/1.1" 200 0
+2026-03-27T12:52:08,511 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /127.0.0.1:40838 "GET /models/resnet-18 HTTP/1.1" 200 40
+2026-03-27T12:52:08,611 [DEBUG] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerLifeCycle - Worker cmdline: [/home/chadji10/ADE/.venv_torchserve/bin/python, /home/chadji10/ADE/.venv_torchserve/lib/python3.12/site-packages/ts/model_service_worker.py, --sock-type, unix, --sock-name, /tmp/.ts.sock.9000, --metrics-config, /home/chadji10/ADE/.venv_torchserve/lib/python3.12/site-packages/ts/configs/metrics.yaml]
+[2026-03-27T12:54:22+0200] TorchServe failed to become READY
+[2026-03-27T12:54:22+0200] Stopping TorchServe
+[2026-03-27T12:54:25+0200] Run directory: /home/chadji10/ADE/runs/resnet-18_poisson_20260327_125003

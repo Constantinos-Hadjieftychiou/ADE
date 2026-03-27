@@ -1,0 +1,371 @@
+[2026-03-27T12:57:57+0200] GPU info:
+Fri Mar 27 12:57:57 2026       
++-----------------------------------------------------------------------------------------+
+| NVIDIA-SMI 550.163.01             Driver Version: 550.163.01     CUDA Version: 12.4     |
+|-----------------------------------------+------------------------+----------------------+
+| GPU  Name                 Persistence-M | Bus-Id          Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |
+|                                         |                        |               MIG M. |
+|=========================================+========================+======================|
+|   0  Tesla V100-SXM2-32GB           Off |   00000000:18:00.0 Off |                    0 |
+| N/A   37C    P0             57W /  300W |     430MiB /  32768MiB |     13%      Default |
+|                                         |                        |                  N/A |
++-----------------------------------------+------------------------+----------------------+
+|   1  Tesla V100-SXM2-32GB           Off |   00000000:3B:00.0 Off |                    0 |
+| N/A   32C    P0             55W /  300W |     430MiB /  32768MiB |     13%      Default |
+|                                         |                        |                  N/A |
++-----------------------------------------+------------------------+----------------------+
+|   2  Tesla V100-SXM2-32GB           Off |   00000000:86:00.0 Off |                    0 |
+| N/A   31C    P0             56W /  300W |     430MiB /  32768MiB |     10%      Default |
+|                                         |                        |                  N/A |
++-----------------------------------------+------------------------+----------------------+
+|   3  Tesla V100-SXM2-32GB           Off |   00000000:AF:00.0 Off |                    0 |
+| N/A   33C    P0             41W /  300W |       4MiB /  32768MiB |      0%      Default |
+|                                         |                        |                  N/A |
++-----------------------------------------+------------------------+----------------------+
+                                                                                         
++-----------------------------------------------------------------------------------------+
+| Processes:                                                                              |
+|  GPU   GI   CI        PID   Type   Process name                              GPU Memory |
+|        ID   ID                                                               Usage      |
+|=========================================================================================|
+|    0   N/A  N/A    185566      C   ...on/3.11.3-GCCcore-12.3.0/bin/python        426MiB |
+|    1   N/A  N/A    185567      C   ...on/3.11.3-GCCcore-12.3.0/bin/python        426MiB |
+|    2   N/A  N/A    185568      C   ...on/3.11.3-GCCcore-12.3.0/bin/python        426MiB |
++-----------------------------------------------------------------------------------------+
+Looking in indexes: https://download.pytorch.org/whl/cu121
+Collecting torch==2.5.1
+  Downloading https://download.pytorch.org/whl/cu121/torch-2.5.1%2Bcu121-cp312-cp312-linux_x86_64.whl (780.4 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 780.4/780.4 MB 66.4 MB/s  0:00:11
+Collecting torchvision==0.20.1
+  Downloading https://download-r2.pytorch.org/whl/cu121/torchvision-0.20.1%2Bcu121-cp312-cp312-linux_x86_64.whl (7.3 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 7.3/7.3 MB 93.2 MB/s  0:00:00
+Requirement already satisfied: filelock in /share/apps/eb/software/Python-bundle-PyPI/2024.06-GCCcore-13.3.0/lib/python3.12/site-packages (from torch==2.5.1) (3.15.1)
+Collecting typing-extensions>=4.8.0 (from torch==2.5.1)
+  Downloading https://download.pytorch.org/whl/typing_extensions-4.15.0-py3-none-any.whl.metadata (3.3 kB)
+Collecting networkx (from torch==2.5.1)
+  Downloading networkx-3.6.1-py3-none-any.whl.metadata (6.8 kB)
+Requirement already satisfied: jinja2 in /share/apps/eb/software/Python-bundle-PyPI/2024.06-GCCcore-13.3.0/lib/python3.12/site-packages (from torch==2.5.1) (3.1.4)
+Requirement already satisfied: fsspec in /share/apps/eb/software/Python-bundle-PyPI/2024.06-GCCcore-13.3.0/lib/python3.12/site-packages (from torch==2.5.1) (2024.6.0)
+Collecting nvidia-cuda-nvrtc-cu12==12.1.105 (from torch==2.5.1)
+  Downloading https://download.pytorch.org/whl/cu121/nvidia_cuda_nvrtc_cu12-12.1.105-py3-none-manylinux1_x86_64.whl (23.7 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 23.7/23.7 MB 74.8 MB/s  0:00:00
+Collecting nvidia-cuda-runtime-cu12==12.1.105 (from torch==2.5.1)
+  Downloading https://download.pytorch.org/whl/cu121/nvidia_cuda_runtime_cu12-12.1.105-py3-none-manylinux1_x86_64.whl (823 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 823.6/823.6 kB 69.6 MB/s  0:00:00
+Collecting nvidia-cuda-cupti-cu12==12.1.105 (from torch==2.5.1)
+  Downloading https://download.pytorch.org/whl/cu121/nvidia_cuda_cupti_cu12-12.1.105-py3-none-manylinux1_x86_64.whl (14.1 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 14.1/14.1 MB 74.5 MB/s  0:00:00
+Collecting nvidia-cudnn-cu12==9.1.0.70 (from torch==2.5.1)
+  Downloading https://download.pytorch.org/whl/cu121/nvidia_cudnn_cu12-9.1.0.70-py3-none-manylinux2014_x86_64.whl (664.8 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 664.8/664.8 MB 70.5 MB/s  0:00:09
+Collecting nvidia-cublas-cu12==12.1.3.1 (from torch==2.5.1)
+  Downloading https://download.pytorch.org/whl/cu121/nvidia_cublas_cu12-12.1.3.1-py3-none-manylinux1_x86_64.whl (410.6 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 410.6/410.6 MB 66.8 MB/s  0:00:05
+Collecting nvidia-cufft-cu12==11.0.2.54 (from torch==2.5.1)
+  Downloading https://download.pytorch.org/whl/cu121/nvidia_cufft_cu12-11.0.2.54-py3-none-manylinux1_x86_64.whl (121.6 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 121.6/121.6 MB 73.9 MB/s  0:00:01
+Collecting nvidia-curand-cu12==10.3.2.106 (from torch==2.5.1)
+  Downloading https://download.pytorch.org/whl/cu121/nvidia_curand_cu12-10.3.2.106-py3-none-manylinux1_x86_64.whl (56.5 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 56.5/56.5 MB 74.4 MB/s  0:00:00
+Collecting nvidia-cusolver-cu12==11.4.5.107 (from torch==2.5.1)
+  Downloading https://download.pytorch.org/whl/cu121/nvidia_cusolver_cu12-11.4.5.107-py3-none-manylinux1_x86_64.whl (124.2 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 124.2/124.2 MB 74.3 MB/s  0:00:01
+Collecting nvidia-cusparse-cu12==12.1.0.106 (from torch==2.5.1)
+  Downloading https://download.pytorch.org/whl/cu121/nvidia_cusparse_cu12-12.1.0.106-py3-none-manylinux1_x86_64.whl (196.0 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 196.0/196.0 MB 67.5 MB/s  0:00:02
+Collecting nvidia-nccl-cu12==2.21.5 (from torch==2.5.1)
+  Downloading https://download.pytorch.org/whl/nvidia_nccl_cu12-2.21.5-py3-none-manylinux2014_x86_64.whl (188.7 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 188.7/188.7 MB 72.6 MB/s  0:00:02
+Collecting nvidia-nvtx-cu12==12.1.105 (from torch==2.5.1)
+  Downloading https://download.pytorch.org/whl/cu121/nvidia_nvtx_cu12-12.1.105-py3-none-manylinux1_x86_64.whl (99 kB)
+Collecting triton==3.1.0 (from torch==2.5.1)
+  Downloading https://download.pytorch.org/whl/triton-3.1.0-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (209.6 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 209.6/209.6 MB 74.3 MB/s  0:00:02
+Requirement already satisfied: setuptools in ./.venv_torchserve/lib/python3.12/site-packages (from torch==2.5.1) (82.0.1)
+Collecting sympy==1.13.1 (from torch==2.5.1)
+  Downloading sympy-1.13.1-py3-none-any.whl.metadata (12 kB)
+Requirement already satisfied: numpy in /share/apps/eb/software/SciPy-bundle/2024.05-gfbf-2024a/lib/python3.12/site-packages (from torchvision==0.20.1) (1.26.4)
+Requirement already satisfied: pillow!=8.3.*,>=5.3.0 in /share/apps/eb/software/Pillow/10.4.0-GCCcore-13.3.0/lib/python3.12/site-packages (from torchvision==0.20.1) (10.4.0)
+Collecting nvidia-nvjitlink-cu12 (from nvidia-cusolver-cu12==11.4.5.107->torch==2.5.1)
+  Downloading https://download.pytorch.org/whl/nvidia_nvjitlink_cu12-12.9.86-py3-none-manylinux2010_x86_64.manylinux_2_12_x86_64.whl.metadata (1.7 kB)
+Requirement already satisfied: mpmath<1.4,>=1.1.0 in /share/apps/eb/software/SciPy-bundle/2024.05-gfbf-2024a/lib/python3.12/site-packages (from sympy==1.13.1->torch==2.5.1) (1.3.0)
+Requirement already satisfied: MarkupSafe>=2.0 in /share/apps/eb/software/Python-bundle-PyPI/2024.06-GCCcore-13.3.0/lib/python3.12/site-packages (from jinja2->torch==2.5.1) (2.1.5)
+Downloading sympy-1.13.1-py3-none-any.whl (6.2 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 6.2/6.2 MB 21.9 MB/s  0:00:00
+Downloading https://download.pytorch.org/whl/typing_extensions-4.15.0-py3-none-any.whl (44 kB)
+Downloading networkx-3.6.1-py3-none-any.whl (2.1 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.1/2.1 MB 101.0 MB/s  0:00:00
+Downloading https://download.pytorch.org/whl/nvidia_nvjitlink_cu12-12.9.86-py3-none-manylinux2010_x86_64.manylinux_2_12_x86_64.whl (39.7 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 39.7/39.7 MB 74.3 MB/s  0:00:00
+Installing collected packages: typing-extensions, triton, sympy, nvidia-nvtx-cu12, nvidia-nvjitlink-cu12, nvidia-nccl-cu12, nvidia-curand-cu12, nvidia-cufft-cu12, nvidia-cuda-runtime-cu12, nvidia-cuda-nvrtc-cu12, nvidia-cuda-cupti-cu12, nvidia-cublas-cu12, networkx, nvidia-cusparse-cu12, nvidia-cudnn-cu12, nvidia-cusolver-cu12, torch, torchvision
+
+Successfully installed networkx-3.6.1 nvidia-cublas-cu12-12.1.3.1 nvidia-cuda-cupti-cu12-12.1.105 nvidia-cuda-nvrtc-cu12-12.1.105 nvidia-cuda-runtime-cu12-12.1.105 nvidia-cudnn-cu12-9.1.0.70 nvidia-cufft-cu12-11.0.2.54 nvidia-curand-cu12-10.3.2.106 nvidia-cusolver-cu12-11.4.5.107 nvidia-cusparse-cu12-12.1.0.106 nvidia-nccl-cu12-2.21.5 nvidia-nvjitlink-cu12-12.9.86 nvidia-nvtx-cu12-12.1.105 sympy-1.13.1 torch-2.5.1+cu121 torchvision-0.20.1+cu121 triton-3.1.0 typing-extensions-4.15.0
+Collecting torchserve
+  Using cached torchserve-0.12.0-py3-none-any.whl.metadata (1.4 kB)
+Collecting torch-model-archiver
+  Using cached torch_model_archiver-0.12.0-py3-none-any.whl.metadata (1.4 kB)
+Requirement already satisfied: pillow in /share/apps/eb/software/Pillow/10.4.0-GCCcore-13.3.0/lib/python3.12/site-packages (10.4.0)
+Requirement already satisfied: requests in /share/apps/eb/software/Python-bundle-PyPI/2024.06-GCCcore-13.3.0/lib/python3.12/site-packages (2.32.3)
+Requirement already satisfied: pandas in /share/apps/eb/software/SciPy-bundle/2024.05-gfbf-2024a/lib/python3.12/site-packages (2.2.2)
+Requirement already satisfied: numpy in /share/apps/eb/software/SciPy-bundle/2024.05-gfbf-2024a/lib/python3.12/site-packages (1.26.4)
+Requirement already satisfied: matplotlib in /share/apps/eb/software/matplotlib/3.9.2-gfbf-2024a/lib/python3.12/site-packages (3.9.2)
+Collecting nvidia-ml-py3
+  Using cached nvidia_ml_py3-7.352.0-py3-none-any.whl
+Collecting pyyaml
+  Downloading pyyaml-6.0.3-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (2.4 kB)
+Requirement already satisfied: psutil in /share/apps/eb/software/Python-bundle-PyPI/2024.06-GCCcore-13.3.0/lib/python3.12/site-packages (from torchserve) (5.9.8)
+Requirement already satisfied: packaging in /share/apps/eb/software/Python-bundle-PyPI/2024.06-GCCcore-13.3.0/lib/python3.12/site-packages (from torchserve) (24.1)
+Requirement already satisfied: wheel in ./.venv_torchserve/lib/python3.12/site-packages (from torchserve) (0.46.3)
+Collecting enum-compat (from torch-model-archiver)
+  Using cached enum_compat-0.0.3-py3-none-any.whl.metadata (954 bytes)
+Requirement already satisfied: charset-normalizer<4,>=2 in /share/apps/eb/software/Python-bundle-PyPI/2024.06-GCCcore-13.3.0/lib/python3.12/site-packages (from requests) (3.3.2)
+Requirement already satisfied: idna<4,>=2.5 in /share/apps/eb/software/Python-bundle-PyPI/2024.06-GCCcore-13.3.0/lib/python3.12/site-packages (from requests) (3.7)
+Requirement already satisfied: urllib3<3,>=1.21.1 in /share/apps/eb/software/Python-bundle-PyPI/2024.06-GCCcore-13.3.0/lib/python3.12/site-packages (from requests) (2.2.1)
+Requirement already satisfied: certifi>=2017.4.17 in /share/apps/eb/software/Python-bundle-PyPI/2024.06-GCCcore-13.3.0/lib/python3.12/site-packages (from requests) (2024.6.2)
+Requirement already satisfied: python-dateutil>=2.8.2 in /share/apps/eb/software/Python-bundle-PyPI/2024.06-GCCcore-13.3.0/lib/python3.12/site-packages (from pandas) (2.9.0.post0)
+Requirement already satisfied: pytz>=2020.1 in /share/apps/eb/software/Python-bundle-PyPI/2024.06-GCCcore-13.3.0/lib/python3.12/site-packages (from pandas) (2024.1)
+Requirement already satisfied: tzdata>=2022.7 in /share/apps/eb/software/SciPy-bundle/2024.05-gfbf-2024a/lib/python3.12/site-packages (from pandas) (2024.1)
+Requirement already satisfied: contourpy>=1.0.1 in /share/apps/eb/software/matplotlib/3.9.2-gfbf-2024a/lib/python3.12/site-packages (from matplotlib) (1.3.0)
+Requirement already satisfied: cycler>=0.10 in /share/apps/eb/software/matplotlib/3.9.2-gfbf-2024a/lib/python3.12/site-packages (from matplotlib) (0.12.1)
+Requirement already satisfied: fonttools>=4.22.0 in /share/apps/eb/software/matplotlib/3.9.2-gfbf-2024a/lib/python3.12/site-packages (from matplotlib) (4.53.1)
+Requirement already satisfied: kiwisolver>=1.3.1 in /share/apps/eb/software/matplotlib/3.9.2-gfbf-2024a/lib/python3.12/site-packages (from matplotlib) (1.4.4)
+Requirement already satisfied: pyparsing>=2.3.1 in /share/apps/eb/software/Python-bundle-PyPI/2024.06-GCCcore-13.3.0/lib/python3.12/site-packages (from matplotlib) (3.1.2)
+Requirement already satisfied: six>=1.5 in /share/apps/eb/software/Python-bundle-PyPI/2024.06-GCCcore-13.3.0/lib/python3.12/site-packages (from python-dateutil>=2.8.2->pandas) (1.16.0)
+Using cached torchserve-0.12.0-py3-none-any.whl (42.2 MB)
+Using cached torch_model_archiver-0.12.0-py3-none-any.whl (16 kB)
+Downloading pyyaml-6.0.3-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (807 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 807.9/807.9 kB 1.6 MB/s  0:00:00
+Using cached enum_compat-0.0.3-py3-none-any.whl (1.3 kB)
+Installing collected packages: nvidia-ml-py3, enum-compat, torch-model-archiver, pyyaml, torchserve
+
+Successfully installed enum-compat-0.0.3 nvidia-ml-py3-7.352.0 pyyaml-6.0.3 torch-model-archiver-0.12.0 torchserve-0.12.0
+Collecting git+https://github.com/ml-energy/zeus.git
+  Cloning https://github.com/ml-energy/zeus.git to /tmp/pip-req-build-5grmg4r1
+  Resolved https://github.com/ml-energy/zeus.git to commit c6bc37654b43b7d57230cf889a71929e314d7f20
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Getting requirements to build wheel: started
+  Getting requirements to build wheel: finished with status 'done'
+  Preparing metadata (pyproject.toml): started
+  Preparing metadata (pyproject.toml): finished with status 'done'
+Requirement already satisfied: numpy in /share/apps/eb/software/SciPy-bundle/2024.05-gfbf-2024a/lib/python3.12/site-packages (from zeus==0.15.0) (1.26.4)
+Requirement already satisfied: pandas in /share/apps/eb/software/SciPy-bundle/2024.05-gfbf-2024a/lib/python3.12/site-packages (from zeus==0.15.0) (2.2.2)
+Collecting scikit-learn (from zeus==0.15.0)
+  Using cached scikit_learn-1.8.0-cp312-cp312-linux_x86_64.whl
+Collecting nvidia-ml-py (from zeus==0.15.0)
+  Using cached nvidia_ml_py-13.595.45-py3-none-any.whl.metadata (9.7 kB)
+Collecting pydantic (from zeus==0.15.0)
+  Using cached pydantic-2.12.5-py3-none-any.whl.metadata (90 kB)
+Requirement already satisfied: rich in /share/apps/eb/software/Python-bundle-PyPI/2024.06-GCCcore-13.3.0/lib/python3.12/site-packages (from zeus==0.15.0) (13.7.1)
+Collecting tyro (from zeus==0.15.0)
+  Using cached tyro-1.0.11-py3-none-any.whl.metadata (12 kB)
+Collecting httpx (from zeus==0.15.0)
+  Using cached httpx-0.28.1-py3-none-any.whl.metadata (7.1 kB)
+Collecting amdsmi (from zeus==0.15.0)
+  Using cached amdsmi-7.0.2-py3-none-any.whl.metadata (2.8 kB)
+Requirement already satisfied: python-dateutil in /share/apps/eb/software/Python-bundle-PyPI/2024.06-GCCcore-13.3.0/lib/python3.12/site-packages (from zeus==0.15.0) (2.9.0.post0)
+Collecting anyio (from httpx->zeus==0.15.0)
+  Using cached anyio-4.13.0-py3-none-any.whl.metadata (4.5 kB)
+Requirement already satisfied: certifi in /share/apps/eb/software/Python-bundle-PyPI/2024.06-GCCcore-13.3.0/lib/python3.12/site-packages (from httpx->zeus==0.15.0) (2024.6.2)
+Collecting httpcore==1.* (from httpx->zeus==0.15.0)
+  Using cached httpcore-1.0.9-py3-none-any.whl.metadata (21 kB)
+Requirement already satisfied: idna in /share/apps/eb/software/Python-bundle-PyPI/2024.06-GCCcore-13.3.0/lib/python3.12/site-packages (from httpx->zeus==0.15.0) (3.7)
+Collecting h11>=0.16 (from httpcore==1.*->httpx->zeus==0.15.0)
+  Using cached h11-0.16.0-py3-none-any.whl.metadata (8.3 kB)
+Requirement already satisfied: typing_extensions>=4.5 in ./.venv_torchserve/lib/python3.12/site-packages (from anyio->httpx->zeus==0.15.0) (4.15.0)
+Requirement already satisfied: pytz>=2020.1 in /share/apps/eb/software/Python-bundle-PyPI/2024.06-GCCcore-13.3.0/lib/python3.12/site-packages (from pandas->zeus==0.15.0) (2024.1)
+Requirement already satisfied: tzdata>=2022.7 in /share/apps/eb/software/SciPy-bundle/2024.05-gfbf-2024a/lib/python3.12/site-packages (from pandas->zeus==0.15.0) (2024.1)
+Requirement already satisfied: six>=1.5 in /share/apps/eb/software/Python-bundle-PyPI/2024.06-GCCcore-13.3.0/lib/python3.12/site-packages (from python-dateutil->zeus==0.15.0) (1.16.0)
+Collecting annotated-types>=0.6.0 (from pydantic->zeus==0.15.0)
+  Using cached annotated_types-0.7.0-py3-none-any.whl.metadata (15 kB)
+Collecting pydantic-core==2.41.5 (from pydantic->zeus==0.15.0)
+  Using cached pydantic_core-2.41.5-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (7.3 kB)
+Collecting typing-inspection>=0.4.2 (from pydantic->zeus==0.15.0)
+  Using cached typing_inspection-0.4.2-py3-none-any.whl.metadata (2.6 kB)
+Requirement already satisfied: markdown-it-py>=2.2.0 in /share/apps/eb/software/Python-bundle-PyPI/2024.06-GCCcore-13.3.0/lib/python3.12/site-packages (from rich->zeus==0.15.0) (3.0.0)
+Requirement already satisfied: pygments<3.0.0,>=2.13.0 in /share/apps/eb/software/Python-bundle-PyPI/2024.06-GCCcore-13.3.0/lib/python3.12/site-packages (from rich->zeus==0.15.0) (2.18.0)
+Requirement already satisfied: mdurl~=0.1 in /share/apps/eb/software/Python-bundle-PyPI/2024.06-GCCcore-13.3.0/lib/python3.12/site-packages (from markdown-it-py>=2.2.0->rich->zeus==0.15.0) (0.1.2)
+Requirement already satisfied: scipy>=1.10.0 in /share/apps/eb/software/SciPy-bundle/2024.05-gfbf-2024a/lib/python3.12/site-packages (from scikit-learn->zeus==0.15.0) (1.13.1)
+Requirement already satisfied: joblib>=1.3.0 in /share/apps/eb/software/Python-bundle-PyPI/2024.06-GCCcore-13.3.0/lib/python3.12/site-packages (from scikit-learn->zeus==0.15.0) (1.4.2)
+Requirement already satisfied: threadpoolctl>=3.2.0 in /share/apps/eb/software/Python-bundle-PyPI/2024.06-GCCcore-13.3.0/lib/python3.12/site-packages (from scikit-learn->zeus==0.15.0) (3.5.0)
+Collecting docstring-parser>=0.15 (from tyro->zeus==0.15.0)
+  Using cached docstring_parser-0.17.0-py3-none-any.whl.metadata (3.5 kB)
+Collecting typeguard>=4.0.0 (from tyro->zeus==0.15.0)
+  Using cached typeguard-4.5.1-py3-none-any.whl.metadata (3.8 kB)
+Using cached amdsmi-7.0.2-py3-none-any.whl (64 kB)
+Using cached httpx-0.28.1-py3-none-any.whl (73 kB)
+Using cached httpcore-1.0.9-py3-none-any.whl (78 kB)
+Using cached h11-0.16.0-py3-none-any.whl (37 kB)
+Using cached anyio-4.13.0-py3-none-any.whl (114 kB)
+Using cached nvidia_ml_py-13.595.45-py3-none-any.whl (51 kB)
+Using cached pydantic-2.12.5-py3-none-any.whl (463 kB)
+Using cached pydantic_core-2.41.5-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (2.1 MB)
+Using cached annotated_types-0.7.0-py3-none-any.whl (13 kB)
+Using cached typing_inspection-0.4.2-py3-none-any.whl (14 kB)
+Using cached tyro-1.0.11-py3-none-any.whl (183 kB)
+Using cached docstring_parser-0.17.0-py3-none-any.whl (36 kB)
+Using cached typeguard-4.5.1-py3-none-any.whl (36 kB)
+Building wheels for collected packages: zeus
+  Building wheel for zeus (pyproject.toml): started
+  Building wheel for zeus (pyproject.toml): finished with status 'done'
+  Created wheel for zeus: filename=zeus-0.15.0-py3-none-any.whl size=283035 sha256=803ef0274d441bdabb2df91737cb70b9cafc8d518d300cadf6b40681467e0a64
+  Stored in directory: /tmp/pip-ephem-wheel-cache-637kuoak/wheels/41/2b/31/f14db3955629af73b8f2fd783d5d5fd5d07b962499a7802d01
+Successfully built zeus
+Installing collected packages: nvidia-ml-py, typing-inspection, typeguard, pydantic-core, h11, docstring-parser, anyio, annotated-types, amdsmi, tyro, scikit-learn, pydantic, httpcore, httpx, zeus
+
+Successfully installed amdsmi-7.0.2 annotated-types-0.7.0 anyio-4.13.0 docstring-parser-0.17.0 h11-0.16.0 httpcore-1.0.9 httpx-0.28.1 nvidia-ml-py-13.595.45 pydantic-2.12.5 pydantic-core-2.41.5 scikit-learn-1.8.0 typeguard-4.5.1 typing-inspection-0.4.2 tyro-1.0.11 zeus-0.15.0
+[2026-03-27T13:14:20+0200] Starting TorchServe pinned to CPUs 2-3
+WARNING: sun.reflect.Reflection.getCallerClass is not supported. This will impact performance.
+2026-03-27T13:14:21,831 [WARN ] main org.pytorch.serve.util.ConfigManager - Your torchserve instance can access any URL to load models. When deploying to production, make sure to limit the set of allowed_urls in config.properties
+2026-03-27T13:14:21,850 [INFO ] main org.pytorch.serve.servingsdk.impl.PluginsManager - Initializing plugins manager...
+2026-03-27T13:14:21,901 [INFO ] main org.pytorch.serve.metrics.configuration.MetricConfiguration - Successfully loaded metrics configuration from /home/chadji10/ADE/.venv_torchserve/lib/python3.12/site-packages/ts/configs/metrics.yaml
+2026-03-27T13:14:21,966 [INFO ] main org.pytorch.serve.ModelServer - 
+Torchserve version: 0.12.0
+TS Home: /home/chadji10/ADE/.venv_torchserve/lib/python3.12/site-packages
+Current directory: /home/chadji10/ADE
+Temp directory: /tmp
+Metrics config path: /home/chadji10/ADE/.venv_torchserve/lib/python3.12/site-packages/ts/configs/metrics.yaml
+Number of GPUs: 1
+Number of CPUs: 2
+Max heap size: 18032 M
+Python executable: /home/chadji10/ADE/.venv_torchserve/bin/python
+Config file: /home/chadji10/ADE/torchserve.properties
+Inference address: http://127.0.0.1:8080
+Management address: http://127.0.0.1:8081
+Metrics address: http://127.0.0.1:8082
+Model Store: /home/chadji10/ADE/model_store
+Initial Models: resnet-18=resnet-18.mar
+Log dir: /home/chadji10/ADE/logs
+Metrics dir: /home/chadji10/ADE/logs
+Netty threads: 0
+Netty client threads: 0
+Default workers per model: 1
+Blacklist Regex: N/A
+Maximum Response Size: 6553500
+Maximum Request Size: 6553500
+Limit Maximum Image Pixels: true
+Prefer direct buffer: false
+Allowed Urls: [file://.*|http(s)?://.*]
+Custom python dependency for model allowed: false
+Enable metrics API: true
+Metrics mode: PROMETHEUS
+Disable system metrics: true
+Workflow Store: /home/chadji10/ADE/model_store
+CPP log config: N/A
+Model config: N/A
+System metrics command: default
+Model API enabled: false
+2026-03-27T13:14:21,975 [INFO ] main org.pytorch.serve.servingsdk.impl.PluginsManager -  Loading snapshot serializer plugin...
+2026-03-27T13:14:21,994 [INFO ] main org.pytorch.serve.ModelServer - Loading initial models: resnet-18.mar
+2026-03-27T13:14:22,699 [DEBUG] main org.pytorch.serve.wlm.ModelVersionedRefs - Adding new version 1.0 for model resnet-18
+2026-03-27T13:14:22,699 [DEBUG] main org.pytorch.serve.wlm.ModelVersionedRefs - Setting default version to 1.0 for model resnet-18
+2026-03-27T13:14:22,699 [INFO ] main org.pytorch.serve.wlm.ModelManager - Model resnet-18 loaded.
+2026-03-27T13:14:22,699 [DEBUG] main org.pytorch.serve.wlm.ModelManager - updateModel: resnet-18, count: 1
+2026-03-27T13:14:22,708 [INFO ] main org.pytorch.serve.ModelServer - Initialize Inference server with: EpollServerSocketChannel.
+2026-03-27T13:14:22,719 [DEBUG] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerLifeCycle - Worker cmdline: [/home/chadji10/ADE/.venv_torchserve/bin/python, /home/chadji10/ADE/.venv_torchserve/lib/python3.12/site-packages/ts/model_service_worker.py, --sock-type, unix, --sock-name, /tmp/.ts.sock.9000, --metrics-config, /home/chadji10/ADE/.venv_torchserve/lib/python3.12/site-packages/ts/configs/metrics.yaml]
+2026-03-27T13:14:22,762 [INFO ] main org.pytorch.serve.ModelServer - Inference API bind to: http://127.0.0.1:8080
+2026-03-27T13:14:22,777 [INFO ] main org.pytorch.serve.ModelServer - Initialize Management server with: EpollServerSocketChannel.
+2026-03-27T13:14:22,778 [INFO ] main org.pytorch.serve.ModelServer - Management API bind to: http://127.0.0.1:8081
+2026-03-27T13:14:22,778 [INFO ] main org.pytorch.serve.ModelServer - Initialize Metrics server with: EpollServerSocketChannel.
+2026-03-27T13:14:22,778 [INFO ] main org.pytorch.serve.ModelServer - Metrics API bind to: http://127.0.0.1:8082
+Model server started.
+[2026-03-27T13:14:28+0200] Waiting for TorchServe READY...
+2026-03-27T13:14:28,654 [INFO ] pool-2-thread-2 ACCESS_LOG - /127.0.0.1:41350 "GET /ping HTTP/1.1" 200 6
+2026-03-27T13:14:30,295 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /127.0.0.1:41064 "GET /models/resnet-18 HTTP/1.1" 200 983
+2026-03-27T13:14:32,516 [INFO ] pool-2-thread-2 ACCESS_LOG - /127.0.0.1:41354 "GET /ping HTTP/1.1" 200 0
+2026-03-27T13:14:34,200 [INFO ] epollEventLoopGroup-3-4 ACCESS_LOG - /127.0.0.1:41068 "GET /models/resnet-18 HTTP/1.1" 200 1598
+2026-03-27T13:14:36,231 [INFO ] pool-2-thread-2 ACCESS_LOG - /127.0.0.1:41358 "GET /ping HTTP/1.1" 200 0
+2026-03-27T13:14:36,272 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /127.0.0.1:41072 "GET /models/resnet-18 HTTP/1.1" 200 29
+2026-03-27T13:14:38,299 [INFO ] pool-2-thread-2 ACCESS_LOG - /127.0.0.1:41362 "GET /ping HTTP/1.1" 200 0
+2026-03-27T13:14:39,040 [INFO ] W-9000-resnet-18_1.0-stdout MODEL_LOG - s_name_part0=/tmp/.ts.sock, s_name_part1=9000, pid=189453
+2026-03-27T13:14:39,043 [INFO ] W-9000-resnet-18_1.0-stdout MODEL_LOG - Listening on port: /tmp/.ts.sock.9000
+2026-03-27T13:14:39,054 [INFO ] W-9000-resnet-18_1.0-stdout MODEL_LOG - Successfully loaded /home/chadji10/ADE/.venv_torchserve/lib/python3.12/site-packages/ts/configs/metrics.yaml.
+2026-03-27T13:14:39,056 [INFO ] W-9000-resnet-18_1.0-stdout MODEL_LOG - [PID]189453
+2026-03-27T13:14:39,056 [INFO ] W-9000-resnet-18_1.0-stdout MODEL_LOG - Torch worker started.
+2026-03-27T13:14:39,056 [DEBUG] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - W-9000-resnet-18_1.0 State change null -> WORKER_STARTED
+2026-03-27T13:14:39,059 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Connecting to: /tmp/.ts.sock.9000
+2026-03-27T13:14:39,062 [INFO ] W-9000-resnet-18_1.0-stdout MODEL_LOG - Python runtime: 3.12.3
+2026-03-27T13:14:39,063 [INFO ] W-9000-resnet-18_1.0-stdout MODEL_LOG - Connection accepted: /tmp/.ts.sock.9000.
+2026-03-27T13:14:39,065 [DEBUG] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Flushing req.cmd LOAD repeats 1 to backend at: 1774610079065
+2026-03-27T13:14:39,066 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Looping backend response at: 1774610079066
+2026-03-27T13:14:39,077 [INFO ] W-9000-resnet-18_1.0-stdout MODEL_LOG - model_name: resnet-18, batchSize: 1
+2026-03-27T13:14:40,167 [INFO ] epollEventLoopGroup-3-4 ACCESS_LOG - /127.0.0.1:41076 "GET /models/resnet-18 HTTP/1.1" 200 1856
+2026-03-27T13:14:42,201 [INFO ] pool-2-thread-2 ACCESS_LOG - /127.0.0.1:41366 "GET /ping HTTP/1.1" 200 1
+2026-03-27T13:14:43,523 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /127.0.0.1:41080 "GET /models/resnet-18 HTTP/1.1" 200 1258
+2026-03-27T13:14:45,555 [INFO ] pool-2-thread-2 ACCESS_LOG - /127.0.0.1:41370 "GET /ping HTTP/1.1" 200 0
+2026-03-27T13:14:45,612 [INFO ] epollEventLoopGroup-3-4 ACCESS_LOG - /127.0.0.1:41084 "GET /models/resnet-18 HTTP/1.1" 200 32
+2026-03-27T13:14:47,751 [INFO ] pool-2-thread-2 ACCESS_LOG - /127.0.0.1:41374 "GET /ping HTTP/1.1" 200 0
+2026-03-27T13:14:50,943 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /127.0.0.1:41088 "GET /models/resnet-18 HTTP/1.1" 200 3180
+2026-03-27T13:14:52,970 [INFO ] pool-2-thread-2 ACCESS_LOG - /127.0.0.1:41378 "GET /ping HTTP/1.1" 200 1
+2026-03-27T13:14:54,194 [INFO ] epollEventLoopGroup-3-4 ACCESS_LOG - /127.0.0.1:41092 "GET /models/resnet-18 HTTP/1.1" 200 1200
+2026-03-27T13:14:56,227 [INFO ] pool-2-thread-2 ACCESS_LOG - /127.0.0.1:41384 "GET /ping HTTP/1.1" 200 0
+2026-03-27T13:14:56,299 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /127.0.0.1:41098 "GET /models/resnet-18 HTTP/1.1" 200 51
+2026-03-27T13:14:58,340 [INFO ] pool-2-thread-2 ACCESS_LOG - /127.0.0.1:41388 "GET /ping HTTP/1.1" 200 2
+2026-03-27T13:14:58,392 [INFO ] epollEventLoopGroup-3-4 ACCESS_LOG - /127.0.0.1:41102 "GET /models/resnet-18 HTTP/1.1" 200 35
+2026-03-27T13:15:00,425 [INFO ] pool-2-thread-2 ACCESS_LOG - /127.0.0.1:41392 "GET /ping HTTP/1.1" 200 0
+2026-03-27T13:15:02,596 [INFO ] epollEventLoopGroup-3-2 ACCESS_LOG - /127.0.0.1:41106 "GET /models/resnet-18 HTTP/1.1" 200 2152
+2026-03-27T13:15:02,721 [INFO ] W-9000-resnet-18_1.0-stdout MODEL_LOG - OpenVINO is not enabled
+2026-03-27T13:15:02,724 [INFO ] W-9000-resnet-18_1.0-stdout MODEL_LOG - proceeding without onnxruntime
+2026-03-27T13:15:02,724 [INFO ] W-9000-resnet-18_1.0-stdout MODEL_LOG - Torch TensorRT not enabled
+2026-03-27T13:15:03,025 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Backend response time: 23959
+2026-03-27T13:15:03,026 [DEBUG] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - W-9000-resnet-18_1.0 State change WORKER_STARTED -> WORKER_MODEL_LOADED
+2026-03-27T13:15:04,668 [INFO ] pool-2-thread-2 ACCESS_LOG - /127.0.0.1:41396 "GET /ping HTTP/1.1" 200 1
+2026-03-27T13:15:04,782 [INFO ] epollEventLoopGroup-3-4 ACCESS_LOG - /127.0.0.1:41110 "GET /models/resnet-18 HTTP/1.1" 200 46
+[2026-03-27T13:15:04+0200] TorchServe READY
+[2026-03-27T13:15:04+0200] Running warm-up inferences...
+[2026-03-27T13:15:10+0200] Warm-up completed
+[2026-03-27T13:15:10+0200] ===== RUN 1 =====
+Loading CIFAR-10 dataset...
+Files already downloaded and verified
+Loaded 1000 images
+2026-03-27T13:15:18,498 [INFO ] pool-2-thread-2 ACCESS_LOG - /127.0.0.1:41400 "GET /ping HTTP/1.1" 200 1
+Starting phase: poisson-2min-1rps
+2026-03-27T13:15:18,779 [DEBUG] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Flushing req.cmd PREDICT repeats 1 to backend at: 1774610118779
+2026-03-27T13:15:18,782 [INFO ] W-9000-resnet-18_1.0 org.pytorch.serve.wlm.WorkerThread - Looping backend response at: 1774610118782
+2026-03-27T13:15:18,783 [INFO ] W-9000-resnet-18_1.0-stdout MODEL_LOG - Backend received inference at: 1774610118
+Starting phase: poisson-2min-2rps
+Starting phase: poisson-2min-5rps
+Starting phase: poisson-2min-10rps
+Starting phase: poisson-2min-15rps
+Starting phase: poisson-2min-20rps
+Starting phase: poisson-2min-30rps
+Starting phase: poisson-2min-40rps
+Starting phase: poisson-2min-50rps
+Starting phase: poisson-2min-60rps
+Starting phase: poisson-2min-70rps
+Starting phase: poisson-2min-80rps
+
+Baseline GPU power: 59.40 W
+
+Idle window comparison:
+Request-idle & Energy-idle : 10950
+Request-idle only          : 331
+Energy-idle only           : 11505
+Neither idle               : 6014
+
+Latency statistics:
+count    45349.000000
+mean         0.010049
+std          0.017510
+min          0.004871
+25%          0.007265
+50%          0.009212
+75%          0.011858
+max          1.862948
+Name: latency, dtype: float64
+
+Latency percentiles
+p50 0.009212 s
+p90 0.014154 s
+p95 0.015789 s
+p99 0.019933 s
+
+Estimated GPU saturation begins near 1 RPS
+
+Saved plots including latency and saturation detection
+[2026-03-27T13:39:34+0200] Run 1 completed
+[2026-03-27T13:39:34+0200] All runs finished
+[2026-03-27T13:39:34+0200] Results stored in: /home/chadji10/ADE/runs/resnet-18_poisson_20260327_125720
+[2026-03-27T13:39:34+0200] Stopping TorchServe
+[2026-03-27T13:39:36+0200] Run directory: /home/chadji10/ADE/runs/resnet-18_poisson_20260327_125720
