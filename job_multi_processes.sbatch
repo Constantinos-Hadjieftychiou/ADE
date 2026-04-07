@@ -19,7 +19,7 @@
 
 set -euo pipefail
 
-MODEL_NAME="${MODEL_NAME:-resnet-18}"
+MODEL_NAME="${MODEL_NAME:-resnet-50}"
 REPEATS="${REPEATS:-1}"
 CONCURRENCY="${CONCURRENCY:-16}"
 WINDOW_S="${WINDOW_S:-0.05}"

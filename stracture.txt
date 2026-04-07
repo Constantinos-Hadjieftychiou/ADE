@@ -2,7 +2,7 @@ Title: Leveraging Machine Learning to Predict Idleness in Microservices on GPUs
 
 Abstract
 
-Keywords
+
 
 I. Introduction
    A. Background and Motivation
